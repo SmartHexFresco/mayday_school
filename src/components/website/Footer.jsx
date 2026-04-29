@@ -193,7 +193,7 @@ const Footer = () => {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white text-xs text-center sm:text-left">
-            &copy; {currentYear} MayDay Int'l School. All rights reserved.
+            &copy; {currentYear} Powered by Bravotechub School Portal. All rights reserved.
           </p>
           <p className="text-white text-xs">
             Designed & Developed with ❤️ for Excellence in Education

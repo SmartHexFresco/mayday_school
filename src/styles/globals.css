@@ -48,7 +48,7 @@
   body {
     font-family: 'Inter', sans-serif;
     color: #1a1a1a;
-    background-color: #ffffff;
+    background-color: #d7dae0;
     -webkit-font-smoothing: antialiased;
   }
 }
@@ -112,3 +112,48 @@
 .animate-fadeUp {
   animation: fadeUp 0.8s ease forwards;
 } */
+
+
+
+
+
+
+
+
+
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+
+
+
+
+
+
+/* Navy Blue color (matching the uniform) */
+.bg-navy-50 { background-color: #f0f2f8; }
+.bg-navy-100 { background-color: #e8ebf3; }
+.bg-navy-200 { background-color: #c5cde0; }
+.bg-navy-600 { background-color: #2a3a5f; }
+.bg-navy-700 { background-color: #1a2a4f; }
+.bg-navy-800 { background-color: #0f1a3a; }
+.bg-navy-900 { background-color: #0a1228; }
+
+.text-navy-50 { color: #f0f2f8; }
+.text-navy-100 { color: #e8ebf3; }
+.text-navy-200 { color: #c5cde0; }
+.text-navy-600 { color: #2a3a5f; }
+.text-navy-700 { color: #1a2a4f; }
+.text-navy-800 { color: #0f1a3a; }
+.text-navy-900 { color: #0a1228; }

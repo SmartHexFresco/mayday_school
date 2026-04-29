@@ -9,7 +9,21 @@ import {
   Heart,
 } from 'lucide-react'
 
-// ── Specialties Data ──────────────────────────────────────
+// For images in PUBLIC folder - use direct path strings (NOT require!)
+const ictImg = '/ict.jpg'  // Your image is directly in public folder
+
+// Set others to null (no images yet)
+let summerImg = null
+let clubsImg = null
+let culturalImg = null
+let graduationImg = null
+let christmasImg = null
+let musicImg = null
+let artImg = null
+
+console.log('ICT Image path:', ictImg)
+
+// ── Specialties Data with Images ──────────────────────────
 const specialties = [
   {
     icon: Monitor,
@@ -17,6 +31,8 @@ const specialties = [
     description:
       'Our fully equipped ICT laboratory exposes students to computer literacy, typing skills, and basic programming from an early age. We believe digital skills are essential for the 21st century learner.',
     color: 'bg-blue-100 text-blue-800',
+    image: ictImg,
+    imageAlt: 'Students using computers in ICT lab'
   },
   {
     icon: Sun,
@@ -24,6 +40,8 @@ const specialties = [
     description:
       'Our summer holiday programme offers intensive academic coaching, fun learning packages, and special events designed to keep students sharp and engaged during the long vacation.',
     color: 'bg-orange-100 text-orange-800',
+    image: summerImg,
+    imageAlt: 'Summer holiday activities'
   },
   {
     icon: Users,
@@ -31,6 +49,8 @@ const specialties = [
     description:
       'Students can join a variety of clubs including the Debate Club, Science Club, Art Club, Drama Club, and Press Club — each designed to develop unique talents and leadership skills.',
     color: 'bg-green-100 text-green-800',
+    image: clubsImg,
+    imageAlt: 'Students in club activities'
   },
   {
     icon: Globe,
@@ -38,6 +58,8 @@ const specialties = [
     description:
       'Our annual cultural day celebrates the rich diversity of Nigeria and the world. Students dress in traditional attire, perform cultural dances, and showcase the beauty of our heritage.',
     color: 'bg-purple-100 text-purple-800',
+    image: culturalImg,
+    imageAlt: 'Cultural day celebration'
   },
   {
     icon: GraduationCap,
@@ -45,6 +67,8 @@ const specialties = [
     description:
       'Our graduation ceremony is a grand celebration of excellence. We honour our graduating pupils with a memorable ceremony that marks their transition to the next chapter of their academic journey.',
     color: 'bg-green-100 text-green-800',
+    image: graduationImg,
+    imageAlt: 'Graduation ceremony'
   },
   {
     icon: Heart,
@@ -52,6 +76,8 @@ const specialties = [
     description:
       'Our end-of-year Christmas celebration is a highlight of the school calendar — filled with performances, games, carol singing, gift sharing, and lots of fun for every child.',
     color: 'bg-red-100 text-red-800',
+    image: christmasImg,
+    imageAlt: 'Christmas party celebration'
   },
   {
     icon: Music,
@@ -59,6 +85,8 @@ const specialties = [
     description:
       'Students are introduced to music, drama, and dance as core elements of holistic development. Our annual concert showcases the incredible talents of our students.',
     color: 'bg-pink-100 text-pink-800',
+    image: musicImg,
+    imageAlt: 'Music and performing arts'
   },
   {
     icon: Palette,
@@ -66,6 +94,8 @@ const specialties = [
     description:
       'Creative expression is encouraged at every level. From painting and drawing to craft projects, our art programme helps children develop imagination, focus, and fine motor skills.',
     color: 'bg-indigo-100 text-indigo-800',
+    image: artImg,
+    imageAlt: 'Art and creativity activities'
   },
 ]
 
@@ -123,7 +153,7 @@ const Specialties = () => {
         </div>
       </section>
 
-      {/* ── Specialties Grid ─────────────────────────────── */}
+      {/* ── Specialties Grid with Images ─────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="text-yellow-600 font-semibold text-sm uppercase tracking-widest">
@@ -139,24 +169,42 @@ const Specialties = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {specialties.map(({ icon: Icon, title, description, color }) => (
+          {specialties.map(({ icon: Icon, title, description, color, image, imageAlt }) => (
             <div
               key={title}
-              className="bg-white border border-gray-100 rounded-xl p-6 hover:shadow-md hover:border-blue-200 transition-all duration-300 group"
+              className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-md hover:border-blue-200 transition-all duration-300 group"
             >
-              <div
-                className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${color}`}
-              >
-                <Icon className="w-6 h-6" />
+              {/* Image Section - Only shows if image exists */}
+              {image && (
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={image}
+                    alt={imageAlt || title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      console.log(`Failed to load image for ${title}`);
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
+              
+              {/* Content Section */}
+              <div className="p-6">
+                <div
+                  className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${color}`}
+                >
+                  <Icon className="w-6 h-6" />
+                </div>
+
+                <h3 className="text-gray-900 font-semibold mb-2 group-hover:text-blue-800 transition-colors">
+                  {title}
+                </h3>
+
+                <p className="text-gray-500 text-sm leading-relaxed">
+                  {description}
+                </p>
               </div>
-
-              <h3 className="text-gray-900 font-semibold mb-2 group-hover:text-blue-800 transition-colors">
-                {title}
-              </h3>
-
-              <p className="text-gray-500 text-sm leading-relaxed">
-                {description}
-              </p>
             </div>
           ))}
         </div>
@@ -201,10 +249,25 @@ const Specialties = () => {
 
       {/* ── Summer Holiday ───────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="bg-yellow-600 rounded-2xl px-8 py-14">
+        <div className="bg-gradient-to-r from-yellow-600 to-yellow-500 rounded-2xl overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            
+            {/* Image Side - Only shows if image exists */}
+            {summerImg && (
+              <div className="h-64 lg:h-full">
+                <img
+                  src={summerImg}
+                  alt="Summer holiday activities"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.style.display = 'none'
+                  }}
+                />
+              </div>
+            )}
 
-            <div className="text-white">
+            {/* Content Side */}
+            <div className={`text-white p-8 lg:p-10 ${!summerImg ? 'lg:col-span-2' : ''}`}>
               <span className="bg-white/20 text-white text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest">
                 Every Long Vacation
               </span>
@@ -224,24 +287,24 @@ const Specialties = () => {
                 Registration opens at the end of every third term. Contact us to secure
                 your child's spot early — spaces fill up fast!
               </p>
-            </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                'Academic Coaching',
-                'Arts & Crafts',
-                'Sports & Games',
-                'Educational Trips',
-                'Drama & Music',
-                'Special Packages',
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="bg-white/20 border border-white/20 rounded-lg p-4 text-center text-white text-sm font-medium"
-                >
-                  {item}
-                </div>
-              ))}
+              <div className="grid grid-cols-2 gap-3 mt-6">
+                {[
+                  'Academic Coaching',
+                  'Arts & Crafts',
+                  'Sports & Games',
+                  'Educational Trips',
+                  'Drama & Music',
+                  'Special Packages',
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="bg-white/20 border border-white/20 rounded-lg p-3 text-center text-white text-sm font-medium"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
 
           </div>
@@ -267,35 +330,43 @@ const Specialties = () => {
                 title: 'Graduation Day',
                 description:
                   'A grand celebration honouring our graduating pupils with certificates, awards, and performances.',
+                icon: GraduationCap
               },
               {
                 title: 'Cultural Day',
                 description:
                   'Students celebrate Nigerian and global cultures through traditional costumes, food, and performances.',
+                icon: Globe
               },
               {
                 title: 'Open Day',
                 description:
                   'Parents visit classrooms, review progress, and engage directly with teachers and management.',
+                icon: Users
               },
               {
                 title: 'Christmas Party',
                 description:
                   'A joyful end-of-year celebration featuring carol singing, talent shows, games, and gift sharing.',
+                icon: Heart
               },
-            ].map((event) => (
-              <div
-                key={event.title}
-                className="bg-white/10 border border-white/10 rounded-xl p-6 hover:bg-white/15 transition-all duration-300"
-              >
-                <h3 className="text-yellow-400 font-semibold mb-3">
-                  {event.title}
-                </h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  {event.description}
-                </p>
-              </div>
-            ))}
+            ].map((event) => {
+              const IconComponent = event.icon
+              return (
+                <div
+                  key={event.title}
+                  className="bg-white/10 border border-white/10 rounded-xl p-6 hover:bg-white/15 transition-all duration-300 text-center"
+                >
+                  <IconComponent className="w-10 h-10 text-yellow-400 mx-auto mb-4" />
+                  <h3 className="text-yellow-400 font-semibold mb-3">
+                    {event.title}
+                  </h3>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    {event.description}
+                  </p>
+                </div>
+              )
+            })}
           </div>
 
         </div>

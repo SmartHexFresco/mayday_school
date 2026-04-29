@@ -1,3 +1,12 @@
+
+
+
+
+
+
+
+
+
 import { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { Menu, X, GraduationCap } from 'lucide-react'
@@ -15,15 +24,34 @@ const navLinks = [
   { name: 'Contact', path: '/contact' },
 ]
 
+// Sliding text messages
+const topBarMessages = [
+  "Welcome to MayDay International School — Nurturing Godly Children",
+  "📚 Enrolling Now for 2026/2027 Academic Session!",
+  "🎓 Excellence in Education Since 2014",
+  "🏆 Where Every Child Shines Bright",
+  "📞 Call us today for a school tour!",
+  "✨ Character. Leadership. Excellence."
+]
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
 
   // Detect scroll for sticky shadow effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Auto-slide top bar messages every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMessageIndex((prev) => (prev + 1) % topBarMessages.length)
+    }, 5000)
+    return () => clearInterval(interval)
   }, [])
 
   // Close menu on route change
@@ -36,10 +64,34 @@ const Navbar = () => {
         scrolled ? 'shadow-md' : 'shadow-sm'
       )}
     >
-      {/* Top Bar */}
-      <div className="bg-blue-700 text-white text-xs py-1.5 px-4 text-center tracking-wide">
-        Welcome to MayDay International School — Nurturing Excellence, Building Futures
-      </div>
+      {/* Top Bar with Sliding Text
+      <div className="bg-blue-700 text-white text-xs py-1.5 px-4 text-center tracking-wide overflow-hidden whitespace-nowrap">
+        <div
+          className="inline-block animate-slide"
+          key={currentMessageIndex}
+        >
+          {topBarMessages[currentMessageIndex]}
+        </div>
+      </div> */}
+
+
+
+
+{/* Top Bar with Marquee Effect */}
+<div className="bg-blue-700 text-white text-xs py-1.5 px-4 overflow-hidden">
+  <div className="animate-marquee whitespace-nowrap inline-block">
+    {topBarMessages.map((message, idx) => (
+      <span key={idx} className="mx-8">
+        {message}
+      </span>
+    ))}
+  </div>
+</div>
+
+
+
+
+
 
       {/* Main Navbar */}
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
