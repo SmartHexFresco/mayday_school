@@ -28,7 +28,7 @@ const navLinks = [
 const topBarMessages = [
   "Welcome to MayDay International School — Nurturing Godly Children",
   "📚 Enrolling Now for 2026/2027 Academic Session!",
-  "🎓 Excellence in Education Since 2014",
+ // "🎓 Excellence in Education Since 2014",
   "🏆 Where Every Child Shines Bright",
   "📞 Call us today for a school tour!",
   "✨ Character. Leadership. Excellence."
