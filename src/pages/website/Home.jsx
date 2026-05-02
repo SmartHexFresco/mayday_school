@@ -8,6 +8,7 @@ import { ArrowRight } from 'lucide-react'
 import { supabase } from '@lib/supabaseClient'
 import Hero from '@components/website/Hero'
 import TestimonialCard from '@components/website/TestimonialCard'
+import About from '@pages/website/About'
 
 // ── Why Choose Us Data ────────────────────────────────────
 const features = [
@@ -89,6 +90,9 @@ const Home = () => {
 
       {/* ── Hero ─────────────────────────────────────────── */}
       <Hero />
+
+      {/* ── About ─────────────────────────────────────────── */}
+      <About />
 
       {/* ── Why Choose Us ────────────────────────────────── */}
       <section className="bg-gray-50 py-20">

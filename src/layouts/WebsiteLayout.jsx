@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Navbar from '@components/website/Navbar'
 import Footer from '@components/website/Footer'
+import About from  '@pages/website/About'
 
 const WebsiteLayout = () => {
   return (
@@ -8,6 +9,7 @@ const WebsiteLayout = () => {
       <Navbar />
        <main className="grow"> 
         <Outlet />
+        < About/>
       </main>
       <Footer />
     </div>
