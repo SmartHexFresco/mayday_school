@@ -9,6 +9,7 @@ import { supabase } from '@lib/supabaseClient'
 import Hero from '@components/website/Hero'
 import TestimonialCard from '@components/website/TestimonialCard'
 import About from '@pages/website/About'
+import Administration from '@pages/website/Administration'
 
 // ── Why Choose Us Data ────────────────────────────────────
 const features = [
@@ -93,6 +94,10 @@ const Home = () => {
 
       {/* ── About ─────────────────────────────────────────── */}
       <About />
+
+
+       {/* ── About ─────────────────────────────────────────── */} 
+       <Administration />
 
       {/* ── Why Choose Us ────────────────────────────────── */}
       <section className="bg-gray-50 py-20">
