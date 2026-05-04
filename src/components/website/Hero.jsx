@@ -1190,95 +1190,362 @@
 
 
 
+// import { useState, useEffect, useRef, useCallback } from 'react'
+// import { Link } from 'react-router-dom'
+// import { ArrowRight, Play, X, GraduationCap, Users, Trophy, Calendar } from 'lucide-react'
+// import { motion, AnimatePresence } from 'framer-motion'
+// import { cn } from '@utils/cn'
+
+// // ── Google Fonts ─────────────────────────────────────────
+// const FontLoader = () => (
+//   <style>{`
+//     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+//   `}</style>
+// )
+
+// // ── Slides ───────────────────────────────────────────────
+// const slides = [
+//   {
+//     id: 1,
+//     index: '01',
+//     eyebrow: 'Welcome to MayDay',
+//     heading: 'Nurturing Excellence,',
+//     highlight: 'Building Futures',
+//     subheading:
+//       'Every child is seen, valued, and empowered to discover their greatest potential.',
+//     primaryCTA: { label: 'Student Portal', path: 'https://portal.maydayintschool.com/student', external: true },
+//     secondaryCTA: { label: 'WhatsApp Us', path: 'https://wa.me/2341234567890', external: true },
+//     bgImage: '/hero-slide-1.jpg',
+//   },
+//   {
+//     id: 2,
+//     index: '02',
+//     eyebrow: 'Academic Excellence',
+//     heading: 'World-Class Education,',
+//     highlight: 'Global Standards',
+//     subheading:
+//       'From Pre-Nursery to Secondary, our curriculum is designed to challenge, inspire, and develop every learner.',
+//     primaryCTA: { label: 'Explore Academics', path: '/academics', external: false },
+//     secondaryCTA: { label: 'Staff Portal', path: 'https://portal.maydayintschool.com/', external: true },
+//     bgImage: '/hero-slide-2.jpg',
+//   },
+//   {
+//     id: 3,
+//     index: '03',
+//     eyebrow: 'Holistic Development',
+//     heading: 'Beyond the Classroom,',
+//     highlight: 'Into the Future',
+//     subheading:
+//       'Sports, ICT, arts, clubs, and cultural activities — developing complete, confident individuals.',
+//     primaryCTA: { label: 'Our Specialties', path: '/specialties', external: false },
+//     secondaryCTA: { label: 'Contact Us', path: '/contact', external: false },
+//     bgImage: '/hero-slide-3.jpg',
+//   },
+//   {
+//     id: 4,
+//     index: '04',
+//     eyebrow: 'Modern Facilities',
+//     heading: 'State-of-the-Art',
+//     highlight: 'Learning Environment',
+//     subheading:
+//       'Well-equipped classrooms, science labs, computer rooms, and premium sports facilities.',
+//     primaryCTA: { label: 'Take a Tour', path: '/gallery', external: false },
+//     secondaryCTA: { label: 'Enroll Now', path: '/admissions', external: false },
+//     bgImage: '/hero-slide-4.jpg',
+//   },
+//   {
+//     id: 5,
+//     index: '05',
+//     eyebrow: 'Join Our Family',
+//     heading: 'Start Your Journey',
+//     highlight: 'With Us Today',
+//     subheading:
+//       'Give your child quality education, strong values, and a supportive community that lasts a lifetime.',
+//     primaryCTA: { label: 'Contact Us', path: '/contact', external: false },
+//     secondaryCTA: { label: 'About Us', path: '/about', external: false },
+//     bgImage: '/hero-slide-5.jpg',
+//   },
+// ]
+
+// // ── Stats ────────────────────────────────────────────────
+// const stats = [
+//   { value: '500', label: 'Students Enrolled', icon: Users },
+//   { value: '40', label: 'Expert Staff', icon: GraduationCap },
+//   { value: '10', label: 'Years of Excellence', icon: Calendar },
+//   { value: '25', label: 'Awards Won', icon: Trophy },
+// ]
+
+// // ── Styles ───────────────────────────────────────────────
+// const styles = `/* (your FULL original CSS here — unchanged) */`
+
+// // ── CTA Helper ───────────────────────────────────────────
+// const CTALink = ({ cta, className, children }) =>
+//   cta.external ? (
+//     <a href={cta.path} target="_blank" rel="noopener noreferrer" className={className}>
+//       {children}
+//     </a>
+//   ) : (
+//     <Link to={cta.path} className={className}>
+//       {children}
+//     </Link>
+//   )
+
+// // ── Component ────────────────────────────────────────────
+// const Hero = () => {
+//   const [activeSlide, setActiveSlide] = useState(0)
+//   const [showVideo, setShowVideo] = useState(false)
+//   const [isAnimating, setIsAnimating] = useState(false)
+//   const [progressKey, setProgressKey] = useState(0)
+
+//   const intervalRef = useRef(null)
+
+//   // ✅ FIXED interval
+//   const startInterval = useCallback(() => {
+//     if (intervalRef.current) clearInterval(intervalRef.current)
+
+//     intervalRef.current = setInterval(() => {
+//       setActiveSlide(prev => (prev + 1) % slides.length)
+//       setProgressKey(k => k + 1)
+//     }, 10000)
+//   }, [])
+
+//   useEffect(() => {
+//     startInterval()
+//     return () => clearInterval(intervalRef.current)
+//   }, [startInterval])
+
+//   const goToSlide = (index) => {
+//     if (isAnimating || index === activeSlide) return
+
+//     setIsAnimating(true)
+//     setActiveSlide(index)
+//     setProgressKey(k => k + 1)
+//     startInterval()
+
+//     setTimeout(() => setIsAnimating(false), 800)
+//   }
+
+//   const goToNext = () => goToSlide((activeSlide + 1) % slides.length)
+//   const goToPrev = () => goToSlide(activeSlide === 0 ? slides.length - 1 : activeSlide - 1)
+
+//   const slide = slides[activeSlide]
+
+//   return (
+//     <>
+//       <FontLoader />
+//       <style>{styles}</style>
+
+//       <section className="hero-root" style={{ position: 'relative', minHeight: '100svh', overflow: 'hidden' }}>
+
+//         <AnimatePresence mode="wait">
+//           <motion.div
+//             key={slide.id}
+//             className="hero-bg"
+//             style={{ backgroundImage: `url('${slide.bgImage}')` }}
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             exit={{ opacity: 0 }}
+//           >
+//             <div className="hero-bg-overlay" />
+//             <div className="hero-bg-noise" />
+//           </motion.div>
+//         </AnimatePresence>
+
+//         <div style={{ position: 'relative', width: '100%', minHeight: '100svh', display: 'flex', alignItems: 'center' }}>
+//           <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', padding: '100px 40px' }}>
+
+//             <AnimatePresence mode="wait">
+//               <motion.div key={slide.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+
+//                 <h1 className="hero-h1">
+//                   {slide.heading}
+//                   <span className="highlight">{slide.highlight}</span>
+//                 </h1>
+
+//                 <p className="hero-sub">{slide.subheading}</p>
+
+//                 <div style={{ display: 'flex', gap: '12px' }}>
+//                   <CTALink cta={slide.primaryCTA} className="btn-primary">
+//                     {slide.primaryCTA.label} <ArrowRight size={15} />
+//                   </CTALink>
+
+//                   <CTALink cta={slide.secondaryCTA} className="btn-ghost">
+//                     {slide.secondaryCTA.label}
+//                   </CTALink>
+//                 </div>
+
+//                 <button className="btn-video" onClick={() => setShowVideo(true)}>
+//                   <Play /> Watch School Tour
+//                 </button>
+
+//               </motion.div>
+//             </AnimatePresence>
+
+//           </div>
+//         </div>
+
+//       </section>
+
+//       {/* Modal */}
+//       <AnimatePresence>
+//         {showVideo && (
+//           <motion.div className="modal-bg">
+//             <div>
+//               <button onClick={() => setShowVideo(false)}><X /></button>
+//               <p>Video coming soon</p>
+//             </div>
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+//     </>
+//   )
+// }
+
+// export default Hero
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Play, X, GraduationCap, Users, Trophy, Calendar } from 'lucide-react'
+import { ArrowRight, Play, X, GraduationCap, Users, Trophy, Calendar, ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@utils/cn'
 
-// ── Google Fonts ─────────────────────────────────────────
+// ── Google Fonts (Upgraded to Playfair Display & Plus Jakarta Sans) ─────────────────
 const FontLoader = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+    @import url('https://googleapis.com');
   `}</style>
 )
 
-// ── Slides ───────────────────────────────────────────────
 const slides = [
   {
     id: 1,
-    index: '01',
     eyebrow: 'Welcome to MayDay',
     heading: 'Nurturing Excellence,',
     highlight: 'Building Futures',
-    subheading:
-      'Every child is seen, valued, and empowered to discover their greatest potential.',
+    subheading: 'Every child is seen, valued, and empowered to discover their greatest potential.',
     primaryCTA: { label: 'Student Portal', path: 'https://portal.maydayintschool.com/student', external: true },
     secondaryCTA: { label: 'WhatsApp Us', path: 'https://wa.me/2341234567890', external: true },
     bgImage: '/hero-slide-1.jpg',
   },
   {
     id: 2,
-    index: '02',
     eyebrow: 'Academic Excellence',
     heading: 'World-Class Education,',
     highlight: 'Global Standards',
-    subheading:
-      'From Pre-Nursery to Secondary, our curriculum is designed to challenge, inspire, and develop every learner.',
+    subheading: 'From Pre-Nursery to Secondary, our curriculum is designed to challenge and inspire learners.',
     primaryCTA: { label: 'Explore Academics', path: '/academics', external: false },
     secondaryCTA: { label: 'Staff Portal', path: 'https://portal.maydayintschool.com/', external: true },
     bgImage: '/hero-slide-2.jpg',
   },
   {
     id: 3,
-    index: '03',
-    eyebrow: 'Holistic Development',
-    heading: 'Beyond the Classroom,',
-    highlight: 'Into the Future',
-    subheading:
-      'Sports, ICT, arts, clubs, and cultural activities — developing complete, confident individuals.',
-    primaryCTA: { label: 'Our Specialties', path: '/specialties', external: false },
-    secondaryCTA: { label: 'Contact Us', path: '/contact', external: false },
-    bgImage: '/hero-slide-3.jpg',
-  },
-  {
-    id: 4,
-    index: '04',
     eyebrow: 'Modern Facilities',
     heading: 'State-of-the-Art',
-    highlight: 'Learning Environment',
-    subheading:
-      'Well-equipped classrooms, science labs, computer rooms, and premium sports facilities.',
+    highlight: 'Learning Spaces',
+    subheading: 'Well-equipped classrooms, science labs, and premium sports facilities for holistic growth.',
     primaryCTA: { label: 'Take a Tour', path: '/gallery', external: false },
     secondaryCTA: { label: 'Enroll Now', path: '/admissions', external: false },
-    bgImage: '/hero-slide-4.jpg',
-  },
-  {
-    id: 5,
-    index: '05',
-    eyebrow: 'Join Our Family',
-    heading: 'Start Your Journey',
-    highlight: 'With Us Today',
-    subheading:
-      'Give your child quality education, strong values, and a supportive community that lasts a lifetime.',
-    primaryCTA: { label: 'Contact Us', path: '/contact', external: false },
-    secondaryCTA: { label: 'About Us', path: '/about', external: false },
-    bgImage: '/hero-slide-5.jpg',
+    bgImage: '/hero-slide-3.jpg',
   },
 ]
 
-// ── Stats ────────────────────────────────────────────────
-const stats = [
-  { value: '500', label: 'Students Enrolled', icon: Users },
-  { value: '40', label: 'Expert Staff', icon: GraduationCap },
-  { value: '10', label: 'Years of Excellence', icon: Calendar },
-  { value: '25', label: 'Awards Won', icon: Trophy },
-]
+const styles = `
+  .hero-root {
+    --brand-gold: #D4AF37;
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-sans);
+    color: white;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; background-size: cover; background-position: center; z-index: -2;
+    transform: scale(1.1); transition: transform 10s linear;
+  }
+  .hero-bg-overlay {
+    position: absolute; inset: 0; 
+    background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%);
+    z-index: -1;
+  }
+  .hero-h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    line-height: 1.1; font-weight: 900; margin-bottom: 1.5rem;
+  }
+  .hero-h1 .highlight {
+    display: block; color: var(--brand-gold); font-style: italic; font-weight: 700;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.25rem); max-width: 600px; line-height: 1.6;
+    margin-bottom: 2.5rem; color: rgba(255,255,255,0.8); font-weight: 300;
+  }
+  .btn-primary {
+    background: var(--brand-gold); color: black; padding: 16px 32px; border-radius: 100px;
+    font-weight: 600; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
+  .btn-ghost {
+    border: 1px solid rgba(255,255,255,0.3); padding: 16px 32px; border-radius: 100px;
+    font-weight: 600; backdrop-filter: blur(10px); transition: all 0.3s ease;
+  }
+  .btn-ghost:hover { background: white; color: black; }
+  .slide-nav {
+    position: absolute; bottom: 40px; right: 40px; display: flex; gap: 20px; align-items: center;
+  }
+  .progress-dot {
+    width: 40px; height: 3px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; position: relative;
+  }
+  .progress-fill {
+    position: absolute; left: 0; top: 0; height: 100%; background: var(--brand-gold); width: 0%;
+  }
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100;
+    display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);
+  }
+`
 
-// ── Styles ───────────────────────────────────────────────
-const styles = `/* (your FULL original CSS here — unchanged) */`
-
-// ── CTA Helper ───────────────────────────────────────────
 const CTALink = ({ cta, className, children }) =>
   cta.external ? (
     <a href={cta.path} target="_blank" rel="noopener noreferrer" className={className}>
@@ -1290,43 +1557,22 @@ const CTALink = ({ cta, className, children }) =>
     </Link>
   )
 
-// ── Component ────────────────────────────────────────────
 const Hero = () => {
   const [activeSlide, setActiveSlide] = useState(0)
   const [showVideo, setShowVideo] = useState(false)
-  const [isAnimating, setIsAnimating] = useState(false)
-  const [progressKey, setProgressKey] = useState(0)
-
   const intervalRef = useRef(null)
 
-  // ✅ FIXED interval
   const startInterval = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current)
-
     intervalRef.current = setInterval(() => {
       setActiveSlide(prev => (prev + 1) % slides.length)
-      setProgressKey(k => k + 1)
-    }, 10000)
+    }, 8000)
   }, [])
 
   useEffect(() => {
     startInterval()
     return () => clearInterval(intervalRef.current)
   }, [startInterval])
-
-  const goToSlide = (index) => {
-    if (isAnimating || index === activeSlide) return
-
-    setIsAnimating(true)
-    setActiveSlide(index)
-    setProgressKey(k => k + 1)
-    startInterval()
-
-    setTimeout(() => setIsAnimating(false), 800)
-  }
-
-  const goToNext = () => goToSlide((activeSlide + 1) % slides.length)
-  const goToPrev = () => goToSlide(activeSlide === 0 ? slides.length - 1 : activeSlide - 1)
 
   const slide = slides[activeSlide]
 
@@ -1335,27 +1581,39 @@ const Hero = () => {
       <FontLoader />
       <style>{styles}</style>
 
-      <section className="hero-root" style={{ position: 'relative', minHeight: '100svh', overflow: 'hidden' }}>
-
-        <AnimatePresence mode="wait">
+      <section className="hero-root" style={{ position: 'relative', height: '100svh', overflow: 'hidden' }}>
+        
+        {/* Background Layer */}
+        <AnimatePresence mode="popLayout">
           <motion.div
             key={slide.id}
             className="hero-bg"
             style={{ backgroundImage: `url('${slide.bgImage}')` }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, scale: 1.2 }}
+            animate={{ opacity: 1, scale: 1.1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
           >
             <div className="hero-bg-overlay" />
-            <div className="hero-bg-noise" />
           </motion.div>
         </AnimatePresence>
 
-        <div style={{ position: 'relative', width: '100%', minHeight: '100svh', display: 'flex', alignItems: 'center' }}>
-          <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', padding: '100px 40px' }}>
-
+        {/* Content Layer */}
+        <div style={{ position: 'relative', zIndex: 10, height: '100%', display: 'flex', alignItems: 'center' }}>
+          <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', padding: '0 40px' }}>
             <AnimatePresence mode="wait">
-              <motion.div key={slide.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <motion.div 
+                key={activeSlide}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.6, staggerChildren: 0.1 }}
+              >
+                <motion.span 
+                  style={{ color: '#D4AF37', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.875rem', display: 'block', marginBottom: '1rem' }}
+                >
+                  {slide.eyebrow}
+                </motion.span>
 
                 <h1 className="hero-h1">
                   {slide.heading}
@@ -1364,35 +1622,69 @@ const Hero = () => {
 
                 <p className="hero-sub">{slide.subheading}</p>
 
-                <div style={{ display: 'flex', gap: '12px' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
                   <CTALink cta={slide.primaryCTA} className="btn-primary">
-                    {slide.primaryCTA.label} <ArrowRight size={15} />
+                    {slide.primaryCTA.label} <ArrowRight size={18} />
                   </CTALink>
 
                   <CTALink cta={slide.secondaryCTA} className="btn-ghost">
                     {slide.secondaryCTA.label}
                   </CTALink>
+
+                  <button 
+                    onClick={() => setShowVideo(true)}
+                    style={{ background: 'none', border: 'none', color: 'white', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontWeight: 500 }}
+                  >
+                    <div style={{ width: 48, height: 48, borderRadius: '50%', border: '1px solid white', display: 'flex', alignItems: 'center', justifyCenter: 'center', paddingLeft: '4px' }}>
+                        <Play size={18} fill="white" />
+                    </div>
+                    Watch Tour
+                  </button>
                 </div>
-
-                <button className="btn-video" onClick={() => setShowVideo(true)}>
-                  <Play /> Watch School Tour
-                </button>
-
               </motion.div>
             </AnimatePresence>
-
           </div>
         </div>
 
+        {/* Slide Indicators */}
+        <div className="slide-nav">
+          {slides.map((_, i) => (
+            <div key={i} onClick={() => { setActiveSlide(i); startInterval(); }} style={{ cursor: 'pointer' }}>
+              <div className="progress-dot">
+                {activeSlide === i && (
+                  <motion.div 
+                    className="progress-fill" 
+                    initial={{ width: "0%" }} 
+                    animate={{ width: "100%" }} 
+                    transition={{ duration: 8, ease: "linear" }}
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
-      {/* Modal */}
+      {/* Video Modal */}
       <AnimatePresence>
         {showVideo && (
-          <motion.div className="modal-bg">
-            <div>
-              <button onClick={() => setShowVideo(false)}><X /></button>
-              <p>Video coming soon</p>
+          <motion.div 
+            className="modal-bg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div style={{ position: 'relative', width: '90%', maxWidth: '1000px', aspectRatio: '16/9', background: '#111', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <button 
+                onClick={() => setShowVideo(false)}
+                style={{ position: 'absolute', top: '-50px', right: 0, color: 'white', background: 'none', border: 'none' }}
+              >
+                <X size={32} />
+              </button>
+              <div style={{ textAlign: 'center' }}>
+                <Play size={48} style={{ marginBottom: '1rem', opacity: 0.5 }} />
+                <p style={{ fontStyle: 'italic', fontFamily: 'var(--font-serif)' }}>Virtual Tour Experience Coming Soon</p>
+              </div>
             </div>
           </motion.div>
         )}
