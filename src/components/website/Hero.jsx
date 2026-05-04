@@ -5,13 +5,6 @@
 
 
 
-
-
-
-
-
-
-
 // import { useState, useEffect } from 'react'
 // import { Link } from 'react-router-dom'
 // import { ArrowRight, ChevronRight, Play, X } from 'lucide-react'
@@ -26,8 +19,8 @@
 //     highlight: 'Building Futures',
 //     subheading:
 //       'At MayDay International School, every child is seen, valued, and empowered to discover their greatest potential.',
-//     primaryCTA: { label: 'Apply Now', path: '/admissions' },
-//     secondaryCTA: { label: 'Discover More', path: '/about' },
+//     primaryCTA: { label: 'Student Portal', path: 'https://portal.maydayintschool.com/student', external: true },
+//     secondaryCTA: { label: 'WhatsApp Us', path: 'https://wa.me/2341234567890', external: true },
 //     bgImage: '/hero-bg.jpg',
 //   },
 //   {
@@ -37,8 +30,8 @@
 //     highlight: 'Home',
 //     subheading:
 //       'From Pre-Nursery to Primary, our curriculum is designed to challenge, inspire, and develop every learner to their fullest capacity.',
-//     primaryCTA: { label: 'Academics', path: '/academics' },
-//     secondaryCTA: { label: 'Staff', path: '/administration' },
+//     primaryCTA: { label: 'Academics', path: '/academics', external: false },
+//     secondaryCTA: { label: 'Staff Portal', path: 'https://portal.maydayintschool.com/', external: true },
 //     bgImage: '/hero-bg.jpg',
 //   },
 //   {
@@ -48,8 +41,8 @@
 //     highlight: 'Into the Future',
 //     subheading:
 //       'Sports, ICT, arts, clubs, and cultural activities — we develop the complete child, equipping them for every challenge ahead.',
-//     primaryCTA: { label: 'Specialties', path: '/specialties' },
-//     secondaryCTA: { label: 'Gallery', path: '/gallery' },
+//     primaryCTA: { label: 'Specialties', path: '/specialties', external: false },
+//     secondaryCTA: { label: 'Contact Us', path: '/contact', external: false },
 //     bgImage: '/hero-bg.jpg',
 //   },
 // ]
@@ -93,6 +86,42 @@
 //   }
 
 //   const slide = slides[activeSlide]
+
+//   // Helper function to render CTA button
+//   const renderCTA = (cta) => {
+//     if (cta.external) {
+//       return (
+//         <a
+//           href={cta.path}
+//           target="_blank"
+//           rel="noopener noreferrer"
+//           className={`inline-flex items-center gap-2 ${
+//             cta.label === 'Student Portal' || cta.label === 'Staff Portal'
+//               ? 'bg-green-600 hover:bg-green-700'
+//               : cta.label === 'WhatsApp Us'
+//               ? 'bg-green-500 hover:bg-green-600'
+//               : 'bg-yellow-600 hover:bg-yellow-700'
+//           } text-white font-bold px-7 py-3.5 rounded-xl transition`}
+//         >
+//           {cta.label}
+//           <ArrowRight className="w-4 h-4" />
+//         </a>
+//       )
+//     }
+//     return (
+//       <Link
+//         to={cta.path}
+//         className={`inline-flex items-center gap-2 ${
+//           cta.label === 'Academics' || cta.label === 'Specialties'
+//             ? 'bg-yellow-600 hover:bg-yellow-700'
+//             : 'bg-white/10 hover:bg-white/20 border border-white/20'
+//         } text-white font-semibold px-7 py-3.5 rounded-xl transition`}
+//       >
+//         {cta.label}
+//         <ChevronRight className="w-4 h-4" />
+//       </Link>
+//     )
+//   }
 
 //   return (
 //     <>
@@ -142,22 +171,31 @@
 //               </p>
 
 //               <div className="flex flex-wrap items-center gap-4">
-//                 <Link
-//                   to={slide.primaryCTA.path}
-//                   className="inline-flex items-center gap-2 bg-yellow-600 hover:bg-yellow-700 text-white font-bold px-7 py-3.5 rounded-xl transition"
-//                 >
-//                   {slide.primaryCTA.label}
-//                   <ArrowRight className="w-4 h-4" />
-//                 </Link>
+//                 {/* Primary CTA */}
+//                 {renderCTA(slide.primaryCTA)}
 
-//                 <Link
-//                   to={slide.secondaryCTA.path}
-//                   className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-7 py-3.5 rounded-xl transition"
-//                 >
-//                   {slide.secondaryCTA.label}
-//                   <ChevronRight className="w-4 h-4" />
-//                 </Link>
+//                 {/* Secondary CTA */}
+//                 {slide.secondaryCTA.external ? (
+//                   <a
+//                     href={slide.secondaryCTA.path}
+//                     target="_blank"
+//                     rel="noopener noreferrer"
+//                     className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-7 py-3.5 rounded-xl transition"
+//                   >
+//                     {slide.secondaryCTA.label}
+//                     <ChevronRight className="w-4 h-4" />
+//                   </a>
+//                 ) : (
+//                   <Link
+//                     to={slide.secondaryCTA.path}
+//                     className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-7 py-3.5 rounded-xl transition"
+//                   >
+//                     {slide.secondaryCTA.label}
+//                     <ChevronRight className="w-4 h-4" />
+//                   </Link>
+//                 )}
 
+//                 {/* Watch School Tour Button */}
 //                 <button
 //                   onClick={() => setShowVideo(true)}
 //                   className="inline-flex items-center gap-2 text-white/70 hover:text-white text-sm font-medium"
@@ -231,6 +269,10 @@
 //             >
 //               <X className="w-5 h-5" />
 //             </button>
+//             {/* Add your video embed here */}
+//             <div className="flex items-center justify-center h-full text-white">
+//               School Tour Video Coming Soon
+//             </div>
 //           </div>
 //         </div>
 //       )}
@@ -239,6 +281,37 @@
 // }
 
 // export default Hero
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -304,18 +377,18 @@ const slides = [
       'At MayDay International School, every child is seen, valued, and empowered to discover their greatest potential.',
     primaryCTA: { label: 'Student Portal', path: 'https://portal.maydayintschool.com/student', external: true },
     secondaryCTA: { label: 'WhatsApp Us', path: 'https://wa.me/2341234567890', external: true },
-    bgImage: '/hero-bg.jpg',
+    bgImage: '/hero-slide-1.jpg',
   },
   {
     id: 2,
     badge: 'Academic Excellence',
-    heading: 'World-Class Education',
-    highlight: 'Home',
+    heading: 'World-Class Education,',
+    highlight: 'Global Standards',
     subheading:
-      'From Pre-Nursery to Primary, our curriculum is designed to challenge, inspire, and develop every learner to their fullest capacity.',
+      'From Pre-Nursery to Secondary, our curriculum is designed to challenge, inspire, and develop every learner to their fullest capacity.',
     primaryCTA: { label: 'Academics', path: '/academics', external: false },
     secondaryCTA: { label: 'Staff Portal', path: 'https://portal.maydayintschool.com/', external: true },
-    bgImage: '/hero-bg.jpg',
+    bgImage: '/hero-slide-2.jpg',
   },
   {
     id: 3,
@@ -326,7 +399,29 @@ const slides = [
       'Sports, ICT, arts, clubs, and cultural activities — we develop the complete child, equipping them for every challenge ahead.',
     primaryCTA: { label: 'Specialties', path: '/specialties', external: false },
     secondaryCTA: { label: 'Contact Us', path: '/contact', external: false },
-    bgImage: '/hero-bg.jpg',
+    bgImage: '/hero-slide-3.jpg',
+  },
+  {
+    id: 4,
+    badge: 'Modern Facilities',
+    heading: 'State-of-the-Art',
+    highlight: 'Learning Environment',
+    subheading:
+      'Well-equipped classrooms, science labs, computer rooms, library, and sports facilities that enhance the learning experience.',
+    primaryCTA: { label: 'Take a Tour', path: '/gallery', external: false },
+    secondaryCTA: { label: 'Enroll Now', path: '/admissions', external: false },
+    bgImage: '/hero-slide-4.jpg',
+  },
+  {
+    id: 5,
+    badge: 'Join Our Family',
+    heading: 'Start Your Journey',
+    highlight: 'With Us Today',
+    subheading:
+      'Give your child the gift of quality education, strong moral values, and a supportive community that nurtures greatness.',
+    primaryCTA: { label: 'Contact Us', path: '/contact', external: false },
+    secondaryCTA: { label: 'Learn More', path: '/about', external: false },
+    bgImage: '/hero-slide-5.jpg',
   },
 ]
 
@@ -347,7 +442,7 @@ const Hero = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       goToNext()
-    }, 6000)
+    }, 8000)
     return () => clearInterval(interval)
   }, [activeSlide])
 
@@ -395,10 +490,10 @@ const Hero = () => {
       <Link
         to={cta.path}
         className={`inline-flex items-center gap-2 ${
-          cta.label === 'Academics' || cta.label === 'Specialties'
+          cta.label === 'Academics' || cta.label === 'Specialties' || cta.label === 'Take a Tour' || cta.label === 'Contact Us'
             ? 'bg-yellow-600 hover:bg-yellow-700'
             : 'bg-white/10 hover:bg-white/20 border border-white/20'
-        } text-white font-semibold px-7 py-3.5 rounded-xl transition`}
+        } text-white font-bold px-7 py-3.5 rounded-xl transition`}
       >
         {cta.label}
         <ChevronRight className="w-4 h-4" />
@@ -418,17 +513,17 @@ const Hero = () => {
             backgroundImage: `url('${slides[activeSlide].bgImage}')`,
           }}
         >
-          {/* Dark overlays for readability */}
-          <div className="absolute inset-0 bg-black/60" />
-          <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/50 to-black/70" />
-          <div className="absolute inset-0 bg-blue-900/20" />
+          {/* Dark overlays for readability - slightly reduced for clearer images */}
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/50" />
+          <div className="absolute inset-0 bg-blue-900/10" />
         </div>
 
         {/* Content Container */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
-            {/* LEFT CONTENT */}
+            {/* LEFT CONTENT - THICKER TEXT FOR BETTER VISIBILITY */}
             <div
               className={cn(
                 'transition-all duration-500',
@@ -437,19 +532,19 @@ const Hero = () => {
                   : 'opacity-100 translate-y-0'
               )}
             >
-              <div className="inline-flex items-center gap-2 bg-yellow-600/20 border border-yellow-500/30 text-yellow-400 text-xs font-semibold px-4 py-2 rounded-full uppercase tracking-widest mb-6">
+              <div className="inline-flex items-center gap-2 bg-yellow-600/30 border border-yellow-500/40 text-yellow-400 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-6 backdrop-blur-sm">
                 <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-pulse" />
                 {slide.badge}
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-4">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-tight mb-4 drop-shadow-lg">
                 {slide.heading}{' '}
-                <span className="text-yellow-400 block mt-1">
+                <span className="text-yellow-400 block mt-1 drop-shadow-xl">
                   {slide.highlight}
                 </span>
               </h1>
 
-              <p className="text-gray-300 text-lg leading-relaxed mb-10 max-w-xl">
+              <p className="text-white text-lg lg:text-xl leading-relaxed mb-10 max-w-xl font-medium drop-shadow-md">
                 {slide.subheading}
               </p>
 
@@ -463,7 +558,7 @@ const Hero = () => {
                     href={slide.secondaryCTA.path}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-7 py-3.5 rounded-xl transition"
+                    className="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 text-white font-bold px-7 py-3.5 rounded-xl transition"
                   >
                     {slide.secondaryCTA.label}
                     <ChevronRight className="w-4 h-4" />
@@ -471,7 +566,7 @@ const Hero = () => {
                 ) : (
                   <Link
                     to={slide.secondaryCTA.path}
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-7 py-3.5 rounded-xl transition"
+                    className="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 text-white font-bold px-7 py-3.5 rounded-xl transition"
                   >
                     {slide.secondaryCTA.label}
                     <ChevronRight className="w-4 h-4" />
@@ -481,9 +576,9 @@ const Hero = () => {
                 {/* Watch School Tour Button */}
                 <button
                   onClick={() => setShowVideo(true)}
-                  className="inline-flex items-center gap-2 text-white/70 hover:text-white text-sm font-medium"
+                  className="inline-flex items-center gap-2 text-white text-sm font-semibold drop-shadow-md hover:text-yellow-400 transition"
                 >
-                  <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                  <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
                     <Play className="w-4 h-4 ml-0.5" />
                   </div>
                   Watch School Tour
@@ -491,17 +586,17 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* RIGHT STATS */}
+            {/* RIGHT STATS - Made more visible */}
             <div className="hidden lg:grid grid-cols-2 gap-4">
               {stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="bg-white/10 border border-white/10 rounded-2xl p-6 text-center"
+                  className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-center hover:bg-black/50 transition"
                 >
-                  <p className="text-4xl font-black text-white mb-1">
+                  <p className="text-4xl lg:text-5xl font-black text-yellow-400 mb-1 drop-shadow-lg">
                     {stat.value}
                   </p>
-                  <p className="text-gray-300 text-sm">{stat.label}</p>
+                  <p className="text-white text-sm font-semibold">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -510,7 +605,7 @@ const Hero = () => {
         </div>
 
         {/* NAVIGATION DOTS */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
           {slides.map((_, i) => (
             <button
               key={i}
@@ -518,8 +613,8 @@ const Hero = () => {
               className={cn(
                 'transition-all rounded-full',
                 i === activeSlide
-                  ? 'w-8 h-2.5 bg-yellow-400'
-                  : 'w-2.5 h-2.5 bg-white/40 hover:bg-white/70'
+                  ? 'w-8 h-3 bg-yellow-400'
+                  : 'w-3 h-3 bg-white/60 hover:bg-white/90'
               )}
             />
           ))}
@@ -528,14 +623,14 @@ const Hero = () => {
         {/* NAV BUTTONS */}
         <button
           onClick={goToPrev}
-          className="absolute left-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full text-white flex items-center justify-center"
+          className="absolute left-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full text-white flex items-center justify-center transition z-20"
         >
           <ChevronRight className="rotate-180 w-5 h-5" />
         </button>
 
         <button
           onClick={goToNext}
-          className="absolute right-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full text-white flex items-center justify-center"
+          className="absolute right-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full text-white flex items-center justify-center transition z-20"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -548,7 +643,7 @@ const Hero = () => {
           <div className="relative w-full max-w-3xl bg-black rounded-2xl overflow-hidden aspect-video">
             <button
               onClick={() => setShowVideo(false)}
-              className="absolute top-3 right-3 w-9 h-9 bg-white/10 rounded-full text-white"
+              className="absolute top-3 right-3 w-9 h-9 bg-white/10 rounded-full text-white hover:bg-white/20 transition"
             >
               <X className="w-5 h-5" />
             </button>
