@@ -129,31 +129,31 @@ import Home from '@pages/website/Home'
 import About from '@pages/website/About'
 import Admissions from '@pages/website/Admissions'
 import Academics from '@pages/website/Academics'
-import Gallery from '@pages/website/Gallery'
-import News from '@pages/website/News'
+//import Gallery from '@pages/website/Gallery'
+//import News from '@pages/website/News'
 import Contact from '@pages/website/Contact'
 import Specialties from '@pages/website/Specialties'
 import Administration from '@pages/website/Administration'
 import Reports from '@pages/website/Reports'
 
 // Portal Pages
-import StudentLogin from '@pages/portal/StudentLogin'
-import StaffLogin from '@pages/portal/StaffLogin'
-import StudentDashboard from '@pages/portal/StudentDashboard'
-import StaffDashboard from '@pages/portal/StaffDashboard'
-import ManageStudents from '@pages/portal/ManageStudents'
-import UploadResults from '@pages/portal/UploadResults'
-import ViewResults from '@pages/portal/ViewResults'
+// import StudentLogin from '@pages/portal/StudentLogin'
+// import StaffLogin from '@pages/portal/StaffLogin'
+// import StudentDashboard from '@pages/portal/StudentDashboard'
+// import StaffDashboard from '@pages/portal/StaffDashboard'
+// import ManageStudents from '@pages/portal/ManageStudents'
+// import UploadResults from '@pages/portal/UploadResults'
+// import ViewResults from '@pages/portal/ViewResults'
 
 // Admin Dashboard Pages
-import AdminDashboard from '@pages/dashboard/AdminDashboard'
-import Students from '@pages/dashboard/Students'
-import Staff from '@pages/dashboard/Staff'
-import Results from '@pages/dashboard/Results'
-import Classes from '@pages/dashboard/Classes'
-import Subjects from '@pages/dashboard/Subjects'
-import AdminNews from '@pages/dashboard/News'
-import Events from '@pages/dashboard/Events'
+// import AdminDashboard from '@pages/dashboard/AdminDashboard'
+// import Students from '@pages/dashboard/Students'
+// import Staff from '@pages/dashboard/Staff'
+// import Results from '@pages/dashboard/Results'
+// import Classes from '@pages/dashboard/Classes'
+// import Subjects from '@pages/dashboard/Subjects'
+// import AdminNews from '@pages/dashboard/News'
+// import Events from '@pages/dashboard/Events'
 
 // Guards
 import ProtectedRoute from '@components/ProtectedRoute'
@@ -172,8 +172,8 @@ const AppRoutes = () => {
           <Route path="/academics" element={<Academics />} />
           <Route path="/specialties" element={<Specialties />} />
           <Route path="/administration" element={<Administration />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/news" element={<News />} />
+         {/* <Route path="/gallery" element={<Gallery />} />
+          <Route path="/news" element={<News />} />*/}
           <Route path="/reports" element={<Reports />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
@@ -188,17 +188,17 @@ const AppRoutes = () => {
             <Route path="/portal/student-dashboard" element={<StudentDashboard />} />
             <Route path="/portal/student-results" element={<ViewResults />} />
           </Route>
-
-          {/* Protected — Staff */}
+{/* 
+          Protected — Staff
           <Route element={<ProtectedRoute allowedRoles={['staff']} />}>
             <Route path="/portal/staff-dashboard" element={<StaffDashboard />} />
             <Route path="/portal/manage-students" element={<ManageStudents />} />
             <Route path="/portal/upload-results" element={<UploadResults />} />
           </Route>
-        </Route>
+        </Route> */}
 
         {/* ── Admin Dashboard Routes ── */}
-        <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+        {/* <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
           <Route element={<DashboardLayout />}>
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/students" element={<Students />} />
@@ -208,8 +208,8 @@ const AppRoutes = () => {
             <Route path="/admin/subjects" element={<Subjects />} />
             <Route path="/admin/news" element={<AdminNews />} />
             <Route path="/admin/events" element={<Events />} />
-          </Route>
-        </Route>
+          </Route>*/}
+        </Route> 
 
         {/* ── Fallback ── */}
         <Route path="*" element={<Navigate to="/" replace />} />
