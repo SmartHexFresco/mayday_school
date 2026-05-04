@@ -10,6 +10,7 @@ import Hero from '@components/website/Hero'
 import TestimonialCard from '@components/website/TestimonialCard'
 import About from '@pages/website/About'
 import Administration from '@pages/website/Administration'
+import WhatsAppButton from '@components/dashboard/WhatsAppButton'
 
 // ── Why Choose Us Data ────────────────────────────────────
 const features = [
@@ -98,6 +99,9 @@ const Home = () => {
 
        {/* ── Administration ─────────────────────────────────────────── */} 
        <Administration />
+
+      {/* ── Whatsapp ─────────────────────────────────────────── */}
+      <WhatsAppButton/>
 
       {/* ── Why Choose Us ────────────────────────────────── */}
       <section className="bg-gray-50 py-20">
