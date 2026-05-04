@@ -1,9 +1,6 @@
 import { Mail, Phone } from 'lucide-react'
 
-// Import images (only for leadership that exist)
-import directorImg from '@assets/images/staff/leadership/director.jpg'
-import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
-import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
+// No image imports - use initials only
 
 // ── Leadership Staff Data Only ──
 const leadershipData = [
@@ -13,7 +10,6 @@ const leadershipData = [
     role: 'Director',
     qualification: 'LL.B, BL, MBA',
     bio: 'A distinguished educational philanthropist committed to raising exceptional leaders through quality education and moral excellence.',
-    image: directorImg,
     category: 'leadership'
   },
   {
@@ -22,7 +18,6 @@ const leadershipData = [
     role: 'Head Teacher',
     qualification: 'M.Ed. Educational Administration',
     bio: 'A passionate educator with a heart for excellence, dedicated to nurturing young minds and fostering a culture of academic distinction.',
-    image: headTeacherImg,
     category: 'leadership'
   },
   {
@@ -31,32 +26,21 @@ const leadershipData = [
     role: 'Deputy Head Teacher',
     qualification: 'M.Ed. Curriculum Studies',
     bio: 'An innovative curriculum specialist committed to academic rigor, teacher development, and student success.',
-    image: deputyHeadImg,
     category: 'leadership'
   }
 ]
 
 // ── Staff Card Component ──────────────────────────────────
 const StaffCard = ({ member }) => {
-  const { full_name, role, qualification, bio, image } = member
+  const { full_name, role, qualification, bio } = member
 
   return (
     <div className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-md hover:border-green-200 transition-all duration-300 group">
-      {/* Photo */}
-      <div className="h-52 bg-green-50 overflow-hidden">
-        {image ? (
-          <img
-            src={image}
-            alt={full_name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <div className="w-20 h-20 bg-green-800 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-              {full_name?.charAt(0).toUpperCase()}
-            </div>
-          </div>
-        )}
+      {/* Photo - Using initials instead of images */}
+      <div className="h-52 bg-green-50 overflow-hidden flex items-center justify-center">
+        <div className="w-20 h-20 bg-green-800 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+          {full_name?.charAt(0).toUpperCase()}
+        </div>
       </div>
 
       {/* Info */}
