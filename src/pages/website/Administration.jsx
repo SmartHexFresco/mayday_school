@@ -2,6 +2,9 @@ import { motion } from 'framer-motion'
 import { Mail, Phone, Award, X } from 'lucide-react'
 
 // (Keep your existing image imports here)
+import directorImg from '@assets/images/staff/leadership/director.jpg'
+import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
+import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
 
 const leadershipData = [
   {
@@ -10,7 +13,7 @@ const leadershipData = [
     role: 'Director',
     qualification: 'LL.B, BL, MBA',
     bio: 'A distinguished educational philanthropist committed to raising exceptional leaders through quality education and moral excellence.',
-    image: '/director.jpg' // Use your imported variable
+    image: directorImg // Use your imported variable
   },
   {
     id: 2,
@@ -18,7 +21,7 @@ const leadershipData = [
     role: 'Head Teacher',
     qualification: 'M.Ed. Educational Administration',
     bio: 'A passionate educator with a heart for excellence, dedicated to nurturing young minds and fostering distinction.',
-    image: '/headteacher.jpg' // Use your imported variable
+    image: headTeacherImg // Use your imported variable
   },
   {
     id: 3,
@@ -26,7 +29,7 @@ const leadershipData = [
     role: 'Deputy Head Teacher',
     qualification: 'M.Ed. Curriculum Studies',
     bio: 'An innovative curriculum specialist committed to academic rigor, teacher development, and student success.',
-    image: '/deputyhead.jpg' // Use your imported variable
+    image: deputyHeadImg // Use your imported variable
   }
 ]
 
