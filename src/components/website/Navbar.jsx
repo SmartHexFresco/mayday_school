@@ -19,8 +19,8 @@ const navLinks = [
   { name: 'Academics', path: '/academics' },
   { name: 'Administration', path: '/administration' },
   { name: 'Specialties', path: '/specialties' },
-  { name: 'Gallery', path: '/gallery' },
-  { name: 'News', path: '/news' },
+  //{ name: 'Gallery', path: '/gallery' },
+  //{ name: 'News', path: '/news' },
   { name: 'Contact', path: '/contact' },
 ]
 
