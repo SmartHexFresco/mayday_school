@@ -272,12 +272,7 @@
 import { Mail, Phone } from 'lucide-react'
 
 // Import each image with a UNIQUE name (only for images that exist)
-import mathsTeacherImg from '@assets/images/staff/academic/maths-teacher.jpg'
 import directorImg from '@assets/images/staff/leadership/director.jpg'
-import blessingucheImg from '@assets/images/staff/non-academic/blessinguche.jpg'
-import englishTeacherImg from '@assets/images/staff/academic/english-teacher.jpg'
-import scienceTeacherImg from '@assets/images/staff/academic/science-teacher.jpg'
-import accountantImg from '@assets/images/staff/non-academic/accountant.jpg'
 import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
 import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
 
@@ -285,7 +280,7 @@ import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
 const staffData = [
   {
     id: 1,
-    full_name: 'Honourable Mr. Chide Romanus',
+    full_name: 'Honourable Mr. Chiude Romanus',
     role: 'Director',
     subject: null,
     qualification: 'LL.B, BL, MBA',
