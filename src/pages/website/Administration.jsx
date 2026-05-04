@@ -1,6 +1,9 @@
 import { Mail, Phone } from 'lucide-react'
 
 // No image imports - use initials only
+import directorImg from '@assets/images/staff/leadership/director.jpg'
+import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
+import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
 
 // ── Leadership Staff Data Only ──
 const leadershipData = [
