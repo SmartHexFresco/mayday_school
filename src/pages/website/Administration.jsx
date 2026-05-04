@@ -1,10 +1,7 @@
 import { motion } from 'framer-motion'
-import { Mail, Phone, Award } from 'lucide-react'
+import { Mail, Phone, Award, X } from 'lucide-react'
 
-// Import leadership images (Keeping your existing imports)
-import directorImg from '@assets/images/staff/leadership/director.jpg'
-import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
-import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
+// (Keep your existing image imports here)
 
 const leadershipData = [
   {
@@ -13,15 +10,15 @@ const leadershipData = [
     role: 'Director',
     qualification: 'LL.B, BL, MBA',
     bio: 'A distinguished educational philanthropist committed to raising exceptional leaders through quality education and moral excellence.',
-    image: directorImg
+    image: '/director.jpg' // Use your imported variable
   },
   {
     id: 2,
     full_name: 'Mrs. Chinwe P. Okafor',
     role: 'Head Teacher',
     qualification: 'M.Ed. Educational Administration',
-    bio: 'A passionate educator with a heart for excellence, dedicated to nurturing young minds and fostering a culture of academic distinction.',
-    image: headTeacherImg
+    bio: 'A passionate educator with a heart for excellence, dedicated to nurturing young minds and fostering distinction.',
+    image: '/headteacher.jpg' // Use your imported variable
   },
   {
     id: 3,
@@ -29,84 +26,52 @@ const leadershipData = [
     role: 'Deputy Head Teacher',
     qualification: 'M.Ed. Curriculum Studies',
     bio: 'An innovative curriculum specialist committed to academic rigor, teacher development, and student success.',
-    image: deputyHeadImg
+    image: '/deputyhead.jpg' // Use your imported variable
   }
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 }
-  }
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.6, ease: "easeOut" } 
-  }
-}
-
 const StaffCard = ({ member }) => {
-  const { full_name, role, qualification, bio, image } = member
-
   return (
     <motion.div 
-      variants={itemVariants}
-      whileHover={{ y: -12 }}
-      className="group relative bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -10 }}
+      className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 flex flex-col h-full"
     >
-      <div className="relative h-[440px] overflow-hidden bg-slate-200">
-        <motion.img
-          src={image}
-          alt={full_name}
-          className="w-full h-full object-cover object-top"
-          whileHover={{ scale: 1.08 }}
-          transition={{ duration: 1.2 }}
+      {/* Professional Portrait */}
+      <div className="relative h-[400px] overflow-hidden">
+        <img 
+          src={member.image} 
+          alt={member.full_name} 
+          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-blue-900/90 via-transparent to-transparent opacity-80" />
         
-        {/* Blue-Tinted Professional Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-900/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
-        
-        <div className="absolute bottom-6 left-6 right-6">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="bg-yellow-500 text-blue-950 text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 inline-block mb-3 rounded-sm"
-          >
-            {role}
-          </motion.div>
-          <h3 className="text-2xl font-serif font-bold text-white leading-tight">
-            {full_name}
+        <div className="absolute bottom-6 left-6">
+          <span className="bg-yellow-500 text-blue-950 text-[10px] font-black px-3 py-1 rounded mb-2 inline-block uppercase tracking-wider">
+            {member.role}
+          </span>
+          <h3 className="text-white text-2xl font-['Playfair_Display'] font-bold leading-tight">
+            {member.full_name}
           </h3>
-          <p className="text-blue-200 text-sm font-medium italic mt-1">
-            {qualification}
-          </p>
         </div>
       </div>
 
-      <div className="p-8">
-        <motion.div 
-          className="w-12 h-1 bg-blue-600 mb-4"
-          whileHover={{ width: "100%" }}
-          transition={{ duration: 0.4 }}
-        />
-        <p className="text-slate-600 text-sm leading-relaxed mb-6 italic">
-          "{bio}"
-        </p>
+      {/* Content */}
+      <div className="p-8 flex flex-col flex-grow">
+        <p className="text-blue-600 text-xs font-bold mb-4 uppercase tracking-widest">{member.qualification}</p>
+        <p className="text-slate-600 text-sm leading-relaxed italic mb-8 flex-grow">"{member.bio}"</p>
         
-        <div className="flex gap-4 border-t border-gray-100 pt-6">
-          {[Mail, Phone, Award].map((Icon, i) => (
-            <motion.button 
-              key={i}
-              whileHover={{ scale: 1.2, color: '#2563eb' }}
-              className="text-slate-400 transition-colors"
+        {/* Fixed Interaction Row */}
+        <div className="flex gap-3 pt-6 border-t border-slate-100">
+          {[Mail, Phone, Award].map((Icon, idx) => (
+            <button 
+              key={idx}
+              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-600 hover:bg-blue-50 transition-all"
             >
               <Icon size={18} />
-            </motion.button>
+            </button>
           ))}
         </div>
       </div>
@@ -116,58 +81,29 @@ const StaffCard = ({ member }) => {
 
 const Administration = () => {
   return (
-    <div className="bg-slate-50 min-h-screen">
-      
-      {/* Updated Blue Header Section */}
-      <section className="relative bg-blue-700 text-white py-32 overflow-hidden">
-        {/* Animated Blue Shape Overlay */}
-        <motion.div 
-          initial={{ x: '100%' }}
-          animate={{ x: '30%' }}
-          transition={{ duration: 2, ease: "easeOut" }}
-          className="absolute top-0 right-0 w-full h-full bg-blue-600/30 skew-x-12"
-        />
+    <div className="bg-slate-50 min-h-screen font-['Plus_Jakarta_Sans']">
+      {/* Blue Executive Header */}
+      <section className="bg-blue-700 pt-32 pb-48 relative overflow-hidden">
+        {/* Decorative elements - pointer-events-none */}
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-600 skew-x-12 translate-x-20 pointer-events-none" />
         
-        <div className="relative max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="text-blue-100 text-xs font-bold uppercase tracking-[0.4em] mb-4 block">
-              School Leadership
-            </span>
-            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-8">
-              Our <br />
-              <span className="text-yellow-400 italic">Administration</span>
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <span className="text-blue-200 text-sm font-bold tracking-[0.4em] uppercase mb-4 block">Our Team</span>
+            <h1 className="text-white text-5xl md:text-7xl font-['Playfair_Display'] font-black">
+              Executive <br /> <span className="text-yellow-400 italic">Administration</span>
             </h1>
-            <motion.div 
-              initial={{ width: 0 }}
-              animate={{ width: '120px' }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="h-1.5 bg-yellow-400 mb-8"
-            />
-            <p className="max-w-xl text-blue-50 text-lg leading-relaxed opacity-90">
-              Meet the visionary leaders dedicated to providing world-class 
-              educational standards and fostering moral excellence.
-            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Leadership Grid */}
-      <section className="max-w-7xl mx-auto px-6 py-24 relative -mt-12 z-10">
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
-        >
+      {/* Leadership Grid - Pulled Upwards */}
+      <section className="max-w-7xl mx-auto px-6 -mt-24 pb-24 relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {leadershipData.map((member) => (
             <StaffCard key={member.id} member={member} />
           ))}
-        </motion.div>
+        </div>
       </section>
     </div>
   )
