@@ -1,11 +1,11 @@
 import { Mail, Phone } from 'lucide-react'
 
-// No image imports - use initials only
+// Import your leadership images
 import directorImg from '@assets/images/staff/leadership/director.jpg'
 import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
 import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
 
-// ── Leadership Staff Data Only ──
+// ── Leadership Staff Data ──
 const leadershipData = [
   {
     id: 1,
@@ -13,7 +13,8 @@ const leadershipData = [
     role: 'Director',
     qualification: 'LL.B, BL, MBA',
     bio: 'A distinguished educational philanthropist committed to raising exceptional leaders through quality education and moral excellence.',
-    category: 'leadership'
+    category: 'leadership',
+    image: directorImg  // ← Added image
   },
   {
     id: 2,
@@ -21,7 +22,8 @@ const leadershipData = [
     role: 'Head Teacher',
     qualification: 'M.Ed. Educational Administration',
     bio: 'A passionate educator with a heart for excellence, dedicated to nurturing young minds and fostering a culture of academic distinction.',
-    category: 'leadership'
+    category: 'leadership',
+    image: headTeacherImg  // ← Added image
   },
   {
     id: 3,
@@ -29,21 +31,32 @@ const leadershipData = [
     role: 'Deputy Head Teacher',
     qualification: 'M.Ed. Curriculum Studies',
     bio: 'An innovative curriculum specialist committed to academic rigor, teacher development, and student success.',
-    category: 'leadership'
+    category: 'leadership',
+    image: deputyHeadImg  // ← Added image
   }
 ]
 
 // ── Staff Card Component ──────────────────────────────────
 const StaffCard = ({ member }) => {
-  const { full_name, role, qualification, bio } = member
+  const { full_name, role, qualification, bio, image } = member
 
   return (
     <div className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-md hover:border-green-200 transition-all duration-300 group">
-      {/* Photo - Using initials instead of images */}
-      <div className="h-52 bg-green-50 overflow-hidden flex items-center justify-center">
-        <div className="w-20 h-20 bg-green-800 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-          {full_name?.charAt(0).toUpperCase()}
-        </div>
+      {/* Photo */}
+      <div className="h-52 bg-green-50 overflow-hidden">
+        {image ? (
+          <img
+            src={image}
+            alt={full_name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="w-20 h-20 bg-green-800 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+              {full_name?.charAt(0).toUpperCase()}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Info */}
