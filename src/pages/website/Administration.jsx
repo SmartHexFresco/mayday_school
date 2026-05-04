@@ -1,9 +1,11 @@
 import { Mail, Phone, Award } from 'lucide-react'
 
+// Import your leadership images
 import directorImg from '@assets/images/staff/leadership/director.jpg'
 import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
 import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
 
+// ── Leadership Staff Data ──
 const leadershipData = [
   {
     id: 1,
@@ -11,6 +13,7 @@ const leadershipData = [
     role: 'Director',
     qualification: 'LL.B, BL, MBA',
     bio: 'A distinguished educational philanthropist committed to raising exceptional leaders through quality education and moral excellence.',
+    category: 'leadership',
     image: directorImg
   },
   {
@@ -19,6 +22,7 @@ const leadershipData = [
     role: 'Head Teacher',
     qualification: 'M.Ed. Educational Administration',
     bio: 'A passionate educator with a heart for excellence, dedicated to nurturing young minds and fostering a culture of academic distinction.',
+    category: 'leadership',
     image: headTeacherImg
   },
   {
@@ -27,45 +31,48 @@ const leadershipData = [
     role: 'Deputy Head Teacher',
     qualification: 'M.Ed. Curriculum Studies',
     bio: 'An innovative curriculum specialist committed to academic rigor, teacher development, and student success.',
+    category: 'leadership',
     image: deputyHeadImg
   }
 ]
 
-// Horizontal Card Style
+// ── Staff Card Component - Clean Style ──
 const StaffCard = ({ member }) => {
   const { full_name, role, qualification, bio, image } = member
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row">
+    <div className="bg-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg">
       
-      {/* Image - Left side on desktop */}
-      <div className="sm:w-48 h-48 bg-gray-100 overflow-hidden">
-        {image ? (
-          <img
-            src={image}
-            alt={full_name}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800">
-            <span className="text-white text-4xl font-bold">
-              {full_name?.charAt(0).toUpperCase()}
-            </span>
-          </div>
-        )}
+      {/* Image - Circle Style Instead of Square */}
+      <div className="pt-8 px-8">
+        <div className="w-40 h-40 mx-auto rounded-full overflow-hidden bg-gray-100 shadow-md">
+          {image ? (
+            <img
+              src={image}
+              alt={full_name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800">
+              <span className="text-white text-5xl font-bold">
+                {full_name?.charAt(0).toUpperCase()}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Content - Right side */}
-      <div className="flex-1 p-6">
+      {/* Content */}
+      <div className="text-center p-6">
         <h3 className="text-xl font-bold text-gray-800 mb-1">
           {full_name}
         </h3>
         
-        <p className="text-yellow-600 font-semibold text-sm mb-2">
+        <p className="text-yellow-600 font-semibold text-sm mb-3">
           {role}
         </p>
         
-        <p className="text-gray-500 text-xs mb-3">
+        <p className="text-gray-500 text-xs mb-4">
           {qualification}
         </p>
         
@@ -77,10 +84,12 @@ const StaffCard = ({ member }) => {
   )
 }
 
+// ── Main Component ──
 const Administration = () => {
   return (
     <div className="pt-26 bg-gray-50">
       
+      {/* Page Header */}
       <section className="bg-blue-700 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-yellow-400 text-sm font-semibold uppercase tracking-widest">
@@ -96,6 +105,7 @@ const Administration = () => {
         </div>
       </section>
 
+      {/* Leadership Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="text-yellow-600 font-semibold text-sm uppercase tracking-widest">
@@ -109,7 +119,7 @@ const Administration = () => {
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {leadershipData.map((member) => (
             <StaffCard key={member.id} member={member} />
           ))}
