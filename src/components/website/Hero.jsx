@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Play, X, GraduationCap, Users, Trophy, Calendar, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowRight, Play, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // ── Google Fonts ─────────────────
@@ -118,23 +118,21 @@ const Hero = () => {
           background-size: cover;
           background-position: center;
           z-index: -2;
-          transform: scale(1.1);
-          transition: transform 10s linear;
         }
         
         .hero-bg-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%);
+          background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 100%);
           z-index: -1;
         }
         
         .hero-h1 {
           font-family: var(--font-serif);
-          font-size: clamp(2.5rem, 8vw, 5rem);
-          line-height: 1.1;
-          font-weight: 900;
-          margin-bottom: 1.5rem;
+          font-size: clamp(2rem, 5vw, 3.5rem);
+          line-height: 1.2;
+          font-weight: 800;
+          margin-bottom: 1.2rem;
         }
         
         .hero-h1 .highlight {
@@ -142,23 +140,25 @@ const Hero = () => {
           color: var(--brand-gold);
           font-style: italic;
           font-weight: 700;
+          margin-top: 0.25rem;
         }
         
         .hero-sub {
-          font-size: clamp(1rem, 2vw, 1.25rem);
-          max-width: 600px;
-          line-height: 1.6;
-          margin-bottom: 2.5rem;
-          color: rgba(255,255,255,0.8);
-          font-weight: 300;
+          font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+          max-width: 550px;
+          line-height: 1.5;
+          margin-bottom: 2rem;
+          color: rgba(255,255,255,0.85);
+          font-weight: 400;
         }
         
         .btn-primary {
           background: var(--brand-gold);
           color: black;
-          padding: 16px 32px;
-          border-radius: 100px;
+          padding: 12px 28px;
+          border-radius: 50px;
           font-weight: 600;
+          font-size: 0.9rem;
           display: inline-flex;
           align-items: center;
           gap: 8px;
@@ -168,14 +168,15 @@ const Hero = () => {
         
         .btn-primary:hover {
           transform: translateY(-2px);
-          box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+          box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
         }
         
         .btn-ghost {
           border: 1px solid rgba(255,255,255,0.3);
-          padding: 16px 32px;
-          border-radius: 100px;
+          padding: 12px 28px;
+          border-radius: 50px;
           font-weight: 600;
+          font-size: 0.9rem;
           backdrop-filter: blur(10px);
           transition: all 0.3s ease;
           text-decoration: none;
@@ -187,22 +188,33 @@ const Hero = () => {
         .btn-ghost:hover {
           background: white;
           color: black;
+          border-color: white;
+        }
+        
+        .eyebrow-text {
+          color: #D4AF37;
+          font-weight: 600;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          font-size: 0.7rem;
+          display: block;
+          margin-bottom: 0.75rem;
         }
         
         .slide-nav {
           position: absolute;
-          bottom: 40px;
+          bottom: 30px;
           right: 40px;
           display: flex;
-          gap: 20px;
+          gap: 15px;
           align-items: center;
           z-index: 20;
         }
         
         .progress-dot {
-          width: 40px;
-          height: 3px;
-          background: rgba(255,255,255,0.2);
+          width: 35px;
+          height: 2px;
+          background: rgba(255,255,255,0.3);
           border-radius: 2px;
           overflow: hidden;
           position: relative;
@@ -221,7 +233,7 @@ const Hero = () => {
         .modal-bg {
           position: fixed;
           inset: 0;
-          background: rgba(0,0,0,0.9);
+          background: rgba(0,0,0,0.95);
           z-index: 100;
           display: flex;
           align-items: center;
@@ -229,10 +241,43 @@ const Hero = () => {
           backdrop-filter: blur(10px);
         }
         
+        .watch-tour-btn {
+          background: none;
+          border: none;
+          color: white;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+          font-weight: 500;
+          font-size: 0.9rem;
+          transition: all 0.3s ease;
+        }
+        
+        .watch-tour-btn:hover {
+          color: #D4AF37;
+        }
+        
+        .play-icon {
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+        }
+        
+        .watch-tour-btn:hover .play-icon {
+          border-color: #D4AF37;
+          background: rgba(212, 175, 55, 0.2);
+        }
+        
         @keyframes slideFadeIn {
           0% {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
           }
           100% {
             opacity: 1;
@@ -241,7 +286,7 @@ const Hero = () => {
         }
         
         .content-animate {
-          animation: slideFadeIn 0.6s ease-out;
+          animation: slideFadeIn 0.5s ease-out;
         }
       `}</style>
 
@@ -253,10 +298,10 @@ const Hero = () => {
             key={slide.id}
             className="hero-bg"
             style={{ backgroundImage: `url('${slide.bgImage}')` }}
-            initial={{ opacity: 0, scale: 1.2 }}
-            animate={{ opacity: 1, scale: 1.1 }}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
           >
             <div className="hero-bg-overlay" />
           </motion.div>
@@ -268,21 +313,13 @@ const Hero = () => {
             <AnimatePresence mode="wait">
               <motion.div 
                 key={activeSlide}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.6 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
                 className="content-animate"
               >
-                <span style={{ 
-                  color: '#D4AF37', 
-                  fontWeight: 600, 
-                  letterSpacing: '2px', 
-                  textTransform: 'uppercase', 
-                  fontSize: '0.875rem', 
-                  display: 'block', 
-                  marginBottom: '1rem' 
-                }}>
+                <span className="eyebrow-text">
                   {slide.eyebrow}
                 </span>
 
@@ -293,9 +330,9 @@ const Hero = () => {
 
                 <p className="hero-sub">{slide.subheading}</p>
 
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   <CTALink cta={slide.primaryCTA} className="btn-primary">
-                    {slide.primaryCTA.label} <ArrowRight size={18} />
+                    {slide.primaryCTA.label} <ArrowRight size={16} />
                   </CTALink>
 
                   <CTALink cta={slide.secondaryCTA} className="btn-ghost">
@@ -304,28 +341,10 @@ const Hero = () => {
 
                   <button 
                     onClick={() => setShowVideo(true)}
-                    style={{ 
-                      background: 'none', 
-                      border: 'none', 
-                      color: 'white', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      gap: '10px', 
-                      cursor: 'pointer', 
-                      fontWeight: 500 
-                    }}
+                    className="watch-tour-btn"
                   >
-                    <div style={{ 
-                      width: 48, 
-                      height: 48, 
-                      borderRadius: '50%', 
-                      border: '1px solid white', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      paddingLeft: '4px' 
-                    }}>
-                      <Play size={18} fill="white" />
+                    <div className="play-icon">
+                      <Play size={14} fill="white" />
                     </div>
                     Watch Tour
                   </button>
@@ -368,10 +387,10 @@ const Hero = () => {
             <div style={{ 
               position: 'relative', 
               width: '90%', 
-              maxWidth: '1000px', 
+              maxWidth: '900px', 
               aspectRatio: '16/9', 
               background: '#111', 
-              borderRadius: '20px', 
+              borderRadius: '16px', 
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center' 
@@ -380,7 +399,7 @@ const Hero = () => {
                 onClick={() => setShowVideo(false)}
                 style={{ 
                   position: 'absolute', 
-                  top: '-50px', 
+                  top: '-45px', 
                   right: 0, 
                   color: 'white', 
                   background: 'none', 
@@ -388,11 +407,11 @@ const Hero = () => {
                   cursor: 'pointer'
                 }}
               >
-                <X size={32} />
+                <X size={28} />
               </button>
               <div style={{ textAlign: 'center' }}>
-                <Play size={48} style={{ marginBottom: '1rem', opacity: 0.5 }} />
-                <p style={{ fontStyle: 'italic', fontFamily: 'var(--font-serif)' }}>Virtual Tour Experience Coming Soon</p>
+                <Play size={40} style={{ marginBottom: '1rem', opacity: 0.5 }} />
+                <p style={{ fontStyle: 'italic', fontFamily: 'var(--font-serif)', fontSize: '0.9rem' }}>Virtual Tour Experience Coming Soon</p>
               </div>
             </div>
           </motion.div>
