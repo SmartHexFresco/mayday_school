@@ -1,54 +1,44 @@
-
-
-
-
-
-
-
 import { Mail, Phone } from 'lucide-react'
 
-// Import each image with a UNIQUE name (only for images that exist)
+// Import images (only for leadership that exist)
 import directorImg from '@assets/images/staff/leadership/director.jpg'
 import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
 import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
 
-// ── Staff Data (Leadership Only) ──
-const staffData = [
+// ── Leadership Staff Data Only ──
+const leadershipData = [
   {
     id: 1,
     full_name: 'Honourable Mr. Chiude Romanus',
     role: 'Director',
-    subject: null,
     qualification: 'LL.B, BL, MBA',
     bio: 'A distinguished educational philanthropist committed to raising exceptional leaders through quality education and moral excellence.',
-    category: 'leadership',
-    image: directorImg
+    image: directorImg,
+    category: 'leadership'
   },
   {
     id: 2,
     full_name: 'Mrs. Chinwe P. Okafor',
     role: 'Head Teacher',
-    subject: null,
     qualification: 'M.Ed. Educational Administration',
     bio: 'A passionate educator with a heart for excellence, dedicated to nurturing young minds and fostering a culture of academic distinction.',
-    category: 'leadership',
-    image: headTeacherImg
+    image: headTeacherImg,
+    category: 'leadership'
   },
   {
     id: 3,
     full_name: 'Mrs. Chika Modesta',
     role: 'Deputy Head Teacher',
-    subject: null,
     qualification: 'M.Ed. Curriculum Studies',
     bio: 'An innovative curriculum specialist committed to academic rigor, teacher development, and student success.',
-    category: 'leadership',
-    image: deputyHeadImg
+    image: deputyHeadImg,
+    category: 'leadership'
   }
 ]
 
 // ── Staff Card Component ──────────────────────────────────
 const StaffCard = ({ member }) => {
-  const { full_name, role, subject, qualification, bio, image } = member
+  const { full_name, role, qualification, bio, image } = member
 
   return (
     <div className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-md hover:border-green-200 transition-all duration-300 group">
@@ -75,9 +65,6 @@ const StaffCard = ({ member }) => {
           {full_name}
         </h3>
         <p className="text-yellow-600 text-sm font-medium mb-1">{role}</p>
-        {subject && (
-          <p className="text-green-700 text-xs font-medium mb-2">{subject}</p>
-        )}
         {qualification && (
           <p className="text-gray-400 text-xs mb-3">{qualification}</p>
         )}
@@ -91,8 +78,6 @@ const StaffCard = ({ member }) => {
 
 // ── Main Component ────────────────────────────────────────
 const Administration = () => {
-  const leadership = staffData.filter(s => s.category === 'leadership')
-
   return (
     <div className="pt-26">
       {/* Page Header */}
@@ -126,7 +111,7 @@ const Administration = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {leadership.map((member) => (
+          {leadershipData.map((member) => (
             <StaffCard key={member.id} member={member} />
           ))}
         </div>
