@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, Award, Linkedin, MessageCircle } from 'lucide-react'
+import { Mail, Phone, Award, MessageCircle } from 'lucide-react'
 
 // Keep your existing image imports
 import directorImg from '@assets/images/staff/leadership/director.jpg'
