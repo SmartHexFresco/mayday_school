@@ -1,5 +1,4 @@
-import { motion } from 'framer-motion'
-import { Mail, Phone, Award, Linkedin, MessageCircle } from 'lucide-react'
+
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, Award, Linkedin, MessageCircle } from 'lucide-react'
