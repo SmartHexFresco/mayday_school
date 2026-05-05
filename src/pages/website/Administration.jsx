@@ -1,4 +1,8 @@
 
+
+
+
+
 // import { useState } from 'react'
 // import { motion } from 'framer-motion'
 // import { Mail, Phone, Award, MessageCircle } from 'lucide-react'
@@ -7,6 +11,9 @@
 // import directorImg from '@assets/images/staff/leadership/director.jpg'
 // import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
 // import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
+
+// // Import hero background image
+// import heroBg from '@assets/images/administration-hero.jpg' // Add this image to your assets
 
 // const leadershipData = [
 //   {
@@ -17,7 +24,8 @@
 //     bio: 'A distinguished educational philanthropist committed to raising exceptional leaders through quality education and moral excellence.',
 //     image: directorImg,
 //     email: 'director@mayday.edu.ng',
-//     phone: '+234 801 234 5678'
+//     phone: '+234 801 234 5678',
+//     whatsapp: '2348012345678'
 //   },
 //   {
 //     id: 2,
@@ -27,7 +35,8 @@
 //     bio: 'A passionate educator with a heart for excellence, dedicated to nurturing young minds and fostering distinction.',
 //     image: headTeacherImg,
 //     email: 'headteacher@mayday.edu.ng',
-//     phone: '+234 802 345 6789'
+//     phone: '+234 802 345 6789',
+//     whatsapp: '2348023456789'
 //   },
 //   {
 //     id: 3,
@@ -37,7 +46,8 @@
 //     bio: 'An innovative curriculum specialist committed to academic rigor, teacher development, and student success.',
 //     image: deputyHeadImg,
 //     email: 'deputy@mayday.edu.ng',
-//     phone: '+234 803 456 7890'
+//     phone: '+234 803 456 7890',
+//     whatsapp: '2348034567890'
 //   }
 // ]
 
@@ -62,7 +72,7 @@
 // const StaffCard = ({ member }) => {
 //   const handleWhatsApp = () => {
 //     const message = `Hello, I'm interested in contacting ${member.full_name} (${member.role}) at MayDay International School.`
-//     const whatsappUrl = `https://wa.me/2348012345678?text=${encodeURIComponent(message)}`
+//     const whatsappUrl = `https://wa.me/${member.whatsapp}?text=${encodeURIComponent(message)}`
 //     window.open(whatsappUrl, '_blank')
 //   }
 
@@ -80,40 +90,42 @@
 //       whileHover={{ y: -10 }}
 //       className="group relative bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 transition-all duration-500 h-[520px] flex flex-col"
 //     >
-//       {/* Image Section */}
-//       <div className="relative h-[280px] overflow-hidden bg-gradient-to-br from-blue-900 to-blue-700">
+//       {/* Image Section - Crystal Clear with Full Visibility */}
+//       <div className="relative h-[320px] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
 //         {member.image ? (
 //           <motion.img 
 //             src={member.image} 
 //             alt={member.full_name} 
 //             className="w-full h-full object-cover object-top"
+//             initial={{ scale: 1 }}
 //             whileHover={{ scale: 1.08 }}
 //             transition={{ duration: 0.6 }}
+//             style={{ objectPosition: 'top 20%' }}
 //           />
 //         ) : (
-//           <div className="w-full h-full flex items-center justify-center">
+//           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800">
 //             <span className="text-white text-6xl font-bold">{member.full_name.charAt(0)}</span>
 //           </div>
 //         )}
         
-//         {/* Gradient Overlay */}
-//         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+//         {/* Light Gradient Overlay - Minimal to keep image clear */}
+//         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
         
 //         {/* Role Badge */}
 //         <div className="absolute top-4 left-4">
-//           <span className="bg-yellow-500 text-blue-900 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
+//           <span className="bg-yellow-500 text-blue-900 text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
 //             {member.role}
 //           </span>
 //         </div>
         
-//         {/* Name Overlay */}
-//         <div className="absolute bottom-4 left-4 right-4">
-//           <h3 className="text-white text-xl font-bold leading-tight drop-shadow-lg">
+//         {/* Name Overlay - Moved down for better visibility */}
+//         <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+//           <h3 className="text-white text-2xl font-bold leading-tight drop-shadow-lg">
 //             {member.full_name}
 //           </h3>
 //           <motion.div 
 //             initial={{ width: 0 }}
-//             whileInView={{ width: "50px" }}
+//             whileInView={{ width: "60px" }}
 //             className="h-0.5 bg-yellow-500 mt-2 rounded-full"
 //           />
 //         </div>
@@ -121,7 +133,7 @@
 
 //       {/* Content Section */}
 //       <div className="p-5 flex flex-col flex-grow">
-//         <p className="text-blue-600 font-semibold text-[10px] uppercase tracking-wider mb-2">
+//         <p className="text-blue-600 font-semibold text-[11px] uppercase tracking-wider mb-2">
 //           {member.qualification}
 //         </p>
         
@@ -135,23 +147,28 @@
 //             <motion.button 
 //               whileHover={{ scale: 1.1, backgroundColor: '#2563EB', color: 'white' }}
 //               onClick={handleEmail}
-//               className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 transition-all duration-300 hover:bg-blue-600 hover:border-blue-600 hover:text-white"
+//               className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 transition-all duration-300 hover:bg-blue-600 hover:border-blue-600 hover:text-white"
+//               title={`Email ${member.full_name}`}
 //             >
-//               <Mail size={14} />
+//               <Mail size={15} />
 //             </motion.button>
+            
 //             <motion.button 
 //               whileHover={{ scale: 1.1, backgroundColor: '#2563EB', color: 'white' }}
 //               onClick={handlePhone}
-//               className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 transition-all duration-300 hover:bg-blue-600 hover:border-blue-600 hover:text-white"
+//               className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 transition-all duration-300 hover:bg-blue-600 hover:border-blue-600 hover:text-white"
+//               title={`Call ${member.full_name}`}
 //             >
-//               <Phone size={14} />
+//               <Phone size={15} />
 //             </motion.button>
+            
 //             <motion.button 
 //               whileHover={{ scale: 1.1, backgroundColor: '#25D366', color: 'white' }}
 //               onClick={handleWhatsApp}
-//               className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 transition-all duration-300 hover:bg-green-500 hover:border-green-500 hover:text-white"
+//               className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 transition-all duration-300 hover:bg-green-500 hover:border-green-500 hover:text-white"
+//               title={`WhatsApp ${member.full_name}`}
 //             >
-//               <MessageCircle size={14} />
+//               <MessageCircle size={15} />
 //             </motion.button>
 //           </div>
           
@@ -167,111 +184,37 @@
 //   )
 // }
 
-// // WhatsApp Floating Button Component
-// const WhatsAppFloatingButton = () => {
-//   const [isHovered, setIsHovered] = useState(false)
-  
-//   const handleWhatsAppClick = () => {
-//     const message = "Hello! I'm interested in MayDay International School. I'd like to get more information about admissions and programs."
-//     const whatsappUrl = `https://wa.me/2348012345678?text=${encodeURIComponent(message)}`
-//     window.open(whatsappUrl, '_blank')
-//   }
-
-//   return (
-//     <motion.button
-//       initial={{ scale: 0, opacity: 0 }}
-//       animate={{ scale: 1, opacity: 1 }}
-//       transition={{ delay: 1, duration: 0.5 }}
-//       onClick={handleWhatsAppClick}
-//       onMouseEnter={() => setIsHovered(true)}
-//       onMouseLeave={() => setIsHovered(false)}
-//       style={{
-//         position: 'fixed',
-//         bottom: '24px',
-//         right: '24px',
-//         zIndex: 9999,
-//         width: '56px',
-//         height: '56px',
-//         borderRadius: '50%',
-//         background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
-//         border: 'none',
-//         cursor: 'pointer',
-//         display: 'flex',
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//         boxShadow: '0 8px 25px rgba(37, 211, 102, 0.3)'
-//       }}
-//       whileHover={{ scale: 1.1 }}
-//       whileTap={{ scale: 0.95 }}
-//     >
-//       <MessageCircle size={28} color="white" />
-      
-//       {/* Tooltip */}
-//       <motion.span
-//         initial={{ opacity: 0, x: 20 }}
-//         animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : 20 }}
-//         style={{
-//           position: 'absolute',
-//           right: '70px',
-//           whiteSpace: 'nowrap',
-//           backgroundColor: '#1f2937',
-//           color: 'white',
-//           padding: '8px 16px',
-//           borderRadius: '12px',
-//           fontSize: '12px',
-//           fontWeight: '500',
-//           fontFamily: 'system-ui, sans-serif',
-//           boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
-//         }}
-//       >
-//         Chat with us on WhatsApp 📱
-//       </motion.span>
-      
-//       {/* Pulse Animation */}
-//       <span style={{
-//         position: 'absolute',
-//         top: '-4px',
-//         right: '-4px',
-//         width: '16px',
-//         height: '16px',
-//         backgroundColor: '#ef4444',
-//         borderRadius: '50%',
-//         border: '2px solid white',
-//         animation: 'pulse 1.5s infinite'
-//       }} />
-      
-//       <style>{`
-//         @keyframes pulse {
-//           0%, 100% {
-//             opacity: 1;
-//             transform: scale(1);
-//           }
-//           50% {
-//             opacity: 0.5;
-//             transform: scale(1.3);
-//           }
-//         }
-//       `}</style>
-//     </motion.button>
-//   )
-// }
-
-// // Need to import useState for the WhatsApp button
-// //import { useState } from 'react'
-
 // const Administration = () => {
 //   return (
 //     <main className="bg-white min-h-screen">
-//       {/* Immersive Blue Hero Header */}
-//       <section className="relative bg-gradient-to-br from-blue-800 via-blue-700 to-blue-900 py-28 md:py-36 overflow-hidden">
-//         {/* Animated Background Elements */}
+//       {/* Hero Section with Image Background */}
+//       <section className="relative h-[500px] md:h-[550px] overflow-hidden">
+//         {/* Background Image with Motion */}
+//         <motion.div
+//           initial={{ scale: 1.1 }}
+//           animate={{ scale: 1 }}
+//           transition={{ duration: 1.5, ease: "easeOut" }}
+//           className="absolute inset-0 w-full h-full"
+//         >
+//           <div 
+//             className="w-full h-full bg-cover bg-center bg-no-repeat"
+//            style={{
+//            backgroundImage: `url(${heroBg})`,
+//           }}
+//           >
+//             {/* Dark Overlay for text readability */}
+//             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
+//           </div>
+//         </motion.div>
+        
+//         {/* Animated Elements */}
 //         <motion.div 
 //           animate={{ 
 //             scale: [1, 1.2, 1],
-//             rotate: [0, 10, 0]
+//             rotate: [0, 5, 0]
 //           }}
 //           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-//           className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[100px]"
+//           className="absolute top-20 right-20 w-64 h-64 bg-yellow-500/10 rounded-full blur-[80px]"
 //         />
 //         <motion.div 
 //           animate={{ 
@@ -279,32 +222,46 @@
 //             rotate: [0, -5, 0]
 //           }}
 //           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-//           className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-yellow-500/10 rounded-full blur-[100px]"
+//           className="absolute bottom-20 left-20 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px]"
 //         />
         
-//         <div className="relative z-10 max-w-7xl mx-auto px-6">
-//           <motion.div 
-//             initial={{ opacity: 0, y: 30 }}
-//             whileInView={{ opacity: 1, y: 0 }}
-//             transition={{ duration: 0.8 }}
-//           >
-//             <span className="text-yellow-400 font-bold text-xs uppercase tracking-[0.3em] mb-4 block">
-//               Leadership Excellence
-//             </span>
-//             <h1 className="text-white text-5xl md:text-7xl font-bold leading-tight mb-6">
-//               School <br />
-//               <span className="text-yellow-400 italic">Administration</span>
-//             </h1>
-//             <p className="max-w-xl text-blue-100 text-base leading-relaxed border-l-4 border-yellow-500 pl-6">
-//               Meet the visionary leaders driving academic excellence, 
-//               moral integrity, and holistic development at MayDay International School.
-//             </p>
-//           </motion.div>
+//         {/* Content */}
+//         <div className="relative z-10 h-full flex items-center">
+//           <div className="max-w-7xl mx-auto px-6 w-full">
+//             <motion.div 
+//               initial={{ opacity: 0, y: 30 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ duration: 0.8, delay: 0.2 }}
+//             >
+//               <span className="text-yellow-400 font-bold text-sm uppercase tracking-[0.3em] mb-4 block">
+//                 Leadership Excellence
+//               </span>
+//               <h1 className="text-white text-6xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6">
+//                 School <br />
+//                 <span className="text-yellow-400 italic">Administration</span>
+//               </h1>
+//               <p className="max-w-xl text-blue-100 text-lg leading-relaxed border-l-4 border-yellow-500 pl-6">
+//                 Meet the visionary leaders driving academic excellence, 
+//                 moral integrity, and holistic development at MayDay International School.
+//               </p>
+//             </motion.div>
+//           </div>
 //         </div>
+        
+//         {/* Scroll indicator */}
+//         <motion.div 
+//           animate={{ y: [0, 10, 0] }}
+//           transition={{ duration: 1.5, repeat: Infinity }}
+//           className="absolute bottom-8 left-1/2 -translate-x-1/2"
+//         >
+//           <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+//             <div className="w-1 h-2 bg-white/70 rounded-full mt-2 animate-pulse" />
+//           </div>
+//         </motion.div>
 //       </section>
 
 //       {/* Leadership Grid */}
-//       <section className="max-w-7xl mx-auto px-6 -mt-16 pb-28 relative z-20">
+//       <section className="max-w-7xl mx-auto px-6 -mt-20 pb-28 relative z-20">
 //         <motion.div 
 //           variants={containerVariants}
 //           initial="hidden"
@@ -317,9 +274,6 @@
 //           ))}
 //         </motion.div>
 //       </section>
-      
-//       {/* WhatsApp Floating Button */}
-//      {/* <WhatsAppFloatingButton />*/}
 //     </main>
 //   )
 // }
@@ -414,40 +368,17 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, Award, MessageCircle } from 'lucide-react'
+import { Mail, Phone, Award,  MessageCircle } from 'lucide-react'
 
 // Keep your existing image imports
 import directorImg from '@assets/images/staff/leadership/director.jpg'
 import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
 import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
-
 // Import hero background image
-import heroBg from '@assets/images/administration-hero.jpg' // Add this image to your assets
+ import heroBg from '@assets/images/administration-hero.jpg' // Add this image to your assets
+
 
 const leadershipData = [
   {
@@ -522,19 +453,22 @@ const StaffCard = ({ member }) => {
     <motion.div 
       variants={cardVariants}
       whileHover={{ y: -10 }}
-      className="group relative bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 transition-all duration-500 h-[520px] flex flex-col"
+      className="group relative bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 transition-all duration-500 h-[540px] flex flex-col"
     >
-      {/* Image Section - Crystal Clear with Full Visibility */}
-      <div className="relative h-[320px] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+      {/* Image Section - Centered Face */}
+      <div className="relative h-[340px] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
         {member.image ? (
           <motion.img 
             src={member.image} 
             alt={member.full_name} 
-            className="w-full h-full object-cover object-top"
+            className="w-full h-full object-cover"
+            style={{ 
+              objectPosition: 'center 30%',
+              objectFit: 'cover'
+            }}
             initial={{ scale: 1 }}
             whileHover={{ scale: 1.08 }}
             transition={{ duration: 0.6 }}
-            style={{ objectPosition: 'top 20%' }}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800">
@@ -542,24 +476,24 @@ const StaffCard = ({ member }) => {
           </div>
         )}
         
-        {/* Light Gradient Overlay - Minimal to keep image clear */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+        {/* Light Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         
         {/* Role Badge */}
         <div className="absolute top-4 left-4">
-          <span className="bg-yellow-500 text-blue-900 text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
+          <span className="bg-yellow-500 text-blue-900 text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg z-10 relative">
             {member.role}
           </span>
         </div>
         
-        {/* Name Overlay - Moved down for better visibility */}
+        {/* Name Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-          <h3 className="text-white text-2xl font-bold leading-tight drop-shadow-lg">
+          <h3 className="text-white text-xl font-bold leading-tight drop-shadow-lg">
             {member.full_name}
           </h3>
           <motion.div 
             initial={{ width: 0 }}
-            whileInView={{ width: "60px" }}
+            whileInView={{ width: "50px" }}
             className="h-0.5 bg-yellow-500 mt-2 rounded-full"
           />
         </div>
@@ -618,84 +552,128 @@ const StaffCard = ({ member }) => {
   )
 }
 
+// Hero Section with Image Background
+const HeroSection = () => {
+  return (
+    <section className="relative h-[450px] md:h-[550px] overflow-hidden">
+      {/* Background Image with Motion */}
+      <motion.div
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="absolute inset-0 w-full h-full"
+      >
+        <div 
+          className="w-full h-full bg-cover bg-center bg-no-repeat"
+          style={{
+          backgroundImage: `url(${heroBg})`,
+         }}
+        >
+          {/* Dark Overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
+        </div>
+      </motion.div>
+      
+      {/* Animated Elements */}
+      <motion.div 
+        animate={{ 
+          scale: [1, 1.2, 1],
+          rotate: [0, 5, 0]
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="absolute top-20 right-20 w-64 h-64 bg-yellow-500/10 rounded-full blur-[80px]"
+      />
+      <motion.div 
+        animate={{ 
+          scale: [1.2, 1, 1.2],
+          rotate: [0, -5, 0]
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        className="absolute bottom-20 left-20 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px]"
+      />
+      
+      {/* Content */}
+      <div className="relative z-10 h-full flex items-center">
+        <div className="max-w-7xl mx-auto px-6 w-full">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <span className="text-yellow-400 font-bold text-sm uppercase tracking-[0.3em] mb-4 block">
+              Leadership Excellence
+            </span>
+            <h1 className="text-white text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6">
+              School <br />
+              <span className="text-yellow-400 italic">Administration</span>
+            </h1>
+            <p className="max-w-xl text-blue-100 text-base md:text-lg leading-relaxed border-l-4 border-yellow-500 pl-6">
+              Meet the visionary leaders driving academic excellence, 
+              moral integrity, and holistic development at MayDay International School.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+      
+      {/* Scroll indicator */}
+      <motion.div 
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+          <div className="w-1 h-2 bg-white/70 rounded-full mt-2 animate-pulse" />
+        </div>
+      </motion.div>
+    </section>
+  )
+}
+
+// Responsive image component for better face visibility
+const StaffImage = ({ src, alt, name }) => {
+  const [imgError, setImgError] = useState(false)
+  const [imagePosition, setImagePosition] = useState('center 35%')
+  
+  return (
+    <div className="w-full h-full relative">
+      {!imgError ? (
+        <img 
+          src={src} 
+          alt={alt}
+          className="w-full h-full object-cover"
+          style={{ 
+            objectPosition: imagePosition,
+            objectFit: 'cover'
+          }}
+          onError={() => setImgError(true)}
+          onLoad={(e) => {
+            // Adjust position based on image dimensions
+            const img = e.target
+            const height = img.naturalHeight
+            const width = img.naturalWidth
+            // If image is taller, center on face area
+            if (height > width * 1.3) {
+              setImagePosition('center 30%')
+            }
+          }}
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800">
+          <span className="text-white text-6xl font-bold">{name?.charAt(0) || '?'}</span>
+        </div>
+      )}
+    </div>
+  )
+}
+
 const Administration = () => {
   return (
     <main className="bg-white min-h-screen">
-      {/* Hero Section with Image Background */}
-      <section className="relative h-[500px] md:h-[550px] overflow-hidden">
-        {/* Background Image with Motion */}
-        <motion.div
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="absolute inset-0 w-full h-full"
-        >
-          <div 
-            className="w-full h-full bg-cover bg-center bg-no-repeat"
-           style={{
-           backgroundImage: `url(${heroBg})`,
-          }}
-          >
-            {/* Dark Overlay for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
-          </div>
-        </motion.div>
-        
-        {/* Animated Elements */}
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: [0, 5, 0]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-20 right-20 w-64 h-64 bg-yellow-500/10 rounded-full blur-[80px]"
-        />
-        <motion.div 
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            rotate: [0, -5, 0]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-20 left-20 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px]"
-        />
-        
-        {/* Content */}
-        <div className="relative z-10 h-full flex items-center">
-          <div className="max-w-7xl mx-auto px-6 w-full">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <span className="text-yellow-400 font-bold text-sm uppercase tracking-[0.3em] mb-4 block">
-                Leadership Excellence
-              </span>
-              <h1 className="text-white text-6xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6">
-                School <br />
-                <span className="text-yellow-400 italic">Administration</span>
-              </h1>
-              <p className="max-w-xl text-blue-100 text-lg leading-relaxed border-l-4 border-yellow-500 pl-6">
-                Meet the visionary leaders driving academic excellence, 
-                moral integrity, and holistic development at MayDay International School.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-        
-        {/* Scroll indicator */}
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1 h-2 bg-white/70 rounded-full mt-2 animate-pulse" />
-          </div>
-        </motion.div>
-      </section>
+      {/* Hero Section */}
+      <HeroSection />
 
       {/* Leadership Grid */}
-      <section className="max-w-7xl mx-auto px-6 -mt-20 pb-28 relative z-20">
+      <section className="max-w-7xl mx-auto px-6 -mt-16 pb-28 relative z-20">
         <motion.div 
           variants={containerVariants}
           initial="hidden"
@@ -708,6 +686,15 @@ const Administration = () => {
           ))}
         </motion.div>
       </section>
+
+      {/* Mobile CSS adjustments */}
+      <style>{`
+        @media (max-width: 768px) {
+          .group .h-\\[340px\\] {
+            height: 280px;
+          }
+        }
+      `}</style>
     </main>
   )
 }
