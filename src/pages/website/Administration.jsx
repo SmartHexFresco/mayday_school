@@ -319,7 +319,7 @@ const Administration = () => {
       </section>
       
       {/* WhatsApp Floating Button */}
-      <WhatsAppFloatingButton />
+     {/* <WhatsAppFloatingButton />*/}
     </main>
   )
 }
