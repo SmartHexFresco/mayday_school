@@ -11,15 +11,22 @@ import {
 
 // For images in PUBLIC folder - use direct path strings (NOT require!)
 const ictImg = '/ict.jpg'  // Your image is directly in public folder
+const summerImg = '/summerImg.jpg'
+const clubsImg = '/clubsImg.jpg'
+const culturalImg = '/culturalImg.jpg'
+const graduationImg = '/graduationImg.jpg'
+const christmasImg = '/christmasImg.jpg'
+const  musicImg = '/ musicImg.jpg'
+const artImg = '/artImg.jpg'
 
 // Set others to null (no images yet)
-let summerImg = null
-let clubsImg = null
-let culturalImg = null
-let graduationImg = null
-let christmasImg = null
-let musicImg = null
-let artImg = null
+// let summerImg = null
+//let clubsImg = null
+//let culturalImg = null
+//let graduationImg = null
+//let christmasImg = null
+//let musicImg = null
+//let artImg = null
 
 console.log('ICT Image path:', ictImg)
 
