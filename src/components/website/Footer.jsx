@@ -1,6 +1,3 @@
-
-
-
 import { Link } from 'react-router-dom'
 // import { FaFacebook } from 'react-icons/fa'
 import {
@@ -8,7 +5,6 @@ import {
   Phone,
   Mail,
   MapPin,
-
   MessageCircle,
 } from 'lucide-react'
 
@@ -24,9 +20,10 @@ const quickLinks = [
 ]
 
 const resourceLinks = [
-  { name: 'Gallery', path: '/gallery' },
+  // { name: 'Gallery', path: '/gallery' },
   { name: 'Events', path: '/news' },
   { name: 'Reports', path: '/reports' },
+  { name: 'FAQ', path: '/faq' },  // ← FAQ LINK ADDED HERE
   { name: 'Contact Us', path: '/contact' },
   { name: 'Student Portal', path: '/portal/student-login' },
   { name: 'Staff Portal', path: '/portal/staff-login' },
@@ -63,17 +60,6 @@ const Footer = () => {
 
             {/* Social Links */}
             <div className="flex items-center gap-3 pt-2">
-
-               {/* <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 bg-white/10 hover:bg-yellow-600 rounded-full flex items-center justify-center transition-colors duration-200"
-                aria-label="Facebook"
-              >
-                 <Facebook className="w-4 h-4" />
-              </a>   */}
-
               <a
                 href="https://wa.me/234XXXXXXXXXX"
                 target="_blank"
@@ -91,7 +77,6 @@ const Footer = () => {
               >
                 <Mail className="w-4 h-4" />
               </a>
-
             </div>
           </div>
 
@@ -142,7 +127,6 @@ const Footer = () => {
             </h3>
 
             <ul className="space-y-4">
-
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                 <span className="text-gray-300 text-sm leading-relaxed">
@@ -182,7 +166,6 @@ const Footer = () => {
                   info@MayDay.edu.ng
                 </a>
               </li>
-
             </ul>
           </div>
 
@@ -206,19 +189,3 @@ const Footer = () => {
 }
 
 export default Footer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
