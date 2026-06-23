@@ -490,500 +490,253 @@
 
 
 
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Mail, Phone, Award, MessageCircle, ArrowRight, ChevronDown } from 'lucide-react'
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
-import { Mail, Phone, MessageCircle } from 'lucide-react'
-
-// Keep your existing image imports — swap these back in your real project
 import directorImg from '@assets/images/staff/leadership/director.jpg'
 import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
 import deputyHeadImg from '@assets/images/staff/leadership/deputyhead.jpg'
+import heroBg from '@assets/images/administration-hero.jpg'
 
 const leadershipData = [
   {
     id: 1,
-    index: '01',
-    full_name: 'Hon. Mr. Chiude Romanus',
+    full_name: 'Honourable Mr. Chiude Romanus',
     role: 'Director',
     qualification: 'LL.B, BL, MBA',
-    bio: 'A distinguished educational philanthropist committed to raising exceptional leaders through quality education and moral excellence. His vision shapes every part of how the school defines achievement — not as a score, but as a standard of character carried for life.',
-    quote: 'We are not building a school. We are building the people who will rebuild everything else.',
+    bio: 'A distinguished educational philanthropist committed to raising exceptional leaders through quality education and moral excellence.',
     image: directorImg,
     email: 'director@mayday.edu.ng',
     phone: '+234 801 234 5678',
-    whatsapp: '2348012345678',
+    whatsapp: '2348012345678'
   },
   {
     id: 2,
-    index: '02',
     full_name: 'Mrs. Chinwe P. Okafor',
     role: 'Head Teacher',
     qualification: 'M.Ed. Educational Administration',
-    bio: 'A passionate educator with a heart for excellence, dedicated to nurturing young minds and fostering distinction. She leads the day-to-day life of the school with the conviction that discipline and warmth are not opposites, but partners.',
-    quote: 'Every child remembers one teacher who believed in them first. I want that to be true here, every single day.',
+    bio: 'A passionate educator with a heart for excellence, dedicated to nurturing young minds and fostering distinction.',
     image: headTeacherImg,
     email: 'headteacher@mayday.edu.ng',
     phone: '+234 802 345 6789',
-    whatsapp: '2348023456789',
+    whatsapp: '2348023456789'
   },
   {
     id: 3,
-    index: '03',
     full_name: 'Mrs. Chika Modesta',
     role: 'Deputy Head Teacher',
     qualification: 'M.Ed. Curriculum Studies',
-    bio: 'An innovative curriculum specialist committed to academic rigor, teacher development, and student success. Her work behind the scenes — in lesson design, staff mentoring, and standards — is what makes consistency possible across every classroom.',
-    quote: 'Curriculum is a promise. Our job is to make sure the school keeps it, term after term.',
+    bio: 'An innovative curriculum specialist committed to academic rigor, teacher development, and student success.',
     image: deputyHeadImg,
     email: 'deputy@mayday.edu.ng',
     phone: '+234 803 456 7890',
-    whatsapp: '2348034567890',
-  },
+    whatsapp: '2348034567890'
+  }
 ]
 
-/* ---------------------------------------------------------------------- */
+// Orchestrated staggered animations that run both scrolling up & down
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+}
 
-const HeroSection = () => (
-  <section className="admin-hero">
-    <div className="admin-hero__inner">
-      <motion.span
-        className="admin-eyebrow"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-      >
-        Leadership at MayDay International School
-      </motion.span>
+const cardVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 40,
+    scale: 0.98
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1,
+    transition: { 
+      type: "spring",
+      stiffness: 70,
+      damping: 14,
+      mass: 0.8
+    } 
+  }
+}
 
-      <motion.h1
-        className="admin-hero__title"
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, ease: [0.21, 0.79, 0.31, 0.99], delay: 0.15 }}
-      >
-        The people who
-        <br />
-        <span className="admin-hero__title--italic">carry the standard</span>
-      </motion.h1>
-
-      <motion.div
-        className="admin-hero__rule"
-        initial={{ width: 0, opacity: 0 }}
-        animate={{ width: 64, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
-      />
-
-      <motion.p
-        className="admin-hero__dek"
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.55, ease: 'easeOut' }}
-      >
-        Three administrators, one shared conviction: that academic rigour and moral
-        formation belong in the same sentence. Here is who leads that work, and why.
-      </motion.p>
+const StaffImage = ({ src, alt, name }) => {
+  const [imgError, setImgError] = useState(false)
+  const [imagePosition, setImagePosition] = useState('center 25%')
+  
+  return (
+    <div className="w-full h-full relative bg-slate-50">
+      {!imgError && src ? (
+        <img 
+          src={src} 
+          alt={alt}
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          style={{ objectPosition: imagePosition }}
+          onError={() => setImgError(true)}
+          onLoad={(e) => {
+            const img = e.target
+            if (img.naturalHeight > img.naturalWidth * 1.2) {
+              setImagePosition('center 20%')
+            }
+          }}
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-700 to-blue-900">
+          <span className="text-white text-5xl font-light tracking-wider">
+            {name?.split(' ').map(n => n[0]).join('').slice(0,2) || '?'}
+          </span>
+        </div>
+      )}
     </div>
-  </section>
-)
+  )
+}
 
-/* ---------------------------------------------------------------------- */
-
-const ContactAction = ({ icon: Icon, label, onClick }) => (
-  <button type="button" className="admin-action" onClick={onClick} title={label} aria-label={label}>
-    <Icon size={16} strokeWidth={1.75} />
-  </button>
-)
-
-const LeaderRow = ({ member, reversed }) => {
-  const ref = useRef(null)
-  const prefersReducedMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const portraitY = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [-28, 28])
-
-  const handleEmail = () => { window.location.href = `mailto:${member.email}` }
-  const handlePhone = () => { window.location.href = `tel:${member.phone}` }
+const StaffCard = ({ member }) => {
   const handleWhatsApp = () => {
     const message = `Hello, I'm interested in contacting ${member.full_name} (${member.role}) at MayDay International School.`
     window.open(`https://wa.me/${member.whatsapp}?text=${encodeURIComponent(message)}`, '_blank')
   }
 
   return (
-    <div ref={ref} className={`admin-row ${reversed ? 'admin-row--reversed' : ''}`}>
-      <motion.div
-        className="admin-row__portrait-col"
-        initial={{ opacity: 0, x: reversed ? 64 : -64 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, margin: '-15% 0px' }}
-        transition={{ duration: 0.85, ease: [0.21, 0.79, 0.31, 0.99] }}
-      >
-        <div className="admin-portrait-frame">
-          <motion.img
-            src={member.image}
-            alt={member.full_name}
-            className="admin-portrait-frame__img"
-            style={{ y: portraitY }}
-          />
+    <motion.div 
+      variants={cardVariants}
+      className="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col"
+    >
+      <div className="relative aspect-[4/4] sm:aspect-[4/5] md:aspect-[4/4] overflow-hidden">
+        <StaffImage src={member.image} alt={member.full_name} name={member.full_name} />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
+        
+        <div className="absolute top-4 left-4 z-10">
+          <span className="bg-white/95 backdrop-blur-md text-blue-900 text-[10px] font-bold px-3 py-1.5 rounded-md uppercase tracking-widest shadow-sm">
+            {member.role}
+          </span>
         </div>
-      </motion.div>
 
-      <motion.div
-        className="admin-row__text-col"
-        initial={{ opacity: 0, x: reversed ? -48 : 48 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, margin: '-15% 0px' }}
-        transition={{ duration: 0.85, ease: [0.21, 0.79, 0.31, 0.99], delay: 0.1 }}
-      >
-        <span className="admin-row__index">{member.index}</span>
-        <span className="admin-row__role">{member.role}</span>
-        <h2 className="admin-row__name">{member.full_name}</h2>
-        <p className="admin-row__qualification">{member.qualification}</p>
-        <p className="admin-row__bio">{member.bio}</p>
-
-        <blockquote className="admin-quote">
-          <span className="admin-quote__mark" aria-hidden="true">&ldquo;</span>
-          <p className="admin-quote__text">{member.quote}</p>
-        </blockquote>
-
-        <div className="admin-row__actions">
-          <ContactAction icon={Mail} label={`Email ${member.full_name}`} onClick={handleEmail} />
-          <ContactAction icon={Phone} label={`Call ${member.full_name}`} onClick={handlePhone} />
-          <ContactAction icon={MessageCircle} label={`WhatsApp ${member.full_name}`} onClick={handleWhatsApp} />
+        <div className="absolute bottom-0 left-0 right-0 p-6 z-10 text-white">
+          <p className="text-blue-300 font-medium text-[11px] uppercase tracking-wider mb-1">
+            {member.qualification}
+          </p>
+          <h3 className="text-xl md:text-2xl font-bold tracking-tight text-white leading-snug">
+            {member.full_name}
+          </h3>
         </div>
-      </motion.div>
-    </div>
+      </div>
+
+      <div className="p-6 flex flex-col flex-grow bg-white">
+        <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-grow font-normal italic">
+          "{member.bio}"
+        </p>
+        
+        <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+          <div className="flex gap-2.5">
+            <button 
+              onClick={() => window.location.href = `mailto:${member.email}`}
+              className="w-9 h-9 rounded-full bg-slate-50 text-slate-600 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+              title={`Email ${member.full_name}`}
+            >
+              <Mail size={15} />
+            </button>
+            <button 
+              onClick={() => window.location.href = `tel:${member.phone}`}
+              className="w-9 h-9 rounded-full bg-slate-50 text-slate-600 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+              title={`Call ${member.full_name}`}
+            >
+              <Phone size={15} />
+            </button>
+            <button 
+              onClick={handleWhatsApp}
+              className="w-9 h-9 rounded-full bg-slate-50 text-slate-600 flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200"
+              title={`WhatsApp ${member.full_name}`}
+            >
+              <MessageCircle size={15} />
+            </button>
+          </div>
+          
+          <button className="text-blue-600 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 group/btn">
+            <span>View Bio</span>
+            <ArrowRight size={13} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+          </button>
+        </div>
+      </div>
+    </motion.div>
   )
 }
 
-/* ---------------------------------------------------------------------- */
-
-const ClosingCTA = () => (
-  <section className="admin-cta">
-    <motion.div
-      className="admin-cta__inner"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-10% 0px' }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
-    >
-      <span className="admin-eyebrow admin-eyebrow--center">Speak with leadership</span>
-      <h2 className="admin-cta__title">Get in touch with our leadership team</h2>
-      <button
-        type="button"
-        className="admin-cta__button"
-        onClick={() => { window.location.href = 'mailto:director@mayday.edu.ng' }}
-      >
-        Contact the office
-      </button>
-    </motion.div>
-  </section>
-)
-
-/* ---------------------------------------------------------------------- */
+const HeroSection = () => {
+  return (
+    <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden bg-slate-950">
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={heroBg} 
+          alt="MayDay Admin Banner" 
+          className="w-full h-full object-cover opacity-35 object-center scale-105 select-none"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/40 via-slate-950/80 to-slate-950" />
+      </div>
+      
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20 pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <span className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 font-semibold text-xs uppercase tracking-[0.25em] px-3.5 py-1.5 rounded-full border border-blue-500/20 mb-6">
+            <Award size={12} className="text-blue-400" /> Executive Leadership
+          </span>
+          
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.15] mb-6">
+            Governing with Purpose & <br className="hidden sm:inline" />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-200">
+              Academic Distinction
+            </span>
+          </h1>
+          
+          <p className="max-w-xl mx-auto text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed font-light">
+            Meet the visionary minds driving academic rigor, moral integrity, and modern systems leadership at MayDay International School.
+          </p>
+        </motion.div>
+      </div>
+      
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 opacity-60">
+        <span className="text-[10px] uppercase text-white tracking-widest font-medium">Explore Leadership</span>
+        <ChevronDown size={14} className="text-white animate-bounce" />
+      </div>
+    </section>
+  )
+}
 
 const Administration = () => {
   return (
-    <main className="admin-page">
-      <HeroSection />
-
-      <section className="admin-rows">
-        {leadershipData.map((member, i) => (
-          <LeaderRow key={member.id} member={member} reversed={i % 2 === 1} />
-        ))}
-      </section>
-
-      <ClosingCTA />
-
+    <main className="bg-slate-50 min-h-screen font-sans antialiased">
+      {/* Global Injection for Smooth Elastic Scrolling */}
       <style>{`
-        .admin-page {
-          background: var(--surface-page);
-          font-family: var(--font-body);
-          color: var(--text-primary);
-          overflow-x: hidden;
-        }
-
-        /* ---------------- Hero ---------------- */
-        .admin-hero {
-          position: relative;
-          padding: var(--space-8) var(--space-4) var(--space-7);
-          background: linear-gradient(180deg, var(--surface-wash-start) 0%, var(--surface-wash-end) 70%);
-        }
-        .admin-hero__inner {
-          max-width: 56rem;
-          margin: 0 auto;
-        }
-        .admin-eyebrow {
-          display: block;
-          font-family: var(--font-body);
-          font-size: 0.75rem;
-          font-weight: 600;
-          letter-spacing: var(--tracking-eyebrow);
-          text-transform: uppercase;
-          color: var(--text-eyebrow);
-          margin-bottom: var(--space-3);
-        }
-        .admin-hero__title {
-          font-family: var(--font-display);
-          font-weight: 500;
-          font-size: clamp(2.75rem, 7vw, 5.5rem);
-          line-height: 1.04;
-          letter-spacing: -0.01em;
-          color: var(--text-primary);
-          margin: 0;
-        }
-        .admin-hero__title--italic {
-          font-style: italic;
-          font-weight: 400;
-          color: var(--accent-primary);
-        }
-        .admin-hero__rule {
-          height: 2px;
-          background: var(--border-divider);
-          margin: var(--space-4) 0;
-        }
-        .admin-hero__dek {
-          font-family: var(--font-body);
-          font-size: 1.0625rem;
-          line-height: 1.65;
-          color: var(--text-secondary);
-          max-width: 38rem;
-          margin: 0;
-        }
-
-        /* ---------------- Rows ---------------- */
-        .admin-rows {
-          max-width: 72rem;
-          margin: 0 auto;
-          padding: 0 var(--space-4) var(--space-6);
-        }
-        .admin-row {
-          display: grid;
-          grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-          gap: var(--space-6);
-          align-items: center;
-          padding: var(--space-7) 0;
-          border-bottom: 1px solid var(--border-hairline);
-        }
-        .admin-row:last-child {
-          border-bottom: none;
-        }
-        .admin-row--reversed {
-          grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-        }
-        .admin-row--reversed .admin-row__portrait-col {
-          grid-column: 2;
-          grid-row: 1;
-        }
-        .admin-row--reversed .admin-row__text-col {
-          grid-column: 1;
-          grid-row: 1;
-        }
-
-        .admin-portrait-frame {
-          position: relative;
-          aspect-ratio: 3 / 4;
-          overflow: hidden;
-          border: 1px solid var(--border-portrait);
-          box-shadow: var(--shadow-portrait);
-          background: var(--surface-alt);
-        }
-        .admin-portrait-frame::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border: 1px solid var(--border-portrait);
-          pointer-events: none;
-        }
-        .admin-portrait-frame__img {
-          position: absolute;
-          inset: -6% 0;
-          width: 100%;
-          height: 112%;
-          object-fit: cover;
-          object-position: center 22%;
-        }
-
-        .admin-row__index {
-          display: block;
-          font-family: var(--font-display);
-          font-weight: 400;
-          font-size: 1.5rem;
-          color: var(--text-index);
-          margin-bottom: var(--space-2);
-        }
-        .admin-row__role {
-          display: block;
-          font-size: 0.75rem;
-          font-weight: 600;
-          letter-spacing: var(--tracking-label);
-          text-transform: uppercase;
-          color: var(--text-eyebrow);
-          margin-bottom: var(--space-1);
-        }
-        .admin-row__name {
-          font-family: var(--font-display);
-          font-weight: 500;
-          font-size: clamp(1.875rem, 3.2vw, 2.5rem);
-          line-height: 1.12;
-          color: var(--text-primary);
-          margin: 0 0 0.5rem;
-        }
-        .admin-row__qualification {
-          font-family: var(--font-display);
-          font-style: italic;
-          font-size: 1.0625rem;
-          color: var(--text-secondary);
-          margin: 0 0 var(--space-3);
-        }
-        .admin-row__bio {
-          font-size: 1rem;
-          line-height: 1.7;
-          color: var(--text-secondary);
-          margin: 0 0 var(--space-4);
-          max-width: 34rem;
-        }
-
-        .admin-quote {
-          position: relative;
-          margin: 0 0 var(--space-4);
-          padding-left: var(--space-4);
-          border-left: 2px solid var(--border-divider);
-        }
-        .admin-quote__mark {
-          position: absolute;
-          left: -0.35rem;
-          top: -1.6rem;
-          font-family: var(--font-display);
-          font-size: 4.5rem;
-          line-height: 1;
-          color: var(--accent-quote-mark);
-          font-weight: 500;
-          user-select: none;
-        }
-        .admin-quote__text {
-          font-family: var(--font-display);
-          font-style: italic;
-          font-weight: 400;
-          font-size: 1.25rem;
-          line-height: 1.5;
-          color: var(--text-primary);
-          margin: 0;
-        }
-
-        .admin-row__actions {
-          display: flex;
-          align-items: center;
-          gap: var(--space-2);
-        }
-        .admin-action {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 2.5rem;
-          height: 2.5rem;
-          border-radius: 50%;
-          border: 1px solid var(--action-border);
-          background: var(--action-bg);
-          color: var(--action-fg);
-          cursor: pointer;
-          transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-        }
-        .admin-action:hover {
-          background: var(--action-bg-hover);
-          color: var(--action-fg-hover);
-          border-color: var(--action-border-hover);
-          transform: translateY(-2px);
-        }
-        .admin-action:focus-visible {
-          outline: 2px solid var(--accent-secondary);
-          outline-offset: 2px;
-        }
-
-        /* ---------------- CTA ---------------- */
-        .admin-cta {
-          background: var(--surface-alt);
-          padding: var(--space-7) var(--space-4);
-          text-align: center;
-        }
-        .admin-cta__inner {
-          max-width: 36rem;
-          margin: 0 auto;
-        }
-        .admin-eyebrow--center {
-          text-align: center;
-        }
-        .admin-cta__title {
-          font-family: var(--font-display);
-          font-weight: 500;
-          font-size: clamp(1.75rem, 4vw, 2.5rem);
-          line-height: 1.2;
-          color: var(--text-primary);
-          margin: 0 0 var(--space-4);
-        }
-        .admin-cta__button {
-          font-family: var(--font-body);
-          font-size: 0.9375rem;
-          font-weight: 600;
-          letter-spacing: 0.02em;
-          color: var(--button-primary-fg);
-          background: var(--button-primary-bg);
-          border: none;
-          padding: 0.95rem 2.25rem;
-          cursor: pointer;
-          transition: background 0.25s ease, transform 0.25s ease;
-        }
-        .admin-cta__button:hover {
-          background: var(--button-primary-bg-hover);
-          transform: translateY(-2px);
-        }
-        .admin-cta__button:focus-visible {
-          outline: 2px solid var(--accent-secondary);
-          outline-offset: 3px;
-        }
-
-        /* ---------------- Mobile ---------------- */
-        @media (max-width: 860px) {
-          .admin-hero {
-            padding: var(--space-6) var(--space-3) var(--space-5);
-          }
-          .admin-row,
-          .admin-row--reversed {
-            grid-template-columns: 1fr;
-            gap: var(--space-4);
-            padding: var(--space-6) 0;
-          }
-          .admin-row--reversed .admin-row__portrait-col,
-          .admin-row--reversed .admin-row__text-col {
-            grid-column: 1;
-          }
-          .admin-row__portrait-col {
-            grid-row: 1 !important;
-          }
-          .admin-row__text-col {
-            grid-row: 2 !important;
-          }
-          .admin-portrait-frame {
-            max-width: 22rem;
-            margin: 0 auto;
-          }
-          .admin-row__text-col {
-            text-align: left;
-          }
-          .admin-quote__mark {
-            font-size: 3.5rem;
-            top: -1.2rem;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .admin-portrait-frame__img {
-            transition: none !important;
-          }
+        html {
+          scroll-behavior: smooth !important;
         }
       `}</style>
+
+      <HeroSection />
+
+      {/* Grid wrapper with multi-directional viewport watching */}
+      <section className="max-w-7xl mx-auto px-6 -mt-12 sm:-mt-16 pb-32 relative z-20">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ 
+            once: false,       // <-- Forces animations to execute going up AND down
+            amount: 0.15       // <-- Card triggers animation as soon as 15% of it enters screen
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+        >
+          {leadershipData.map((member) => (
+            <StaffCard key={member.id} member={member} />
+          ))}
+        </motion.div>
+      </section>
     </main>
   )
 }
