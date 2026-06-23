@@ -488,10 +488,8 @@
 
 
 
-
-import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, Award, MessageCircle, ArrowRight, ChevronDown } from 'lucide-react'
+import { Mail, Phone, MessageCircle } from 'lucide-react'
 
 import directorImg from '@assets/images/staff/leadership/director.jpg'
 import headTeacherImg from '@assets/images/staff/leadership/headteacher.jpg'
@@ -538,148 +536,149 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 }
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.08
+    }
   }
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { 
-    opacity: 1, 
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 60, damping: 15 } 
+    transition: {
+      duration: 0.65,
+      ease: [0.21, 0.79, 0.51, 1]
+    }
   }
 }
+
+const ContactIcon = ({ href, label, children, className = '' }) => (
+  <motion.a
+    href={href}
+    target={href.startsWith('https://') ? '_blank' : undefined}
+    rel={href.startsWith('https://') ? 'noreferrer' : undefined}
+    aria-label={label}
+    title={label}
+    whileHover={{ y: -2 }}
+    whileTap={{ scale: 0.96 }}
+    className={`flex h-10 w-10 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-500 transition-colors duration-300 hover:border-[#b8892f] hover:bg-[#b8892f] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#b8892f]/40 focus:ring-offset-2 ${className}`}
+  >
+    {children}
+  </motion.a>
+)
 
 const StaffCard = ({ member }) => {
-  const handleWhatsApp = () => {
-    const message = `Hello, I'm interested in contacting ${member.full_name} (${member.role}) at MayDay International School.`
-    window.open(`https://wa.me/${member.whatsapp}?text=${encodeURIComponent(message)}`, '_blank')
-  }
+  const whatsappMessage = `Hello, I'm interested in contacting ${member.full_name} (${member.role}) at MayDay International School.`
+  const whatsappUrl = `https://wa.me/${member.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`
 
   return (
-    <motion.div 
-      variants={cardVariants}
-      className="group bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
+    <motion.article
+      variants={fadeUpVariants}
+      whileHover={{ y: -6 }}
+      className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_18px_45px_rgba(15,23,42,0.08)] transition-shadow duration-300 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)]"
     >
-      {/* Premium Backdrop Canvas for the Image */}
-      <div className="relative h-44 bg-gradient-to-br from-blue-900 to-blue-950 flex items-center justify-center overflow-hidden">
-        {/* Decorative subtle background design element */}
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
-        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl" />
-        
-        {/* Floating Role Badge */}
-        <div className="absolute top-4 right-4">
-          <span className="bg-blue-600/20 backdrop-blur-md text-blue-200 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-blue-400/20">
-            {member.role}
-          </span>
-        </div>
-        
-        {/* Qualifications quietly embedded in the canvas header */}
-        <div className="absolute bottom-4 left-6">
-          <span className="text-blue-300/90 text-[11px] font-medium tracking-wide uppercase">
-            {member.qualification}
-          </span>
-        </div>
-      </div>
-
-      {/* The Re-designed Image Container Frame */}
-      <div className="relative px-6 -mt-20 flex justify-start">
-        <div className="w-32 h-32 rounded-2xl overflow-hidden border-4 border-white bg-slate-100 shadow-md transition-transform duration-500 group-hover:scale-105 group-hover:shadow-lg">
-          {member.image ? (
-            <img 
-              src={member.image} 
-              alt={member.full_name} 
-              className="w-full h-full object-cover transition-transform duration-700 ease-out"
-              style={{ objectPosition: 'center 20%' }}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-blue-800 text-white font-bold text-3xl">
+      <div className="relative h-[300px] overflow-hidden bg-slate-100 sm:h-[330px] lg:h-[360px]">
+        {member.image ? (
+          <motion.img
+            src={member.image}
+            alt={`${member.full_name}, ${member.role} at MayDay International School`}
+            className="h-full w-full object-cover object-[center_30%]"
+            whileHover={{ scale: 1.045 }}
+            transition={{ duration: 0.65, ease: 'easeOut' }}
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-[#0b1f3a]">
+            <span className="text-5xl font-semibold text-white">
               {member.full_name.charAt(0)}
-            </div>
-          )}
-        </div>
+            </span>
+          </div>
+        )}
+
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#071526]/80 to-transparent" />
+
+        <span className="absolute left-4 top-4 rounded-md bg-[#d6a84f] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#071526]">
+          {member.role}
+        </span>
       </div>
 
-      {/* Content Block */}
-      <div className="p-6 pt-4 flex flex-col flex-grow">
-        <h3 className="text-xl font-bold tracking-tight text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-200">
-          {member.full_name}
-        </h3>
-        
-        <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-grow font-normal italic">
-          "{member.bio}"
+      <div className="flex flex-1 flex-col p-6">
+        <div className="mb-4">
+          <h3 className="text-xl font-semibold leading-tight text-[#071526]">
+            {member.full_name}
+          </h3>
+          <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-[#9b7330]">
+            {member.qualification}
+          </p>
+        </div>
+
+        <p className="flex-1 text-sm leading-7 text-slate-600">
+          “{member.bio}”
         </p>
-        
-        <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-          <div className="flex gap-2">
-            <button 
-              onClick={() => window.location.href = `mailto:${member.email}`}
-              className="w-9 h-9 rounded-xl bg-slate-50 text-slate-500 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
-              title={`Email ${member.full_name}`}
-            >
-              <Mail size={15} />
-            </button>
-            <button 
-              onClick={() => window.location.href = `tel:${member.phone}`}
-              className="w-9 h-9 rounded-xl bg-slate-50 text-slate-500 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
-              title={`Call ${member.full_name}`}
-            >
-              <Phone size={15} />
-            </button>
-            <button 
-              onClick={handleWhatsApp}
-              className="w-9 h-9 rounded-xl bg-slate-50 text-slate-500 flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200"
-              title={`WhatsApp ${member.full_name}`}
-            >
-              <MessageCircle size={15} />
-            </button>
-          </div>
-          
-          <button className="text-blue-600 font-bold text-xs uppercase tracking-wider flex items-center gap-1 group/btn">
-            <span>View Bio</span>
-            <ArrowRight size={13} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
-          </button>
+
+        <div className="mt-6 flex items-center gap-3 border-t border-slate-100 pt-5">
+          <ContactIcon href={`mailto:${member.email}`} label={`Email ${member.full_name}`}>
+            <Mail size={17} />
+          </ContactIcon>
+
+          <ContactIcon href={`tel:${member.phone}`} label={`Call ${member.full_name}`}>
+            <Phone size={17} />
+          </ContactIcon>
+
+          <ContactIcon
+            href={whatsappUrl}
+            label={`Message ${member.full_name} on WhatsApp`}
+            className="hover:border-emerald-600 hover:bg-emerald-600"
+          >
+            <MessageCircle size={17} />
+          </ContactIcon>
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   )
 }
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-slate-950">
-      <div className="absolute inset-0 z-0">
-        <img 
-          src={heroBg} 
-          alt="MayDay Admin Banner" 
-          className="w-full h-full object-cover opacity-30 object-center scale-105 select-none"
+    <section className="relative min-h-[560px] overflow-hidden bg-[#071526] md:min-h-[640px]">
+      <motion.div
+        initial={{ scale: 1.04 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1.4, ease: 'easeOut' }}
+        className="absolute inset-0"
+      >
+        <div
+          className="h-full w-full bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroBg})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/50 via-slate-950/80 to-slate-950" />
-      </div>
-      
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-16 pb-20">
+      </motion.div>
+
+      <div className="absolute inset-0 bg-[#071526]/70" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#071526] via-[#071526]/78 to-[#071526]/25" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#f7f4ee] to-transparent" />
+
+      <div className="relative z-10 mx-auto flex min-h-[560px] max-w-7xl items-center px-6 py-24 md:min-h-[640px]">
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 26 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.75, delay: 0.15 }}
+          className="max-w-3xl"
         >
-          <span className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 font-semibold text-xs uppercase tracking-[0.25em] px-3.5 py-1.5 rounded-full border border-blue-500/20 mb-6">
-            <Award size={12} className="text-blue-400" /> Administration Team
+          <span className="mb-5 block text-xs font-bold uppercase tracking-[0.28em] text-[#d6a84f]">
+            Leadership & Governance
           </span>
-          
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.15] mb-6">
-            School <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-200">Administration</span>
+
+          <h1 className="max-w-2xl text-5xl font-semibold leading-[1.02] text-white sm:text-6xl lg:text-7xl">
+            School Administration
           </h1>
-          
-          <p className="max-w-xl mx-auto text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed font-light">
-            Meet the visionary leaders driving academic excellence, moral integrity, and holistic development at MayDay International School.
+
+          <p className="mt-7 max-w-xl border-l-2 border-[#d6a84f] pl-5 text-base leading-8 text-slate-100 md:text-lg">
+            Meet the leaders guiding academic excellence, moral integrity, and
+            holistic student development at MayDay International School.
           </p>
         </motion.div>
-      </div>
-      
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 opacity-50">
-        <ChevronDown size={16} className="text-white animate-bounce" />
       </div>
     </section>
   )
@@ -687,23 +686,40 @@ const HeroSection = () => {
 
 const Administration = () => {
   return (
-    <main className="bg-slate-50 min-h-screen font-sans antialiased">
-      <style>{`
-        html {
-          scroll-behavior: smooth !important;
-        }
-      `}</style>
-
+    <main className="min-h-screen bg-[#f7f4ee]">
       <HeroSection />
 
-      {/* Grid container with bidirectional layout triggers */}
-      <section className="max-w-7xl mx-auto px-6 -mt-10 pb-32 relative z-20">
-        <motion.div 
+      <section className="relative z-20 mx-auto -mt-16 max-w-7xl px-6 pb-24 md:-mt-20 md:pb-32">
+        <motion.div
+          variants={fadeUpVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          className="mb-10 rounded-xl border border-slate-200 bg-white px-6 py-7 shadow-[0_18px_45px_rgba(15,23,42,0.08)] md:px-8"
+        >
+          <span className="text-xs font-bold uppercase tracking-[0.24em] text-[#9b7330]">
+            Our Leadership Team
+          </span>
+
+          <div className="mt-4 grid gap-5 md:grid-cols-[0.95fr_1.05fr] md:items-end">
+            <h2 className="text-3xl font-semibold leading-tight text-[#071526] md:text-4xl">
+              Meet the people stewarding the MayDay standard.
+            </h2>
+
+            <p className="text-sm leading-7 text-slate-600 md:text-base">
+              Our administration brings together educational vision, disciplined
+              management, and a deep commitment to nurturing confident,
+              principled learners.
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          viewport={{ once: true, margin: '-80px' }}
+          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           {leadershipData.map((member) => (
             <StaffCard key={member.id} member={member} />
