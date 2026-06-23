@@ -489,7 +489,6 @@
 
 
 
-
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, Award, MessageCircle, ArrowRight, ChevronDown } from 'lucide-react'
@@ -535,63 +534,21 @@ const leadershipData = [
   }
 ]
 
-// Orchestrated staggered animations that run both scrolling up & down
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.15 }
   }
 }
 
 const cardVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 40,
-    scale: 0.98
-  },
+  hidden: { opacity: 0, y: 50 },
   visible: { 
     opacity: 1, 
     y: 0,
-    scale: 1,
-    transition: { 
-      type: "spring",
-      stiffness: 70,
-      damping: 14,
-      mass: 0.8
-    } 
+    transition: { type: "spring", stiffness: 60, damping: 15 } 
   }
-}
-
-const StaffImage = ({ src, alt, name }) => {
-  const [imgError, setImgError] = useState(false)
-  const [imagePosition, setImagePosition] = useState('center 25%')
-  
-  return (
-    <div className="w-full h-full relative bg-slate-50">
-      {!imgError && src ? (
-        <img 
-          src={src} 
-          alt={alt}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          style={{ objectPosition: imagePosition }}
-          onError={() => setImgError(true)}
-          onLoad={(e) => {
-            const img = e.target
-            if (img.naturalHeight > img.naturalWidth * 1.2) {
-              setImagePosition('center 20%')
-            }
-          }}
-        />
-      ) : (
-        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-700 to-blue-900">
-          <span className="text-white text-5xl font-light tracking-wider">
-            {name?.split(' ').map(n => n[0]).join('').slice(0,2) || '?'}
-          </span>
-        </div>
-      )}
-    </div>
-  )
 }
 
 const StaffCard = ({ member }) => {
@@ -603,59 +560,83 @@ const StaffCard = ({ member }) => {
   return (
     <motion.div 
       variants={cardVariants}
-      className="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col"
+      className="group bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
     >
-      <div className="relative aspect-[4/4] sm:aspect-[4/5] md:aspect-[4/4] overflow-hidden">
-        <StaffImage src={member.image} alt={member.full_name} name={member.full_name} />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
+      {/* Premium Backdrop Canvas for the Image */}
+      <div className="relative h-44 bg-gradient-to-br from-blue-900 to-blue-950 flex items-center justify-center overflow-hidden">
+        {/* Decorative subtle background design element */}
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl" />
         
-        <div className="absolute top-4 left-4 z-10">
-          <span className="bg-white/95 backdrop-blur-md text-blue-900 text-[10px] font-bold px-3 py-1.5 rounded-md uppercase tracking-widest shadow-sm">
+        {/* Floating Role Badge */}
+        <div className="absolute top-4 right-4">
+          <span className="bg-blue-600/20 backdrop-blur-md text-blue-200 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-blue-400/20">
             {member.role}
           </span>
         </div>
-
-        <div className="absolute bottom-0 left-0 right-0 p-6 z-10 text-white">
-          <p className="text-blue-300 font-medium text-[11px] uppercase tracking-wider mb-1">
+        
+        {/* Qualifications quietly embedded in the canvas header */}
+        <div className="absolute bottom-4 left-6">
+          <span className="text-blue-300/90 text-[11px] font-medium tracking-wide uppercase">
             {member.qualification}
-          </p>
-          <h3 className="text-xl md:text-2xl font-bold tracking-tight text-white leading-snug">
-            {member.full_name}
-          </h3>
+          </span>
         </div>
       </div>
 
-      <div className="p-6 flex flex-col flex-grow bg-white">
+      {/* The Re-designed Image Container Frame */}
+      <div className="relative px-6 -mt-20 flex justify-start">
+        <div className="w-32 h-32 rounded-2xl overflow-hidden border-4 border-white bg-slate-100 shadow-md transition-transform duration-500 group-hover:scale-105 group-hover:shadow-lg">
+          {member.image ? (
+            <img 
+              src={member.image} 
+              alt={member.full_name} 
+              className="w-full h-full object-cover transition-transform duration-700 ease-out"
+              style={{ objectPosition: 'center 20%' }}
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-blue-800 text-white font-bold text-3xl">
+              {member.full_name.charAt(0)}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Content Block */}
+      <div className="p-6 pt-4 flex flex-col flex-grow">
+        <h3 className="text-xl font-bold tracking-tight text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-200">
+          {member.full_name}
+        </h3>
+        
         <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-grow font-normal italic">
           "{member.bio}"
         </p>
         
         <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-          <div className="flex gap-2.5">
+          <div className="flex gap-2">
             <button 
               onClick={() => window.location.href = `mailto:${member.email}`}
-              className="w-9 h-9 rounded-full bg-slate-50 text-slate-600 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+              className="w-9 h-9 rounded-xl bg-slate-50 text-slate-500 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
               title={`Email ${member.full_name}`}
             >
               <Mail size={15} />
             </button>
             <button 
               onClick={() => window.location.href = `tel:${member.phone}`}
-              className="w-9 h-9 rounded-full bg-slate-50 text-slate-600 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+              className="w-9 h-9 rounded-xl bg-slate-50 text-slate-500 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
               title={`Call ${member.full_name}`}
             >
               <Phone size={15} />
             </button>
             <button 
               onClick={handleWhatsApp}
-              className="w-9 h-9 rounded-full bg-slate-50 text-slate-600 flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200"
+              className="w-9 h-9 rounded-xl bg-slate-50 text-slate-500 flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200"
               title={`WhatsApp ${member.full_name}`}
             >
               <MessageCircle size={15} />
             </button>
           </div>
           
-          <button className="text-blue-600 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 group/btn">
+          <button className="text-blue-600 font-bold text-xs uppercase tracking-wider flex items-center gap-1 group/btn">
             <span>View Bio</span>
             <ArrowRight size={13} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
           </button>
@@ -667,42 +648,38 @@ const StaffCard = ({ member }) => {
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden bg-slate-950">
+    <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-slate-950">
       <div className="absolute inset-0 z-0">
         <img 
           src={heroBg} 
           alt="MayDay Admin Banner" 
-          className="w-full h-full object-cover opacity-35 object-center scale-105 select-none"
+          className="w-full h-full object-cover opacity-30 object-center scale-105 select-none"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/40 via-slate-950/80 to-slate-950" />
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/50 via-slate-950/80 to-slate-950" />
       </div>
       
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20 pb-24">
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-16 pb-20">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <span className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 font-semibold text-xs uppercase tracking-[0.25em] px-3.5 py-1.5 rounded-full border border-blue-500/20 mb-6">
-            <Award size={12} className="text-blue-400" /> Executive Leadership
+            <Award size={12} className="text-blue-400" /> Administration Team
           </span>
           
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.15] mb-6">
-            Governing with Purpose & <br className="hidden sm:inline" />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-200">
-              Academic Distinction
-            </span>
+            School <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-200">Administration</span>
           </h1>
           
           <p className="max-w-xl mx-auto text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed font-light">
-            Meet the visionary minds driving academic rigor, moral integrity, and modern systems leadership at MayDay International School.
+            Meet the visionary leaders driving academic excellence, moral integrity, and holistic development at MayDay International School.
           </p>
         </motion.div>
       </div>
       
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 opacity-60">
-        <span className="text-[10px] uppercase text-white tracking-widest font-medium">Explore Leadership</span>
-        <ChevronDown size={14} className="text-white animate-bounce" />
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 opacity-50">
+        <ChevronDown size={16} className="text-white animate-bounce" />
       </div>
     </section>
   )
@@ -711,7 +688,6 @@ const HeroSection = () => {
 const Administration = () => {
   return (
     <main className="bg-slate-50 min-h-screen font-sans antialiased">
-      {/* Global Injection for Smooth Elastic Scrolling */}
       <style>{`
         html {
           scroll-behavior: smooth !important;
@@ -720,16 +696,13 @@ const Administration = () => {
 
       <HeroSection />
 
-      {/* Grid wrapper with multi-directional viewport watching */}
-      <section className="max-w-7xl mx-auto px-6 -mt-12 sm:-mt-16 pb-32 relative z-20">
+      {/* Grid container with bidirectional layout triggers */}
+      <section className="max-w-7xl mx-auto px-6 -mt-10 pb-32 relative z-20">
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ 
-            once: false,       // <-- Forces animations to execute going up AND down
-            amount: 0.15       // <-- Card triggers animation as soon as 15% of it enters screen
-          }}
+          viewport={{ once: false, amount: 0.1 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
         >
           {leadershipData.map((member) => (
