@@ -157,3 +157,129 @@
 .text-navy-700 { color: #1a2a4f; }
 .text-navy-800 { color: #0f1a3a; }
 .text-navy-900 { color: #0a1228; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   Design Tokens — School Administration page
+   Palette: deep navy, royal blue, sky accent, white, off-white. No other hues.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ---- Color: raw palette ---- */
+  --color-navy-900: #0a2540;
+  --color-blue-700: #1e40af;
+  --color-blue-500: #3b82f6;
+  --color-white: #ffffff;
+  --color-offwhite: #f8fafc;
+
+  /* tonal steps derived from the palette only — no new hues */
+  --color-navy-700: #15406b;
+  --color-blue-200: #bfdbfe;
+  --color-blue-100: #dbeafe;
+  --color-blue-50: #eff6ff;
+  --color-line: #cbd9ee;
+
+  /* ---- Color: semantic roles ---- */
+  --surface-page: var(--color-white);
+  --surface-alt: var(--color-offwhite);
+  --surface-wash-start: var(--color-blue-50);
+  --surface-wash-end: var(--color-white);
+
+  --text-primary: var(--color-navy-900);
+  --text-secondary: #44597a;
+  --text-on-accent: var(--color-white);
+  --text-eyebrow: var(--color-blue-700);
+  --text-index: var(--color-blue-200);
+
+  --accent-primary: var(--color-blue-700);
+  --accent-secondary: var(--color-blue-500);
+  --accent-quote-mark: var(--color-blue-200);
+
+  --border-portrait: var(--color-blue-200);
+  --border-hairline: var(--color-line);
+  --border-divider: var(--color-blue-700);
+
+  --action-bg: transparent;
+  --action-border: var(--color-line);
+  --action-fg: var(--color-navy-900);
+  --action-bg-hover: var(--color-blue-700);
+  --action-fg-hover: var(--color-white);
+  --action-border-hover: var(--color-blue-700);
+
+  --button-primary-bg: var(--color-blue-700);
+  --button-primary-bg-hover: var(--color-navy-900);
+  --button-primary-fg: var(--color-white);
+
+  --shadow-portrait: 0 24px 48px -16px rgba(10, 37, 64, 0.25);
+
+  /* ---- Type ---- */
+  --font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', 'DM Sans', -apple-system, sans-serif;
+
+  --tracking-eyebrow: 0.22em;
+  --tracking-label: 0.16em;
+
+  /* ---- Spacing scale ---- */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4.5rem;
+  --space-7: 6rem;
+  --space-8: 9rem;
+
+  /* ---- Motion ---- */
+  --ease-editorial: cubic-bezier(0.21, 0.79, 0.31, 0.99);
+  --duration-fade: 0.9s;
+  --duration-slide: 0.85s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
