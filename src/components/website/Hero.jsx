@@ -496,13 +496,10 @@
 
 
 
-
-
-
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const slides = [
   {
@@ -536,7 +533,7 @@ const slides = [
 const Hero = () => {
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const intervalRef = useRef();
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -554,146 +551,144 @@ const Hero = () => {
       <AnimatePresence mode="wait">
         <motion.div
           key={slide.id}
-          initial={{ opacity: 0, scale: 1.08 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.5 }}
+          transition={{ duration: 1.2 }}
           className="absolute inset-0"
         >
-          <img
+          <motion.img
             src={slide.image}
-            alt=""
-            className="w-full h-full object-cover"
+            alt={slide.title}
+            initial={{ scale: 1.08 }}
+            animate={{ scale: 1 }}
+            transition={{
+              duration: 8,
+              ease: "easeOut",
+            }}
+            className="absolute inset-0 h-full w-full object-cover object-center"
           />
 
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-900/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/75 to-[#0F172A]/35" />
         </motion.div>
       </AnimatePresence>
 
       {/* Content */}
-      <div className="relative z-20 min-h-screen flex items-center">
-        <div className="max-w-[1450px] mx-auto w-full px-6 lg:px-10">
-
+      <div className="relative z-20 flex min-h-screen items-center">
+        <div className="mx-auto w-full max-w-7xl px-6 lg:px-10">
           <AnimatePresence mode="wait">
             <motion.div
               key={slide.id}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 35 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: .7 }}
+              transition={{ duration: 0.7 }}
             >
               {/* Eyebrow */}
-              <div className="mb-8">
-                <span className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/10 backdrop-blur-xl px-5 py-3 text-xs font-semibold uppercase tracking-[4px] text-blue-200">
+              <div className="mb-7">
+                <span
+                  className="
+                  inline-flex
+                  items-center
+                  rounded-full
+                  border
+                  border-white/10
+                  bg-white/10
+                  px-5
+                  py-3
+                  text-[11px]
+                  font-semibold
+                  uppercase
+                  tracking-[3px]
+                  text-blue-200
+                  backdrop-blur-2xl
+                "
+                >
                   Welcome To MayDay International School
                 </span>
               </div>
 
               {/* Heading */}
-              <div className="max-w-5xl">
-                <h1 className="text-white font-extrabold leading-[0.95] tracking-[-0.06em] text-[3.2rem] md:text-[5rem] lg:text-[6.5rem] xl:text-[7.5rem]">
+              <div className="max-w-4xl">
+                <h1
+                  className="
+                  text-[3.2rem]
+                  font-extrabold
+                  leading-[1.02]
+                  tracking-[-0.05em]
+                  text-white
+                  md:text-[4.5rem]
+                  lg:text-[5.5rem]
+                  xl:text-[6rem]
+                "
+                >
                   {slide.title}
 
-                  <span className="block text-blue-400 mt-3">
+                  <span className="mt-3 block text-blue-400">
                     {slide.highlight}
                   </span>
                 </h1>
               </div>
 
               {/* Description */}
-              <div className="mt-10 max-w-2xl">
-                <p className="text-white/75 text-lg md:text-xl leading-9">
+              <div className="mt-7 max-w-xl">
+                <p className="text-base leading-8 text-white/75 md:text-lg">
                   {slide.description}
                 </p>
               </div>
 
               {/* Buttons */}
-              <div className="mt-14 flex flex-wrap gap-5">
-
+              <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   to="/admissions"
                   className="
-                  h-16
-                  px-9
+                  flex
+                  h-14
+                  items-center
+                  gap-3
                   rounded-full
                   bg-blue-700
-                  text-white
-                  font-semibold
+                  px-8
                   text-sm
-                  flex items-center gap-3
-                  transition-all duration-300
+                  font-semibold
+                  text-white
+                  shadow-[0_20px_50px_rgba(29,78,216,.35)]
+                  transition-all
+                  duration-300
                   hover:scale-105
-                  shadow-[0_20px_60px_rgba(29,78,216,.35)]
-                  "
+                "
                 >
                   Apply Now
 
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="h-5 w-5" />
                 </Link>
 
                 <button
                   className="
-                  h-16
-                  px-8
+                  flex
+                  h-14
+                  items-center
+                  gap-3
                   rounded-full
-                  border border-white/10
+                  border
+                  border-white/10
                   bg-white/10
-                  backdrop-blur-2xl
-                  text-white
+                  px-7
+                  text-sm
                   font-semibold
-                  flex items-center gap-4
-                  transition-all duration-300
+                  text-white
+                  backdrop-blur-2xl
+                  transition-all
+                  duration-300
                   hover:bg-white/20
-                  "
+                "
                 >
-                  <div className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center">
-                    <Play className="w-4 h-4 fill-white" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15">
+                    <Play className="h-4 w-4" />
                   </div>
 
                   Watch Tour
                 </button>
-              </div>
-
-              {/* Statistics */}
-              <div
-                className="
-                mt-20
-                grid
-                grid-cols-1
-                sm:grid-cols-3
-                gap-5
-                max-w-5xl
-                "
-              >
-                <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
-                  <h2 className="text-white font-bold text-5xl">
-                    1200+
-                  </h2>
-
-                  <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
-                    Students
-                  </p>
-                </div>
-
-                <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
-                  <h2 className="text-white font-bold text-5xl">
-                    98%
-                  </h2>
-
-                  <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
-                    Success Rate
-                  </p>
-                </div>
-
-                <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
-                  <h2 className="text-white font-bold text-5xl">
-                    15+
-                  </h2>
-
-                  <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
-                    Years Of Excellence
-                  </p>
-                </div>
               </div>
             </motion.div>
           </AnimatePresence>
@@ -701,28 +696,18 @@ const Hero = () => {
       </div>
 
       {/* Indicators */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-30">
+      <div className="absolute bottom-7 left-1/2 z-30 flex -translate-x-1/2 gap-3">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setActiveSlide(index)}
-            className={`
-            transition-all duration-500 rounded-full
-            ${
+            className={`rounded-full transition-all duration-500 ${
               activeSlide === index
-                ? "w-14 h-3 bg-blue-500"
-                : "w-3 h-3 bg-white/40"
-            }
-            `}
+                ? "h-3 w-12 bg-blue-500"
+                : "h-3 w-3 bg-white/40"
+            }`}
           />
         ))}
-      </div>
-
-      {/* Floating Scroll Indicator */}
-      <div className="hidden lg:flex absolute bottom-10 right-10 z-30">
-        <div className="rounded-full border border-white/10 bg-white/10 backdrop-blur-3xl px-5 py-3 text-white/80 text-sm">
-          Scroll Down ↓
-        </div>
       </div>
     </section>
   );
