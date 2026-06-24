@@ -499,38 +499,37 @@
 
 
 
-
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
     id: 1,
+    image: "/hero-slide-1.jpg",
     title: "Empowering Young Minds",
     highlight: "For A Brighter Future",
     description:
-      "At MayDay International School, every child is inspired to learn, lead, and thrive in a world of endless possibilities.",
-    image: "/hero-slide-1.jpg",
+      "At MayDay International School, we inspire every child to learn, lead, and thrive in a world filled with endless possibilities.",
   },
 
   {
     id: 2,
+    image: "/hero-slide-2.jpg",
     title: "Academic Excellence",
     highlight: "Without Limits",
     description:
-      "Providing world-class education with modern teaching methods and global standards.",
-    image: "/hero-slide-2.jpg",
+      "Providing world-class education with modern teaching methods and global standards that prepare students for the future.",
   },
 
   {
     id: 3,
-    title: "Building Character",
-    highlight: "Creating Future Leaders",
-    description:
-      "Developing confident, disciplined, and compassionate individuals prepared for tomorrow.",
     image: "/hero-slide-3.jpg",
+    title: "Building Character",
+    highlight: "Creating Leaders",
+    description:
+      "Developing confident, disciplined and compassionate individuals equipped for tomorrow.",
   },
 ];
 
@@ -550,7 +549,7 @@ const Hero = () => {
   const slide = slides[activeSlide];
 
   return (
-    <section className="relative h-screen overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden">
       {/* Background */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -558,132 +557,141 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 1.08 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.2 }}
+          transition={{ duration: 1.5 }}
           className="absolute inset-0"
         >
           <img
             src={slide.image}
             alt=""
-            className="h-full w-full object-cover"
+            className="w-full h-full object-cover"
           />
 
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/60 to-slate-900/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-900/30" />
         </motion.div>
       </AnimatePresence>
 
       {/* Content */}
-      <div className="relative z-20 flex h-full items-center">
-        <div className="mx-auto w-full max-w-7xl px-6">
+      <div className="relative z-20 min-h-screen flex items-center">
+        <div className="max-w-[1450px] mx-auto w-full px-6 lg:px-10">
+
           <AnimatePresence mode="wait">
             <motion.div
               key={slide.id}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.6 }}
-              className="
-                max-w-3xl
-                rounded-[40px]
-                border border-white/10
-                bg-white/10
-                backdrop-blur-2xl
-                p-8
-                md:p-14
-                shadow-[0_25px_80px_rgba(0,0,0,0.2)]
-              "
+              transition={{ duration: .7 }}
             >
               {/* Eyebrow */}
-              <div className="mb-5 text-xs font-semibold uppercase tracking-[4px] text-blue-200">
-                Welcome To MayDay International School
+              <div className="mb-8">
+                <span className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/10 backdrop-blur-xl px-5 py-3 text-xs font-semibold uppercase tracking-[4px] text-blue-200">
+                  Welcome To MayDay International School
+                </span>
               </div>
 
               {/* Heading */}
-              <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-white md:text-7xl">
-                {slide.title}
+              <div className="max-w-5xl">
+                <h1 className="text-white font-extrabold leading-[0.95] tracking-[-0.06em] text-[3.2rem] md:text-[5rem] lg:text-[6.5rem] xl:text-[7.5rem]">
+                  {slide.title}
 
-                <span className="mt-2 block text-blue-400">
-                  {slide.highlight}
-                </span>
-              </h1>
+                  <span className="block text-blue-400 mt-3">
+                    {slide.highlight}
+                  </span>
+                </h1>
+              </div>
 
               {/* Description */}
-              <p className="mt-8 max-w-2xl text-base leading-8 text-white/80 md:text-lg">
-                {slide.description}
-              </p>
+              <div className="mt-10 max-w-2xl">
+                <p className="text-white/75 text-lg md:text-xl leading-9">
+                  {slide.description}
+                </p>
+              </div>
 
               {/* Buttons */}
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="mt-14 flex flex-wrap gap-5">
+
                 <Link
                   to="/admissions"
                   className="
-                    flex h-14 items-center gap-3
-                    rounded-full
-                    bg-blue-700
-                    px-8
-                    text-sm
-                    font-semibold
-                    text-white
-                    shadow-[0_20px_40px_rgba(29,78,216,.35)]
-                    transition-all duration-300
-                    hover:scale-105
+                  h-16
+                  px-9
+                  rounded-full
+                  bg-blue-700
+                  text-white
+                  font-semibold
+                  text-sm
+                  flex items-center gap-3
+                  transition-all duration-300
+                  hover:scale-105
+                  shadow-[0_20px_60px_rgba(29,78,216,.35)]
                   "
                 >
                   Apply Now
-                  <ArrowRight className="h-5 w-5" />
+
+                  <ArrowRight className="w-5 h-5" />
                 </Link>
 
                 <button
                   className="
-                    flex h-14 items-center gap-3
-                    rounded-full
-                    border border-white/20
-                    bg-white/10
-                    px-8
-                    text-sm
-                    font-semibold
-                    text-white
-                    backdrop-blur-xl
-                    transition-all duration-300
-                    hover:bg-white/20
+                  h-16
+                  px-8
+                  rounded-full
+                  border border-white/10
+                  bg-white/10
+                  backdrop-blur-2xl
+                  text-white
+                  font-semibold
+                  flex items-center gap-4
+                  transition-all duration-300
+                  hover:bg-white/20
                   "
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
-                    <Play className="h-4 w-4" />
+                  <div className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center">
+                    <Play className="w-4 h-4 fill-white" />
                   </div>
 
                   Watch Tour
                 </button>
               </div>
 
-              {/* Stats */}
-              <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div className="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur-xl">
-                  <h3 className="text-3xl font-bold text-white">
+              {/* Statistics */}
+              <div
+                className="
+                mt-20
+                grid
+                grid-cols-1
+                sm:grid-cols-3
+                gap-5
+                max-w-5xl
+                "
+              >
+                <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
+                  <h2 className="text-white font-bold text-5xl">
                     1200+
-                  </h3>
+                  </h2>
 
-                  <p className="mt-2 text-sm text-white/70">
+                  <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
                     Students
                   </p>
                 </div>
 
-                <div className="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur-xl">
-                  <h3 className="text-3xl font-bold text-white">
+                <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
+                  <h2 className="text-white font-bold text-5xl">
                     98%
-                  </h3>
+                  </h2>
 
-                  <p className="mt-2 text-sm text-white/70">
+                  <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
                     Success Rate
                   </p>
                 </div>
 
-                <div className="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur-xl">
-                  <h3 className="text-3xl font-bold text-white">
+                <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
+                  <h2 className="text-white font-bold text-5xl">
                     15+
-                  </h3>
+                  </h2>
 
-                  <p className="mt-2 text-sm text-white/70">
-                    Years Experience
+                  <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
+                    Years Of Excellence
                   </p>
                 </div>
               </div>
@@ -693,22 +701,31 @@ const Hero = () => {
       </div>
 
       {/* Indicators */}
-      <div className="absolute bottom-10 left-1/2 z-30 flex -translate-x-1/2 gap-3">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-30">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setActiveSlide(index)}
-            className={`transition-all duration-500 rounded-full ${
+            className={`
+            transition-all duration-500 rounded-full
+            ${
               activeSlide === index
-                ? "h-3 w-12 bg-blue-500"
-                : "h-3 w-3 bg-white/50"
-            }`}
+                ? "w-14 h-3 bg-blue-500"
+                : "w-3 h-3 bg-white/40"
+            }
+            `}
           />
         ))}
+      </div>
+
+      {/* Floating Scroll Indicator */}
+      <div className="hidden lg:flex absolute bottom-10 right-10 z-30">
+        <div className="rounded-full border border-white/10 bg-white/10 backdrop-blur-3xl px-5 py-3 text-white/80 text-sm">
+          Scroll Down ↓
+        </div>
       </div>
     </section>
   );
 };
 
 export default Hero;
-
