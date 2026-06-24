@@ -499,508 +499,10 @@
 
 
 
-// import { useEffect, useRef, useState } from "react";
-// import { Link } from "react-router-dom";
-// import { ArrowRight, Play } from "lucide-react";
-// import { motion, AnimatePresence } from "framer-motion";
-
-// const slides = [
-//   {
-//     id: 1,
-//     image: "/hero-slide-1.jpg",
-//     title: "Empowering Young Minds",
-//     highlight: "For A Brighter Future",
-//     description:
-//       "At MayDay International School, we inspire every child to learn, lead, and thrive in a world filled with endless possibilities.",
-//   },
-
-//   {
-//     id: 2,
-//     image: "/hero-slide-2.jpg",
-//     title: "Academic Excellence",
-//     highlight: "Without Limits",
-//     description:
-//       "Providing world-class education with modern teaching methods and global standards that prepare students for the future.",
-//   },
-
-//   {
-//     id: 3,
-//     image: "/hero-slide-3.jpg",
-//     title: "Building Character",
-//     highlight: "Creating Leaders",
-//     description:
-//       "Developing confident, disciplined and compassionate individuals equipped for tomorrow.",
-//   },
-// ];
-
-// const Hero = () => {
-//   const [activeSlide, setActiveSlide] = useState(0);
-
-//   const intervalRef = useRef();
-
-//   useEffect(() => {
-//     intervalRef.current = setInterval(() => {
-//       setActiveSlide((prev) => (prev + 1) % slides.length);
-//     }, 7000);
-
-//     return () => clearInterval(intervalRef.current);
-//   }, []);
-
-//   const slide = slides[activeSlide];
-
-//   return (
-//     <section className="relative min-h-screen overflow-hidden">
-//       {/* Background */}
-//       <AnimatePresence mode="wait">
-//         <motion.div
-//           key={slide.id}
-//           initial={{ opacity: 0, scale: 1.08 }}
-//           animate={{ opacity: 1, scale: 1 }}
-//           exit={{ opacity: 0 }}
-//           transition={{ duration: 1.5 }}
-//           className="absolute inset-0"
-//         >
-//           <img
-//             src={slide.image}
-//             alt=""
-//             className="w-full h-full object-cover"
-//           />
-
-//           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-900/30" />
-//         </motion.div>
-//       </AnimatePresence>
-
-//       {/* Content */}
-//       <div className="relative z-20 min-h-screen flex items-center">
-//         <div className="max-w-[1450px] mx-auto w-full px-6 lg:px-10">
-
-//           <AnimatePresence mode="wait">
-//             <motion.div
-//               key={slide.id}
-//               initial={{ opacity: 0, y: 40 }}
-//               animate={{ opacity: 1, y: 0 }}
-//               exit={{ opacity: 0 }}
-//               transition={{ duration: .7 }}
-//             >
-//               {/* Eyebrow */}
-//               <div className="mb-8">
-//                 <span className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/10 backdrop-blur-xl px-5 py-3 text-xs font-semibold uppercase tracking-[4px] text-blue-200">
-//                   Welcome To MayDay International School
-//                 </span>
-//               </div>
-
-//               {/* Heading */}
-//               <div className="max-w-5xl">
-//                 <h1 className="text-white font-extrabold leading-[0.95] tracking-[-0.06em] text-[3.2rem] md:text-[5rem] lg:text-[6.5rem] xl:text-[7.5rem]">
-//                   {slide.title}
-
-//                   <span className="block text-blue-400 mt-3">
-//                     {slide.highlight}
-//                   </span>
-//                 </h1>
-//               </div>
-
-//               {/* Description */}
-//               <div className="mt-10 max-w-2xl">
-//                 <p className="text-white/75 text-lg md:text-xl leading-9">
-//                   {slide.description}
-//                 </p>
-//               </div>
-
-//               {/* Buttons */}
-//               <div className="mt-14 flex flex-wrap gap-5">
-
-//                 <Link
-//                   to="/admissions"
-//                   className="
-//                   h-16
-//                   px-9
-//                   rounded-full
-//                   bg-blue-700
-//                   text-white
-//                   font-semibold
-//                   text-sm
-//                   flex items-center gap-3
-//                   transition-all duration-300
-//                   hover:scale-105
-//                   shadow-[0_20px_60px_rgba(29,78,216,.35)]
-//                   "
-//                 >
-//                   Apply Now
-
-//                   <ArrowRight className="w-5 h-5" />
-//                 </Link>
-
-//                 <button
-//                   className="
-//                   h-16
-//                   px-8
-//                   rounded-full
-//                   border border-white/10
-//                   bg-white/10
-//                   backdrop-blur-2xl
-//                   text-white
-//                   font-semibold
-//                   flex items-center gap-4
-//                   transition-all duration-300
-//                   hover:bg-white/20
-//                   "
-//                 >
-//                   <div className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center">
-//                     <Play className="w-4 h-4 fill-white" />
-//                   </div>
-
-//                   Watch Tour
-//                 </button>
-//               </div>
-
-//               {/* Statistics */}
-//               <div
-//                 className="
-//                 mt-20
-//                 grid
-//                 grid-cols-1
-//                 sm:grid-cols-3
-//                 gap-5
-//                 max-w-5xl
-//                 "
-//               >
-//                 <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
-//                   <h2 className="text-white font-bold text-5xl">
-//                     1200+
-//                   </h2>
-
-//                   <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
-//                     Students
-//                   </p>
-//                 </div>
-
-//                 <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
-//                   <h2 className="text-white font-bold text-5xl">
-//                     98%
-//                   </h2>
-
-//                   <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
-//                     Success Rate
-//                   </p>
-//                 </div>
-
-//                 <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
-//                   <h2 className="text-white font-bold text-5xl">
-//                     15+
-//                   </h2>
-
-//                   <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
-//                     Years Of Excellence
-//                   </p>
-//                 </div>
-//               </div>
-//             </motion.div>
-//           </AnimatePresence>
-//         </div>
-//       </div>
-
-//       {/* Indicators */}
-//       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-30">
-//         {slides.map((_, index) => (
-//           <button
-//             key={index}
-//             onClick={() => setActiveSlide(index)}
-//             className={`
-//             transition-all duration-500 rounded-full
-//             ${
-//               activeSlide === index
-//                 ? "w-14 h-3 bg-blue-500"
-//                 : "w-3 h-3 bg-white/40"
-//             }
-//             `}
-//           />
-//         ))}
-//       </div>
-
-//       {/* Floating Scroll Indicator */}
-//       <div className="hidden lg:flex absolute bottom-10 right-10 z-30">
-//         <div className="rounded-full border border-white/10 bg-white/10 backdrop-blur-3xl px-5 py-3 text-white/80 text-sm">
-//           Scroll Down ↓
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Hero;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Play, Sparkles } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Play } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
@@ -1009,167 +511,222 @@ const slides = [
     title: "Empowering Young Minds",
     highlight: "For A Brighter Future",
     description:
-      "At MayDay International School, every learner is guided to think deeply, lead confidently, and grow with the discipline needed for a changing world.",
+      "At MayDay International School, we inspire every child to learn, lead, and thrive in a world filled with endless possibilities.",
   },
+
   {
     id: 2,
     image: "/hero-slide-2.jpg",
     title: "Academic Excellence",
     highlight: "Without Limits",
     description:
-      "A refined learning environment where modern teaching, strong values, and individual attention prepare students for meaningful achievement.",
+      "Providing world-class education with modern teaching methods and global standards that prepare students for the future.",
   },
+
   {
     id: 3,
     image: "/hero-slide-3.jpg",
     title: "Building Character",
     highlight: "Creating Leaders",
     description:
-      "We nurture confident, compassionate, and capable young people through a school culture designed for excellence in every detail.",
+      "Developing confident, disciplined and compassionate individuals equipped for tomorrow.",
   },
-];
-
-const stats = [
-  { value: "1200+", label: "Students" },
-  { value: "98%", label: "Success Rate" },
-  { value: "15+", label: "Years of Excellence" },
 ];
 
 const Hero = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const intervalRef = useRef(null);
+
+  const intervalRef = useRef();
 
   useEffect(() => {
-    intervalRef.current = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % slides.length);
-    }, 7500);
+    intervalRef.current = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+    }, 7000);
 
-    return () => window.clearInterval(intervalRef.current);
+    return () => clearInterval(intervalRef.current);
   }, []);
 
   const slide = slides[activeSlide];
 
   return (
-    <div className="relative bg-[#F8FAFC]">
-      <section className="relative min-h-[100svh] overflow-hidden bg-[#0F172A]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={slide.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.1, ease: "easeOut" }}
-            className="absolute inset-0"
-          >
-            <motion.img
-              src={slide.image}
-              alt=""
-              initial={{ scale: 1.08 }}
-              animate={{ scale: 1.18 }}
-              transition={{ duration: 9, ease: "linear" }}
-              className="h-full w-full object-cover"
-            />
+    <section className="relative min-h-screen overflow-hidden">
+      {/* Background */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={slide.id}
+          initial={{ opacity: 0, scale: 1.08 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.5 }}
+          className="absolute inset-0"
+        >
+          <img
+            src={slide.image}
+            alt=""
+            className="w-full h-full object-cover"
+          />
 
-            <div className="absolute inset-0 bg-[#0F172A]/70" />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,23,42,0.96)_0%,rgba(15,23,42,0.82)_42%,rgba(15,23,42,0.38)_100%)]" />
-            <div className="absolute inset-x-0 bottom-0 h-56 bg-[linear-gradient(180deg,transparent_0%,#F8FAFC_100%)]" />
-          </motion.div>
-        </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-900/30" />
+        </motion.div>
+      </AnimatePresence>
 
-        <div className="relative z-10 flex min-h-[100svh] items-center">
-          <div className="mx-auto w-full max-w-[1500px] px-5 pb-24 pt-28 sm:px-8 md:pb-28 lg:px-10 xl:px-12">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={slide.id}
-                initial={{ y: 34, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -18, opacity: 0 }}
-                transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-                className="max-w-6xl"
-              >
-                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-2xl sm:mb-8">
-                  <Sparkles className="size-3.5 text-white" />
-                  MayDay International School
-                </div>
+      {/* Content */}
+      <div className="relative z-20 min-h-screen flex items-center">
+        <div className="max-w-[1450px] mx-auto w-full px-6 lg:px-10">
 
-                <h1 className="max-w-5xl text-[clamp(3.1rem,8.2vw,6rem)] font-semibold leading-[0.92] tracking-tight text-white">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: .7 }}
+            >
+              {/* Eyebrow */}
+              <div className="mb-8">
+                <span className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/10 backdrop-blur-xl px-5 py-3 text-xs font-semibold uppercase tracking-[4px] text-blue-200">
+                  Welcome To MayDay International School
+                </span>
+              </div>
+
+              {/* Heading */}
+              <div className="max-w-5xl">
+                <h1 className="text-white font-extrabold leading-[0.95] tracking-[-0.06em] text-[3.2rem] md:text-[5rem] lg:text-[6.5rem] xl:text-[7.5rem]">
                   {slide.title}
-                  <span className="block text-white/70">{slide.highlight}</span>
-                </h1>
 
-                <p className="mt-6 max-w-[700px] text-base leading-7 text-white/76 sm:mt-7 sm:text-lg sm:leading-8 md:text-xl md:leading-9">
+                  <span className="block text-blue-400 mt-3">
+                    {slide.highlight}
+                  </span>
+                </h1>
+              </div>
+
+              {/* Description */}
+              <div className="mt-10 max-w-2xl">
+                <p className="text-white/75 text-lg md:text-xl leading-9">
                   {slide.description}
                 </p>
+              </div>
 
-                <div className="mt-9 flex flex-col gap-3 sm:mt-11 sm:flex-row sm:items-center sm:gap-4">
-                  <Link
-                    to="/admissions"
-                    className="group inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#1D4ED8] px-7 text-sm font-semibold text-white shadow-[0_22px_60px_rgba(29,78,216,0.38)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_76px_rgba(29,78,216,0.48)] sm:h-16 sm:px-9"
-                  >
-                    Apply Now
-                    <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </Link>
+              {/* Buttons */}
+              <div className="mt-14 flex flex-wrap gap-5">
 
-                  <button
-                    type="button"
-                    className="group inline-flex h-14 items-center justify-center gap-3 rounded-full border border-white/18 bg-white/10 px-6 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_18px_54px_rgba(15,23,42,0.25)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/16 sm:h-16 sm:px-8"
-                  >
-                    <span className="grid size-9 place-items-center rounded-full bg-white text-[#1D4ED8] transition-transform duration-300 group-hover:scale-105 sm:size-10">
-                      <Play className="ml-0.5 size-4 fill-[#1D4ED8]" />
-                    </span>
-                    Watch Tour
-                  </button>
+                <Link
+                  to="/admissions"
+                  className="
+                  h-16
+                  px-9
+                  rounded-full
+                  bg-blue-700
+                  text-white
+                  font-semibold
+                  text-sm
+                  flex items-center gap-3
+                  transition-all duration-300
+                  hover:scale-105
+                  shadow-[0_20px_60px_rgba(29,78,216,.35)]
+                  "
+                >
+                  Apply Now
+
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+
+                <button
+                  className="
+                  h-16
+                  px-8
+                  rounded-full
+                  border border-white/10
+                  bg-white/10
+                  backdrop-blur-2xl
+                  text-white
+                  font-semibold
+                  flex items-center gap-4
+                  transition-all duration-300
+                  hover:bg-white/20
+                  "
+                >
+                  <div className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center">
+                    <Play className="w-4 h-4 fill-white" />
+                  </div>
+
+                  Watch Tour
+                </button>
+              </div>
+
+              {/* Statistics */}
+              <div
+                className="
+                mt-20
+                grid
+                grid-cols-1
+                sm:grid-cols-3
+                gap-5
+                max-w-5xl
+                "
+              >
+                <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
+                  <h2 className="text-white font-bold text-5xl">
+                    1200+
+                  </h2>
+
+                  <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
+                    Students
+                  </p>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
 
-        <div className="absolute bottom-8 left-5 z-20 flex items-center gap-3 sm:left-8 lg:left-10 xl:left-12">
-          {slides.map((item, index) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setActiveSlide(index)}
-              className={[
-                "h-2.5 rounded-full transition-all duration-500",
-                activeSlide === index
-                  ? "w-12 bg-white"
-                  : "w-2.5 bg-white/40 hover:bg-white/70",
-              ].join(" ")}
-              aria-label={`Show slide ${index + 1}`}
-            />
-          ))}
-        </div>
+                <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
+                  <h2 className="text-white font-bold text-5xl">
+                    98%
+                  </h2>
 
-        <div className="pointer-events-none absolute bottom-8 right-5 z-20 hidden rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/80 backdrop-blur-2xl lg:block">
-          Scroll
-        </div>
-      </section>
+                  <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
+                    Success Rate
+                  </p>
+                </div>
 
-      <section className="relative z-20 -mt-16 px-5 pb-16 sm:-mt-20 sm:px-8 lg:px-10 xl:px-12">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 overflow-hidden rounded-[28px] border border-[#1D4ED8]/10 bg-white shadow-[0_28px_90px_rgba(15,23,42,0.14)] sm:grid-cols-3">
-          {stats.map((stat, index) => (
-            <div
-              key={stat.label}
-              className={[
-                "relative px-7 py-7 sm:px-8 sm:py-9",
-                index !== 0 ? "border-t border-[#1D4ED8]/10 sm:border-l sm:border-t-0" : "",
-              ].join(" ")}
-            >
-              <div className="absolute inset-x-0 top-0 h-px bg-[#1D4ED8]/20" />
-              <p className="text-[clamp(2.3rem,5vw,4rem)] font-semibold leading-none tracking-tight text-[#1D4ED8]">
-                {stat.value}
-              </p>
-              <p className="mt-3 text-sm font-semibold uppercase tracking-[0.24em] text-[#0F172A]/64">
-                {stat.label}
-              </p>
-            </div>
-          ))}
+                <div className="rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl p-7">
+                  <h2 className="text-white font-bold text-5xl">
+                    15+
+                  </h2>
+
+                  <p className="text-white/60 mt-3 text-sm uppercase tracking-[3px]">
+                    Years Of Excellence
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
-      </section>
-    </div>
+      </div>
+
+      {/* Indicators */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-30">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setActiveSlide(index)}
+            className={`
+            transition-all duration-500 rounded-full
+            ${
+              activeSlide === index
+                ? "w-14 h-3 bg-blue-500"
+                : "w-3 h-3 bg-white/40"
+            }
+            `}
+          />
+        ))}
+      </div>
+
+      {/* Floating Scroll Indicator */}
+      <div className="hidden lg:flex absolute bottom-10 right-10 z-30">
+        <div className="rounded-full border border-white/10 bg-white/10 backdrop-blur-3xl px-5 py-3 text-white/80 text-sm">
+          Scroll Down ↓
+        </div>
+      </div>
+    </section>
   );
 };
 
 export default Hero;
+
