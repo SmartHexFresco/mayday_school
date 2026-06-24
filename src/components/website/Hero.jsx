@@ -500,15 +500,9 @@
 
 
 
-// Premium Hero (Apple × Vercel × Framer Inspired)
-// Blue + White Theme
-
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Play,
-} from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const slides = [
@@ -533,7 +527,7 @@ const slides = [
   {
     id: 3,
     title: "Building Character",
-    highlight: "Creating Leaders",
+    highlight: "Creating Future Leaders",
     description:
       "Developing confident, disciplined, and compassionate individuals prepared for tomorrow.",
     image: "/hero-slide-3.jpg",
@@ -542,7 +536,8 @@ const slides = [
 
 const Hero = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const intervalRef = useRef(null);
+
+  const intervalRef = useRef();
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -560,297 +555,154 @@ const Hero = () => {
       <AnimatePresence mode="wait">
         <motion.div
           key={slide.id}
-          initial={{
-            opacity: 0,
-            scale: 1.1,
-          }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-          }}
-          exit={{
-            opacity: 0,
-          }}
-          transition={{
-            duration: 1.5,
-          }}
+          initial={{ opacity: 0, scale: 1.08 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2 }}
           className="absolute inset-0"
         >
           <img
             src={slide.image}
-            className="w-full h-full object-cover"
             alt=""
+            className="h-full w-full object-cover"
           />
 
-          <div
-            className="
-            absolute
-            inset-0
-            bg-gradient-to-r
-            from-[#0F172A]/85
-            via-[#0F172A]/65
-            to-[#0F172A]/20
-          "
-          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/60 to-slate-900/20" />
         </motion.div>
       </AnimatePresence>
 
-      {/* Main Content */}
-      <div
-        className="
-        relative
-        z-20
-        h-full
-        max-w-7xl
-        mx-auto
-        px-6
-        flex
-        items-center
-      "
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={slide.id}
-            initial={{
-              opacity: 0,
-              y: 40,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.7,
-            }}
-            className="
-            max-w-3xl
-            rounded-[40px]
-            border
-            border-white/10
-            bg-white/10
-            backdrop-blur-2xl
-            shadow-[0_30px_80px_rgba(0,0,0,.2)]
-            p-8
-            md:p-12
-          "
-          >
-            {/* Eyebrow */}
-            <div
+      {/* Content */}
+      <div className="relative z-20 flex h-full items-center">
+        <div className="mx-auto w-full max-w-7xl px-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6 }}
               className="
-              text-blue-200
-              uppercase
-              tracking-[4px]
-              text-xs
-              font-semibold
-              mb-5
-            "
-            >
-              Welcome To MayDay International School
-            </div>
-
-            {/* Heading */}
-            <h1
-              className="
-              text-white
-              text-4xl
-              md:text-7xl
-              font-extrabold
-              leading-[1.05]
-              tracking-tight
-            "
-            >
-              {slide.title}
-
-              <span
-                className="
-                block
-                text-blue-400
-                mt-2
-              "
-              >
-                {slide.highlight}
-              </span>
-            </h1>
-
-            {/* Description */}
-            <p
-              className="
-              mt-8
-              text-white/80
-              leading-8
-              text-base
-              md:text-lg
-              max-w-2xl
-            "
-            >
-              {slide.description}
-            </p>
-
-            {/* Buttons */}
-            <div
-              className="
-              mt-10
-              flex
-              flex-wrap
-              gap-4
-            "
-            >
-              <Link
-                to="/admissions"
-                className="
-                h-14
-                px-8
-                rounded-full
-                bg-blue-700
-                text-white
-                font-semibold
-                flex
-                items-center
-                gap-3
-                shadow-[0_20px_40px_rgba(29,78,216,.4)]
-                hover:scale-105
-                transition-all
-              "
-              >
-                Apply Now
-
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-
-              <button
-                className="
-                h-14
-                px-8
-                rounded-full
-                border
-                border-white/20
+                max-w-3xl
+                rounded-[40px]
+                border border-white/10
                 bg-white/10
-                backdrop-blur-xl
-                text-white
-                font-semibold
-                flex
-                items-center
-                gap-3
-                hover:bg-white/20
-                transition-all
+                backdrop-blur-2xl
+                p-8
+                md:p-14
+                shadow-[0_25px_80px_rgba(0,0,0,0.2)]
               "
-              >
-                <div
+            >
+              {/* Eyebrow */}
+              <div className="mb-5 text-xs font-semibold uppercase tracking-[4px] text-blue-200">
+                Welcome To MayDay International School
+              </div>
+
+              {/* Heading */}
+              <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-white md:text-7xl">
+                {slide.title}
+
+                <span className="mt-2 block text-blue-400">
+                  {slide.highlight}
+                </span>
+              </h1>
+
+              {/* Description */}
+              <p className="mt-8 max-w-2xl text-base leading-8 text-white/80 md:text-lg">
+                {slide.description}
+              </p>
+
+              {/* Buttons */}
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Link
+                  to="/admissions"
                   className="
-                  w-10
-                  h-10
-                  rounded-full
-                  bg-white/20
-                  flex
-                  items-center
-                  justify-center
-                "
+                    flex h-14 items-center gap-3
+                    rounded-full
+                    bg-blue-700
+                    px-8
+                    text-sm
+                    font-semibold
+                    text-white
+                    shadow-[0_20px_40px_rgba(29,78,216,.35)]
+                    transition-all duration-300
+                    hover:scale-105
+                  "
                 >
-                  <Play className="w-4 h-4 fill-white" />
+                  Apply Now
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+
+                <button
+                  className="
+                    flex h-14 items-center gap-3
+                    rounded-full
+                    border border-white/20
+                    bg-white/10
+                    px-8
+                    text-sm
+                    font-semibold
+                    text-white
+                    backdrop-blur-xl
+                    transition-all duration-300
+                    hover:bg-white/20
+                  "
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
+                    <Play className="h-4 w-4" />
+                  </div>
+
+                  Watch Tour
+                </button>
+              </div>
+
+              {/* Stats */}
+              <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div className="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur-xl">
+                  <h3 className="text-3xl font-bold text-white">
+                    1200+
+                  </h3>
+
+                  <p className="mt-2 text-sm text-white/70">
+                    Students
+                  </p>
                 </div>
 
-                Watch Tour
-              </button>
-            </div>
+                <div className="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur-xl">
+                  <h3 className="text-3xl font-bold text-white">
+                    98%
+                  </h3>
 
-            {/* Stats */}
-            <div
-              className="
-              mt-14
-              grid
-              grid-cols-3
-              gap-4
-            "
-            >
-              <div
-                className="
-                rounded-3xl
-                bg-white/10
-                border
-                border-white/10
-                backdrop-blur-xl
-                p-5
-              "
-              >
-                <h3 className="text-white text-3xl font-bold">
-                  1200+
-                </h3>
+                  <p className="mt-2 text-sm text-white/70">
+                    Success Rate
+                  </p>
+                </div>
 
-                <p className="text-white/70 mt-2 text-sm">
-                  Students
-                </p>
+                <div className="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur-xl">
+                  <h3 className="text-3xl font-bold text-white">
+                    15+
+                  </h3>
+
+                  <p className="mt-2 text-sm text-white/70">
+                    Years Experience
+                  </p>
+                </div>
               </div>
-
-              <div
-                className="
-                rounded-3xl
-                bg-white/10
-                border
-                border-white/10
-                backdrop-blur-xl
-                p-5
-              "
-              >
-                <h3 className="text-white text-3xl font-bold">
-                  98%
-                </h3>
-
-                <p className="text-white/70 mt-2 text-sm">
-                  Success Rate
-                </p>
-              </div>
-
-              <div
-                className="
-                rounded-3xl
-                bg-white/10
-                border
-                border-white/10
-                backdrop-blur-xl
-                p-5
-              >
-                <h3 className="text-white text-3xl font-bold">
-                  15+
-                </h3>
-
-                <p className="text-white/70 mt-2 text-sm">
-                  Years Experience
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Indicators */}
-      <div
-        className="
-        absolute
-        bottom-10
-        left-1/2
-        -translate-x-1/2
-        flex
-        gap-3
-        z-30
-      "
-      >
+      <div className="absolute bottom-10 left-1/2 z-30 flex -translate-x-1/2 gap-3">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setActiveSlide(index)}
-            className={`
-              transition-all
-              duration-500
-              rounded-full
-              ${
-                activeSlide === index
-                  ? "w-12 h-3 bg-blue-500"
-                  : "w-3 h-3 bg-white/50"
-              }
-            `}
+            className={`transition-all duration-500 rounded-full ${
+              activeSlide === index
+                ? "h-3 w-12 bg-blue-500"
+                : "h-3 w-3 bg-white/50"
+            }`}
           />
         ))}
       </div>
