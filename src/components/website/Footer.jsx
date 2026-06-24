@@ -110,13 +110,19 @@ const Footer = () => {
             </h3>
 
             <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span className="text-gray-300 text-sm leading-relaxed">
-                  Trans-Ekulu, Abakpa,<br />
-                  Enugu State, Nigeria
-                </span>
-              </li>
+             <li className="flex items-start gap-3">
+            <MapPin className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+            <a
+             href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x1044a311598314b1:0xc481ce57ded232d6?entry=gemini&utm_source=gemini&utm_campaign=gem-default"
+             target="_blank"
+             rel="noopener noreferrer"
+             className="text-gray-300 hover:text-yellow-400 text-sm leading-relaxed transition-colors"
+            >
+             Plot 427 Bishop Shanahan Road,<br />
+             near New Timber Market, GRA,<br />
+             Enugu 400103, Nigeria
+            </a>
+            </li>
 
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-yellow-400 shrink-0" />
