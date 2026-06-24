@@ -20,10 +20,10 @@ import PortalLayout from '@layouts/PortalLayout'
 import Home from '@pages/website/Home'
 import About from '@pages/website/About'
 import Admissions from '@pages/website/Admissions'
-import Academics from '@pages/website/Academics'
+// import Academics from '@pages/website/Academics'
 import Contact from '@pages/website/Contact'
-import Specialties from '@pages/website/Specialties'
-import Administration from '@pages/website/Administration'
+//import Specialties from '@pages/website/Specialties'
+//import Administration from '@pages/website/Administration'
 import Reports from '@pages/website/Reports'
 import FAQ from '@pages/website/FAQ'  // Add this import
 
