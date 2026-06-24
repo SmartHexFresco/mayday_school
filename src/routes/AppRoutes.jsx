@@ -40,9 +40,9 @@ const AppRoutes = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/admissions" element={<Admissions />} />
-          <Route path="/academics" element={<Academics />} />
-          <Route path="/specialties" element={<Specialties />} />
-          <Route path="/administration" element={<Administration />} />
+          {/* <Route path="/academics" element={<Academics />} /> */}
+          {/* <Route path="/specialties" element={<Specialties />} /> */}
+          {/* <Route path="/administration" element={<Administration />} /> */}
           <Route path="/reports" element={<Reports />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />  {/* Add this route */}
