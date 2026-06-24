@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-// import { FaFacebook } from 'react-icons/fa'
 import {
   GraduationCap,
   Phone,
@@ -8,22 +7,16 @@ import {
   MessageCircle,
 } from 'lucide-react'
 
-{/* <FaFacebook className="w-4 h-4" /> */}
-
 const quickLinks = [
   { name: 'Home', path: '/' },
   { name: 'About Us', path: '/about' },
   { name: 'Admissions', path: '/admissions' },
-  { name: 'Academics', path: '/academics' },
-  { name: 'Administration', path: '/administration' },
-  { name: 'Specialties', path: '/specialties' },
 ]
 
 const resourceLinks = [
-  // { name: 'Gallery', path: '/gallery' },
   { name: 'Events', path: '/news' },
   { name: 'Reports', path: '/reports' },
-  { name: 'FAQ', path: '/faq' },  // ← FAQ LINK ADDED HERE
+  { name: 'FAQ', path: '/faq' },
   { name: 'Contact Us', path: '/contact' },
   { name: 'Student Portal', path: '/portal/student-login' },
   { name: 'Staff Portal', path: '/portal/staff-login' },
@@ -34,21 +27,15 @@ const Footer = () => {
 
   return (
     <footer className="bg-blue-700 text-white">
-
-      {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-
-          {/* Column 1 — Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
               <div className="w-10 h-10 bg-yellow-600 rounded-full flex items-center justify-center">
                 <GraduationCap className="w-5 h-5 text-white" />
               </div>
               <div className="leading-tight">
-                <p className="font-semibold text-sm text-white">
-                  MayDay 
-                </p>
+                <p className="font-semibold text-sm text-white">MayDay</p>
                 <p className="text-yellow-400 text-xs">Int'l School</p>
               </div>
             </Link>
@@ -58,7 +45,6 @@ const Footer = () => {
               education, strong values, and a passion for learning.
             </p>
 
-            {/* Social Links */}
             <div className="flex items-center gap-3 pt-2">
               <a
                 href="https://wa.me/234XXXXXXXXXX"
@@ -71,7 +57,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="mailto:info@clustersoftreasure.edu.ng"
+                href="mailto:info@maydayschool.edu.ng"
                 className="w-9 h-9 bg-white/10 hover:bg-yellow-600 rounded-full flex items-center justify-center transition-colors duration-200"
                 aria-label="Email"
               >
@@ -80,7 +66,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Column 2 — Quick Links */}
           <div>
             <h3 className="text-yellow-400 font-semibold text-sm uppercase tracking-widest mb-5">
               Quick Links
@@ -100,7 +85,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 3 — Resources */}
           <div>
             <h3 className="text-yellow-400 font-semibold text-sm uppercase tracking-widest mb-5">
               Resources
@@ -120,7 +104,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4 — Contact Info */}
           <div>
             <h3 className="text-yellow-400 font-semibold text-sm uppercase tracking-widest mb-5">
               Contact Us
@@ -130,8 +113,8 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                 <span className="text-gray-300 text-sm leading-relaxed">
-                  Your School Address,<br />
-                  Enugu, Nigeria
+                  Trans-Ekulu, Abakpa,<br />
+                  Enugu State, Nigeria
                 </span>
               </li>
 
@@ -160,30 +143,27 @@ const Footer = () => {
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-yellow-400 shrink-0" />
                 <a
-                  href="mailto:info@MayDay.edu.ng"
+                  href="mailto:info@maydayschool.edu.ng"
                   className="text-gray-300 hover:text-yellow-400 text-sm"
                 >
-                  info@MayDay.edu.ng
+                  info@maydayschool.edu.ng
                 </a>
               </li>
             </ul>
           </div>
-
         </div>
       </div>
 
-      {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white text-xs text-center sm:text-left">
             &copy; {currentYear} Powered by Bravotechub School Portal. All rights reserved.
           </p>
           <p className="text-white text-xs">
-            Designed & Developed with ❤️ for Excellence in Education
+            Designed & Developed with love for Excellence in Education
           </p>
         </div>
       </div>
-
     </footer>
   )
 }
