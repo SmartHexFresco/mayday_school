@@ -300,7 +300,7 @@ import {
   UserRound,
 } from "lucide-react";
 
-const links = [
+const navLinks = [
   {
     name: "Home",
     path: "/",
@@ -324,23 +324,23 @@ const Navbar = () => {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    let lastScroll = window.scrollY;
+    let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
-      const current = window.scrollY;
+      const currentScrollY = window.scrollY;
 
-      if (current > 120) {
-        if (current > lastScroll) {
+      if (currentScrollY > 120) {
+        if (currentScrollY > lastScrollY + 10) {
           setHidden(true);
           setMobileOpen(false);
-        } else {
+        } else if (currentScrollY < lastScrollY - 10) {
           setHidden(false);
         }
       } else {
         setHidden(false);
       }
 
-      lastScroll = current;
+      lastScrollY = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -350,43 +350,57 @@ const Navbar = () => {
 
   return (
     <>
+      {/* Desktop Navbar */}
       <header
         className={`
-        fixed top-5 left-1/2 -translate-x-1/2
+        fixed
+        top-5
+        left-1/2
+        -translate-x-1/2
+        z-50
         w-[94%]
         max-w-7xl
-        z-50
-        transition-all duration-500
-        ${hidden ? "-translate-y-40" : "translate-y-0 -translate-x-1/2"}
+        transition-all
+        duration-500
+        ${
+          hidden
+            ? "-translate-y-40 -translate-x-1/2"
+            : "translate-y-0 -translate-x-1/2"
+        }
       `}
       >
         <div
           className="
           h-20
+          px-8
           rounded-full
           border border-white/20
           bg-white/80
           backdrop-blur-xl
-          shadow-[0_10px_40px_rgba(0,0,0,0.08)]
-          px-8
-          flex items-center justify-between
+          shadow-[0_20px_60px_rgba(0,0,0,0.08)]
+          flex
+          items-center
+          justify-between
         "
         >
-          {/* logo */}
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
             <div
               className="
-              h-12 w-12
+              h-12
+              w-12
               rounded-2xl
               bg-[#0B1F3A]
-              flex items-center justify-center
+              flex
+              items-center
+              justify-center
             "
             >
               <GraduationCap className="w-6 h-6 text-white" />
             </div>
 
             <div>
-              <h2 className="font-bold text-[#0B1F3A] text-lg">
+              <h2 className="font-bold text-lg text-[#0B1F3A]">
                 MayDay
               </h2>
 
@@ -396,24 +410,27 @@ const Navbar = () => {
             </div>
           </Link>
 
-          {/* desktop links */}
+          {/* Navigation */}
           <div className="hidden lg:flex items-center gap-2">
-            {links.map((link) => (
+            {navLinks.map((link) => (
               <NavLink
                 key={link.path}
                 to={link.path}
                 end={link.path === "/"}
                 className={({ isActive }) =>
                   `
-                  px-5 py-3
+                  px-5
+                  py-3
                   rounded-full
                   text-sm
                   font-medium
-                  transition-all duration-300
+                  transition-all
+                  duration-300
+                  hover:-translate-y-0.5
                   ${
                     isActive
                       ? "bg-[#0B1F3A] text-white"
-                      : "text-gray-600 hover:bg-gray-100"
+                      : "text-slate-600 hover:bg-gray-100"
                   }
                 `
                 }
@@ -423,16 +440,19 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* right buttons */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Right side */}
+          <div className="hidden lg:flex items-center gap-4">
             <Link
               to="/portal/student-login"
               className="
-              flex items-center gap-2
+              flex
+              items-center
+              gap-2
               text-sm
               font-medium
-              text-gray-700
+              text-slate-700
               hover:text-[#0B1F3A]
+              transition-colors
             "
             >
               <UserRound className="w-4 h-4" />
@@ -447,11 +467,14 @@ const Navbar = () => {
               rounded-full
               bg-[#0B1F3A]
               text-white
-              font-semibold
               text-sm
-              flex items-center gap-2
+              font-semibold
+              flex
+              items-center
+              gap-2
+              transition-all
+              duration-300
               hover:scale-105
-              transition-all duration-300
             "
             >
               Apply Now
@@ -459,28 +482,34 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* mobile button */}
+          {/* Mobile Button */}
           <button
             onClick={() => setMobileOpen(true)}
             className="
             lg:hidden
-            w-11 h-11
+            h-11
+            w-11
             rounded-full
-            bg-gray-100
-            flex items-center justify-center
+            bg-slate-100
+            flex
+            items-center
+            justify-center
           "
           >
-            <Menu className="w-5 h-5" />
+            <Menu className="w-5 h-5 text-slate-800" />
           </button>
         </div>
       </header>
 
-      {/* mobile menu */}
+      {/* Mobile Menu */}
       <div
         className={`
-        fixed inset-0 z-[100]
+        fixed
+        inset-0
+        z-[100]
         bg-[#07111F]
-        transition-all duration-500
+        transition-all
+        duration-500
         ${
           mobileOpen
             ? "opacity-100 visible"
@@ -488,13 +517,14 @@ const Navbar = () => {
         }
       `}
       >
+        {/* Top */}
         <div className="h-24 px-8 flex items-center justify-between">
           <div>
             <h2 className="text-white text-xl font-bold">
               MayDay
             </h2>
 
-            <p className="text-white/50 text-xs uppercase tracking-[4px]">
+            <p className="uppercase tracking-[4px] text-xs text-white/50">
               International School
             </p>
           </div>
@@ -502,10 +532,13 @@ const Navbar = () => {
           <button
             onClick={() => setMobileOpen(false)}
             className="
-            w-12 h-12
+            h-12
+            w-12
             rounded-full
             bg-white/10
-            flex items-center justify-center
+            flex
+            items-center
+            justify-center
             text-white
           "
           >
@@ -513,15 +546,17 @@ const Navbar = () => {
           </button>
         </div>
 
+        {/* Links */}
         <div
           className="
+          mt-20
           px-8
-          mt-16
-          flex flex-col
+          flex
+          flex-col
           gap-8
         "
         >
-          {links.map((link) => (
+          {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
@@ -538,13 +573,15 @@ const Navbar = () => {
             </NavLink>
           ))}
 
-          <div className="border-t border-white/10 pt-10 mt-6">
+          <div className="border-t border-white/10 pt-10 mt-8">
             <Link
               to="/portal/student-login"
               className="
-              flex items-center gap-3
-              text-white/80
+              flex
+              items-center
+              gap-3
               text-lg
+              text-white/80
               mb-8
             "
             >
@@ -556,11 +593,11 @@ const Navbar = () => {
               to="/admissions"
               className="
               h-14
+              px-8
               rounded-full
               bg-[#D4AF37]
               text-[#07111F]
               font-bold
-              px-8
               inline-flex
               items-center
               gap-3
@@ -577,4 +614,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
-```
+
