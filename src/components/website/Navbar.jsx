@@ -289,7 +289,6 @@
 
 
 
-
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
@@ -321,26 +320,11 @@ const navLinks = [
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > 120) {
-        if (currentScrollY > lastScrollY + 10) {
-          setHidden(true);
-          setMobileOpen(false);
-        } else if (currentScrollY < lastScrollY - 10) {
-          setHidden(false);
-        }
-      } else {
-        setHidden(false);
-      }
-
-      lastScrollY = currentScrollY;
+      setVisible(window.scrollY > 80);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -350,7 +334,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Desktop Navbar */}
+      {/* NAVBAR */}
       <header
         className={`
         fixed
@@ -361,57 +345,74 @@ const Navbar = () => {
         w-[94%]
         max-w-7xl
         transition-all
-        duration-500
+        duration-700
         ${
-          hidden
-            ? "-translate-y-40 -translate-x-1/2"
-            : "translate-y-0 -translate-x-1/2"
+          visible
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-10 opacity-0"
         }
       `}
       >
         <div
           className="
           h-20
-          px-8
+          px-4
+          sm:px-8
           rounded-full
-          border border-white/20
-          bg-white/80
-          backdrop-blur-xl
+          border
+          border-white/30
+          bg-white/20
+          backdrop-blur-2xl
           shadow-[0_20px_60px_rgba(0,0,0,0.08)]
           flex
           items-center
           justify-between
         "
         >
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
+          {/* LOGO */}
+          <Link
+            to="/"
+            className="flex items-center gap-3"
+          >
             <div
               className="
               h-12
               w-12
               rounded-2xl
-              bg-[#0B1F3A]
+              bg-blue-700
               flex
               items-center
               justify-center
+              shadow-lg
             "
             >
               <GraduationCap className="w-6 h-6 text-white" />
             </div>
 
-            <div>
-              <h2 className="font-bold text-lg text-[#0B1F3A]">
+            <div className="hidden sm:block">
+              <h2 className="font-bold text-lg text-blue-950">
                 MayDay
               </h2>
 
-              <p className="uppercase tracking-[3px] text-[10px] text-gray-500">
+              <p className="uppercase tracking-[3px] text-[10px] text-slate-500">
                 International School
               </p>
             </div>
           </Link>
 
-          {/* Navigation */}
-          <div className="hidden lg:flex items-center gap-2">
+          {/* DESKTOP LINKS */}
+          <div
+            className="
+            hidden
+            lg:flex
+            items-center
+            gap-2
+            bg-white/50
+            backdrop-blur-xl
+            rounded-full
+            p-2
+          "
+          >
             {navLinks.map((link) => (
               <NavLink
                 key={link.path}
@@ -429,8 +430,8 @@ const Navbar = () => {
                   hover:-translate-y-0.5
                   ${
                     isActive
-                      ? "bg-[#0B1F3A] text-white"
-                      : "text-slate-600 hover:bg-gray-100"
+                      ? "bg-blue-700 text-white shadow-lg"
+                      : "text-slate-700 hover:bg-white"
                   }
                 `
                 }
@@ -440,32 +441,43 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Right side */}
-          <div className="hidden lg:flex items-center gap-4">
+          {/* RIGHT BUTTONS */}
+          <div className="hidden lg:flex items-center gap-3">
+            {/* PORTAL */}
             <Link
               to="/portal/student-login"
               className="
+              h-12
+              px-5
+              rounded-full
+              bg-blue-50
+              border
+              border-blue-100
+              text-blue-700
+              text-sm
+              font-semibold
               flex
               items-center
               gap-2
-              text-sm
-              font-medium
-              text-slate-700
-              hover:text-[#0B1F3A]
-              transition-colors
+              transition-all
+              duration-300
+              hover:bg-white
+              hover:shadow-xl
+              hover:-translate-y-0.5
             "
             >
               <UserRound className="w-4 h-4" />
               Portal
             </Link>
 
+            {/* APPLY */}
             <Link
               to="/admissions"
               className="
               h-12
               px-6
               rounded-full
-              bg-[#0B1F3A]
+              bg-blue-700
               text-white
               text-sm
               font-semibold
@@ -475,6 +487,7 @@ const Navbar = () => {
               transition-all
               duration-300
               hover:scale-105
+              shadow-xl
             "
             >
               Apply Now
@@ -482,32 +495,36 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile Button */}
+          {/* MOBILE BUTTON */}
           <button
             onClick={() => setMobileOpen(true)}
             className="
             lg:hidden
-            h-11
-            w-11
+            h-12
+            w-12
             rounded-full
-            bg-slate-100
+            bg-white/40
+            backdrop-blur-xl
+            border
+            border-white/30
             flex
             items-center
             justify-center
           "
-          >
-            <Menu className="w-5 h-5 text-slate-800" />
+        >
+            <Menu className="w-5 h-5 text-blue-900" />
           </button>
         </div>
       </header>
 
-      {/* Mobile Menu */}
+      {/* PREMIUM MOBILE MENU */}
       <div
         className={`
         fixed
         inset-0
         z-[100]
-        bg-[#07111F]
+        bg-white/70
+        backdrop-blur-3xl
         transition-all
         duration-500
         ${
@@ -517,14 +534,22 @@ const Navbar = () => {
         }
       `}
       >
-        {/* Top */}
-        <div className="h-24 px-8 flex items-center justify-between">
+        {/* TOP */}
+        <div
+          className="
+          h-24
+          px-6
+          flex
+          items-center
+          justify-between
+        "
+        >
           <div>
-            <h2 className="text-white text-xl font-bold">
+            <h2 className="font-bold text-2xl text-blue-950">
               MayDay
             </h2>
 
-            <p className="uppercase tracking-[4px] text-xs text-white/50">
+            <p className="text-xs uppercase tracking-[4px] text-slate-500">
               International School
             </p>
           </div>
@@ -535,25 +560,25 @@ const Navbar = () => {
             h-12
             w-12
             rounded-full
-            bg-white/10
+            bg-white
+            shadow-lg
             flex
             items-center
             justify-center
-            text-white
           "
           >
-            <X />
+            <X className="text-blue-900" />
           </button>
         </div>
 
-        {/* Links */}
+        {/* LINKS */}
         <div
           className="
-          mt-20
+          mt-12
           px-8
           flex
           flex-col
-          gap-8
+          gap-7
         "
         >
           {navLinks.map((link) => (
@@ -564,43 +589,54 @@ const Navbar = () => {
               className="
               text-4xl
               font-semibold
-              text-white
-              hover:text-[#D4AF37]
-              transition-colors
+              text-blue-950
+              transition-all
+              duration-300
+              hover:translate-x-2
             "
             >
               {link.name}
             </NavLink>
           ))}
 
-          <div className="border-t border-white/10 pt-10 mt-8">
+          {/* BUTTONS */}
+          <div className="pt-12 space-y-4">
             <Link
               to="/portal/student-login"
+              onClick={() => setMobileOpen(false)}
               className="
+              h-14
+              rounded-2xl
+              bg-blue-50
+              border
+              border-blue-100
+              text-blue-700
+              font-semibold
               flex
               items-center
+              justify-center
               gap-3
-              text-lg
-              text-white/80
-              mb-8
+              shadow-lg
             "
             >
-              <UserRound />
-              Portal
+              <UserRound className="w-5 h-5" />
+              Student Portal
             </Link>
 
             <Link
               to="/admissions"
+              onClick={() => setMobileOpen(false)}
               className="
               h-14
-              px-8
-              rounded-full
-              bg-[#D4AF37]
-              text-[#07111F]
+              rounded-2xl
+              bg-blue-700
+              text-white
               font-bold
-              inline-flex
+              flex
               items-center
+              justify-center
               gap-3
+              shadow-[0_20px_40px_rgba(29,78,216,0.3)]
             "
             >
               Apply Now
