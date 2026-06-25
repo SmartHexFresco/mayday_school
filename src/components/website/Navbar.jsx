@@ -33,33 +33,13 @@ const Navbar = () => {
   const [visible, setVisible] = useState(false);
 
  useEffect(() => {
-  let lastScrollY = window.scrollY;
-
   const handleScroll = () => {
-    const currentScrollY = window.scrollY;
-
-    // Hide when near top
-    if (currentScrollY <= 80) {
-      setVisible(false);
-    }
-    // Show when scrolling up
-    else if (currentScrollY < lastScrollY) {
-      setVisible(true);
-    }
-    // Hide when scrolling down
-    else {
-      setVisible(false);
-    }
-
-    lastScrollY = currentScrollY;
+    setVisible(window.scrollY > 80);
   };
 
-  window.addEventListener("scroll", handleScroll, {
-    passive: true,
-  });
+  window.addEventListener("scroll", handleScroll);
 
-  return () =>
-    window.removeEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
 }, []);
 
   return (
