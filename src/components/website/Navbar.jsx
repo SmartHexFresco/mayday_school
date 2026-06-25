@@ -38,14 +38,17 @@ const Navbar = () => {
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
 
-    if (currentScrollY < 120) {
+    // Hide when near top
+    if (currentScrollY <= 80) {
       setVisible(false);
-    } else {
-      if (currentScrollY < lastScrollY) {
-        setVisible(true);
-      } else {
-        setVisible(false);
-      }
+    }
+    // Show when scrolling up
+    else if (currentScrollY < lastScrollY) {
+      setVisible(true);
+    }
+    // Hide when scrolling down
+    else {
+      setVisible(false);
     }
 
     lastScrollY = currentScrollY;
@@ -57,28 +60,29 @@ const Navbar = () => {
 
   return () =>
     window.removeEventListener("scroll", handleScroll);
-  }, []);
+}, []);
 
   return (
     <>
       {/* NAVBAR */}
       <header
-        className={`
-        fixed
-        top-5
-        left-1/2
-        -translate-x-1/2
-        z-50
-        w-[94%]
-        max-w-7xl
-        transition-all
-        duration-700
-        ${
-          visible
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-10 opacity-0"
-        }
-      `}
+  className={`
+    fixed
+    top-5
+    left-1/2
+    -translate-x-1/2
+    z-50
+    w-[94%]
+    max-w-7xl
+    transition-all
+    duration-500
+    ${
+      visible
+        ? "translate-y-0 opacity-100"
+        : "-translate-y-24 opacity-0 pointer-events-none"
+    }
+  `}
+
       >
         <div
           className="
