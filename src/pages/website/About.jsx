@@ -614,7 +614,7 @@ const About = () => {
           </div>
         </div>
       </section>
-       id="p2m4jf"
+      
       {/* Academic Levels */}
       <section className="bg-slate-50 py-28">
 
@@ -842,18 +842,18 @@ const About = () => {
             shadow-xl
             "
           >
-            <iframe
-              src="https://www.google.com/maps?q=Abuja&output=embed"
-              className="h-[500px] w-full border-0"
-              loading="lazy"
-              title="School Location"
-            />
+           <iframe
+            src="https://www.google.com/maps?q=New+GRA,+Trans-Ekulu,+Enugu,+Nigeria&output=embed"
+            className="h-[500px] w-full border-0"
+            loading="lazy"
+            title="MayDay International School Location"
+          />
           </div>
 
           <div className="mt-10 text-center">
 
             <p className="text-slate-600 text-lg">
-              Your Full School Address, Enugu, Nigeria
+              New GRA, Trans-Ekulu, Enugu State, Nigeria
             </p>
 
             <Link
