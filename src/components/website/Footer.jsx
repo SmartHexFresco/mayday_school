@@ -127,17 +127,17 @@ const Footer = () => {
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-yellow-400 shrink-0" />
                 <a
-                  href="tel:+234XXXXXXXXXX"
+                  href="tel:+234 802 271 1280"
                   className="text-gray-300 hover:text-yellow-400 text-sm"
                 >
-                  +234 XXX XXX XXXX
+                  +234 802 271 1280
                 </a>
               </li>
 
               <li className="flex items-center gap-3">
                 <MessageCircle className="w-4 h-4 text-yellow-400 shrink-0" />
                 <a
-                  href="https://wa.me/234XXXXXXXXXX"
+                  href="https://wa.me/234 803 334 3041"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-yellow-400 text-sm"

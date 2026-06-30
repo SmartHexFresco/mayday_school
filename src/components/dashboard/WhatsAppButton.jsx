@@ -8,7 +8,7 @@ const WhatsAppButton = () => {
   const [lastMessageTime, setLastMessageTime] = useState(null)
   
   // WhatsApp number (without + sign)
-  const phoneNumber = "2348012345678" // CHANGE THIS TO YOUR NUMBER
+  const phoneNumber = "234 803 334 3041" // CHANGE THIS TO YOUR NUMBER
   
   // Business hours
   const businessHours = {
