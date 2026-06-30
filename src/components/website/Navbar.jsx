@@ -9,10 +9,22 @@ import {
 } from "lucide-react";
 
 const navLinks = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Admissions", path: "/admissions" },
-  { name: "Contact", path: "/contact" },
+  {
+    name: "Home",
+    path: "/",
+  },
+  {
+    name: "About",
+    path: "/about",
+  },
+  {
+    name: "Admissions",
+    path: "/admissions",
+  },
+  {
+    name: "Contact",
+    path: "/contact",
+  },
 ];
 
 const Navbar = () => {
@@ -21,215 +33,500 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 24);
+      setScrolled(window.scrollY > 80);
     };
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
+    window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") setMobileOpen(false);
-    };
-
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    window.addEventListener("keydown", handleKeyDown);
-
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
     return () => {
       document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [mobileOpen]);
 
-  const closeMobileMenu = () => setMobileOpen(false);
-
   return (
     <>
-      <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:px-5 sm:pt-5 lg:px-8">
-        <nav
-          className={`mx-auto flex h-16 w-full max-w-7xl items-center justify-between rounded-full border px-3 transition-all duration-500 ease-out sm:h-[76px] sm:px-5 lg:px-6 ${
+      <header
+        className={`
+          fixed
+          top-4
+          sm:top-6
+          left-1/2
+          -translate-x-1/2
+          z-50
+          w-[92%]
+          sm:w-[94%]
+          max-w-7xl
+          transition-all
+          duration-700
+          ease-out
+          ${
             scrolled
-              ? "border-blue-100/80 bg-white/78 shadow-[0_24px_80px_rgba(37,99,235,0.18)] backdrop-blur-2xl"
-              : "border-white/35 bg-white/18 shadow-[0_18px_70px_rgba(37,99,235,0.08)] backdrop-blur-md"
-          }`}
-          aria-label="Main navigation"
+              ? "translate-y-0 opacity-100"
+              : "translate-y-[-120%] opacity-0"
+          }
+        `}
+      >
+        <div
+          className={`
+            h-[72px]
+            sm:h-[80px]
+            px-4
+            sm:px-6
+            lg:px-8
+            rounded-full
+            flex
+            items-center
+            justify-between
+            transition-all
+            duration-500
+            ${
+              scrolled
+                ? "bg-white/70 backdrop-blur-2xl border border-white/30 shadow-[0_20px_60px_-10px_rgba(0,0,0,0.08)]"
+                : "bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_20px_60px_-10px_rgba(0,0,0,0.05)]"
+            }
+          `}
         >
+          {/* LOGO */}
           <Link
             to="/"
-            onClick={closeMobileMenu}
-            className="group flex min-w-0 items-center gap-2 rounded-full pr-2 transition-transform duration-300 hover:scale-[1.01] sm:gap-3"
-            aria-label="MayDay International School home"
+            className="flex items-center gap-3 sm:gap-4 flex-shrink-0"
           >
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-700 shadow-[0_12px_32px_rgba(29,78,216,0.34)] transition-all duration-300 group-hover:bg-blue-800 sm:h-12 sm:w-12">
-              <GraduationCap className="h-5 w-5 text-white sm:h-6 sm:w-6" />
-            </span>
+            <div
+              className="
+                h-11
+                w-11
+                sm:h-12
+                sm:w-12
+                rounded-2xl
+                bg-gradient-to-br
+                from-blue-600
+                to-blue-800
+                flex
+                items-center
+                justify-center
+                shadow-[0_8px_24px_-6px_rgba(29,78,216,0.3)]
+                transition-all
+                duration-300
+                hover:shadow-[0_12px_32px_-8px_rgba(29,78,216,0.4)]
+                hover:scale-105
+              "
+            >
+              <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            </div>
 
-            <span className="min-w-0 leading-none">
-              <span className="block truncate text-[15px] font-semibold tracking-[-0.01em] text-blue-950 sm:text-lg">
+            <div className="leading-tight">
+              <h2
+                className="
+                  font-bold
+                  text-base
+                  sm:text-xl
+                  text-blue-950
+                  tracking-tight
+                  transition-colors
+                  duration-300
+                "
+              >
                 MayDay
-              </span>
-              <span className="mt-1 block truncate text-[7px] font-semibold uppercase tracking-[0.18em] text-blue-500 min-[360px]:text-[8px] sm:text-[10px] sm:tracking-[0.24em]">
+              </h2>
+              <p
+                className="
+                  uppercase
+                  tracking-[2px]
+                  sm:tracking-[3px]
+                  text-[7px]
+                  sm:text-[9px]
+                  text-slate-500
+                  font-medium
+                  hidden
+                  xs:block
+                "
+              >
                 International School
-              </span>
-            </span>
+              </p>
+            </div>
           </Link>
 
-          <div className="hidden items-center gap-1 rounded-full border border-blue-100/70 bg-white/64 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl lg:flex">
-            {navLinks.map((link) => (
+          {/* DESKTOP NAVIGATION */}
+          <div className="hidden lg:flex items-center gap-1">
+            <div
+              className="
+                flex
+                items-center
+                gap-1
+                bg-white/40
+                backdrop-blur-xl
+                rounded-full
+                p-1.5
+                border
+                border-white/30
+              "
+            >
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.path}
+                  to={link.path}
+                  end={link.path === "/"}
+                  className={({ isActive }) =>
+                    `
+                      px-5
+                      py-2.5
+                      rounded-full
+                      text-sm
+                      font-medium
+                      transition-all
+                      duration-300
+                      ease-out
+                      hover:-translate-y-0.5
+                      ${
+                        isActive
+                          ? "bg-blue-700 text-white shadow-[0_8px_24px_-6px_rgba(29,78,216,0.4)]"
+                          : "text-slate-700 hover:bg-white/60 hover:text-blue-700"
+                      }
+                    `
+                  }
+                >
+                  {link.name}
+                </NavLink>
+              ))}
+            </div>
+
+            {/* PORTAL BUTTON */}
+            <Link
+              to="/portal/student-login"
+              className="
+                ml-2
+                h-[44px]
+                px-5
+                rounded-full
+                border-2
+                border-blue-200
+                bg-white/50
+                backdrop-blur-sm
+                text-blue-700
+                text-sm
+                font-semibold
+                flex
+                items-center
+                gap-2
+                transition-all
+                duration-300
+                hover:bg-white
+                hover:border-blue-300
+                hover:shadow-[0_8px_24px_-6px_rgba(29,78,216,0.15)]
+                hover:-translate-y-0.5
+              "
+            >
+              <UserRound className="w-4 h-4" />
+              Portal
+            </Link>
+
+            {/* APPLY BUTTON */}
+            <Link
+              to="/admissions"
+              className="
+                ml-1
+                h-[44px]
+                px-6
+                rounded-full
+                bg-gradient-to-r
+                from-blue-600
+                to-blue-700
+                text-white
+                text-sm
+                font-semibold
+                flex
+                items-center
+                gap-2
+                transition-all
+                duration-300
+                hover:shadow-[0_12px_32px_-8px_rgba(29,78,216,0.4)]
+                hover:-translate-y-0.5
+                hover:scale-105
+                shadow-[0_8px_24px_-6px_rgba(29,78,216,0.3)]
+              "
+            >
+              Apply Now
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </div>
+
+          {/* MOBILE MENU TOGGLE */}
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="
+              lg:hidden
+              h-11
+              w-11
+              sm:h-12
+              sm:w-12
+              rounded-full
+              bg-white/40
+              backdrop-blur-xl
+              border
+              border-white/30
+              flex
+              items-center
+              justify-center
+              transition-all
+              duration-300
+              hover:bg-white/60
+              hover:scale-105
+              shadow-sm
+            "
+          >
+            <Menu className="w-5 h-5 sm:w-5 sm:h-5 text-blue-900" />
+          </button>
+        </div>
+      </header>
+
+      {/* PREMIUM MOBILE OVERLAY */}
+      <div
+        className={`
+          fixed
+          inset-0
+          z-[100]
+          transition-all
+          duration-500
+          ease-out
+          ${
+            mobileOpen
+              ? "opacity-100 visible pointer-events-auto"
+              : "opacity-0 invisible pointer-events-none"
+          }
+        `}
+      >
+        {/* Backdrop */}
+        <div
+          className={`
+            absolute
+            inset-0
+            bg-white/60
+            backdrop-blur-3xl
+            transition-all
+            duration-700
+            ${
+              mobileOpen
+                ? "opacity-100"
+                : "opacity-0"
+            }
+          `}
+          onClick={() => setMobileOpen(false)}
+        />
+
+        {/* Menu Content */}
+        <div
+          className={`
+            relative
+            h-full
+            w-full
+            flex
+            flex-col
+            px-6
+            sm:px-10
+            md:px-16
+            transition-all
+            duration-500
+            delay-100
+            ${
+              mobileOpen
+                ? "translate-y-0 opacity-100"
+                : "translate-y-8 opacity-0"
+            }
+          `}
+        >
+          {/* Top Bar */}
+          <div
+            className="
+              h-24
+              sm:h-28
+              flex
+              items-center
+              justify-between
+              border-b
+              border-blue-100/50
+              flex-shrink-0
+            "
+          >
+            <div>
+              <h2
+                className="
+                  font-bold
+                  text-2xl
+                  sm:text-3xl
+                  text-blue-950
+                  tracking-tight
+                "
+              >
+                MayDay
+              </h2>
+              <p
+                className="
+                  text-[10px]
+                  sm:text-xs
+                  uppercase
+                  tracking-[4px]
+                  sm:tracking-[5px]
+                  text-slate-500
+                  font-medium
+                "
+              >
+                International School
+              </p>
+            </div>
+
+            <button
+              onClick={() => setMobileOpen(false)}
+              className="
+                h-12
+                w-12
+                sm:h-14
+                sm:w-14
+                rounded-full
+                bg-white
+                shadow-[0_8px_24px_-6px_rgba(0,0,0,0.08)]
+                flex
+                items-center
+                justify-center
+                transition-all
+                duration-300
+                hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.12)]
+                hover:scale-105
+                active:scale-95
+              "
+            >
+              <X className="w-6 h-6 sm:w-7 sm:h-7 text-blue-900" />
+            </button>
+          </div>
+
+          {/* Navigation Links */}
+          <div
+            className="
+              flex-1
+              flex
+              flex-col
+              justify-center
+              py-8
+              sm:py-12
+              space-y-6
+              sm:space-y-8
+            "
+          >
+            {navLinks.map((link, index) => (
               <NavLink
                 key={link.path}
                 to={link.path}
-                end={link.path === "/"}
+                onClick={() => setMobileOpen(false)}
                 className={({ isActive }) =>
-                  `rounded-full px-5 py-3 text-sm font-medium tracking-[-0.01em] transition-all duration-300 ease-out ${
-                    isActive
-                      ? "bg-blue-700 text-white shadow-[0_12px_28px_rgba(29,78,216,0.28)]"
-                      : "text-blue-900 hover:bg-white hover:text-blue-700 hover:shadow-[0_10px_30px_rgba(37,99,235,0.12)]"
-                  }`
+                  `
+                    text-4xl
+                    sm:text-5xl
+                    md:text-6xl
+                    lg:text-7xl
+                    font-bold
+                    transition-all
+                    duration-300
+                    ${
+                      isActive
+                        ? "text-blue-700"
+                        : "text-blue-950 hover:text-blue-600"
+                    }
+                    hover:translate-x-3
+                    active:scale-95
+                    tracking-tight
+                  `
                 }
+                style={{
+                  transitionDelay: `${index * 50}ms`,
+                }}
               >
                 {link.name}
               </NavLink>
             ))}
           </div>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          {/* Action Buttons */}
+          <div
+            className="
+              flex-shrink-0
+              pb-8
+              sm:pb-12
+              space-y-4
+              sm:space-y-5
+              w-full
+              max-w-md
+              mx-auto
+            "
+          >
             <Link
               to="/portal/student-login"
-              className="group flex h-12 items-center gap-2 rounded-full border border-blue-200 bg-white/72 px-5 text-sm font-semibold text-blue-700 shadow-[0_12px_34px_rgba(37,99,235,0.1)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-white hover:shadow-[0_18px_44px_rgba(37,99,235,0.18)]"
+              onClick={() => setMobileOpen(false)}
+              className="
+                h-14
+                sm:h-16
+                w-full
+                rounded-2xl
+                bg-white/80
+                backdrop-blur-sm
+                border-2
+                border-blue-100
+                text-blue-700
+                font-semibold
+                text-base
+                sm:text-lg
+                flex
+                items-center
+                justify-center
+                gap-3
+                transition-all
+                duration-300
+                hover:bg-white
+                hover:border-blue-300
+                hover:shadow-[0_12px_32px_-8px_rgba(29,78,216,0.12)]
+                active:scale-98
+              "
             >
-              <UserRound className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
-              Portal
+              <UserRound className="w-5 h-5 sm:w-6 sm:h-6" />
+              Student Portal
             </Link>
 
             <Link
               to="/admissions"
-              className="group flex h-12 items-center gap-2 rounded-full bg-blue-700 px-6 text-sm font-semibold text-white shadow-[0_18px_42px_rgba(29,78,216,0.32)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-800 hover:shadow-[0_24px_54px_rgba(29,78,216,0.38)]"
+              onClick={() => setMobileOpen(false)}
+              className="
+                h-14
+                sm:h-16
+                w-full
+                rounded-2xl
+                bg-gradient-to-r
+                from-blue-600
+                to-blue-700
+                text-white
+                font-bold
+                text-base
+                sm:text-lg
+                flex
+                items-center
+                justify-center
+                gap-3
+                transition-all
+                duration-300
+                shadow-[0_20px_40px_-12px_rgba(29,78,216,0.35)]
+                hover:shadow-[0_24px_48px_-12px_rgba(29,78,216,0.45)]
+                hover:-translate-y-0.5
+                active:scale-98
+              "
             >
               Apply Now
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </Link>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setMobileOpen(true)}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-blue-100 bg-white/76 text-blue-900 shadow-[0_14px_34px_rgba(37,99,235,0.14)] backdrop-blur-xl transition-all duration-300 hover:bg-white active:scale-95 lg:hidden"
-            aria-label="Open navigation menu"
-            aria-expanded={mobileOpen}
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-        </nav>
-      </header>
-
-      <div
-        className={`fixed inset-0 z-[100] overflow-hidden bg-white/88 backdrop-blur-3xl transition-[opacity,visibility] duration-500 ease-out lg:hidden ${
-          mobileOpen ? "visible opacity-100" : "invisible opacity-0"
-        }`}
-        aria-hidden={!mobileOpen}
-      >
-        <div
-          className={`flex min-h-dvh flex-col px-4 py-4 transition-all duration-500 ease-out min-[360px]:px-5 sm:px-8 ${
-            mobileOpen
-              ? "translate-y-0 scale-100 opacity-100"
-              : "translate-y-5 scale-[0.985] opacity-0"
-          }`}
-        >
-          <div className="flex items-center justify-between gap-3">
-            <Link
-              to="/"
-              onClick={closeMobileMenu}
-              className="flex min-w-0 items-center gap-2 rounded-full pr-2 min-[360px]:gap-3"
-              aria-label="MayDay International School home"
-            >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-700 shadow-[0_12px_32px_rgba(29,78,216,0.32)] min-[360px]:h-12 min-[360px]:w-12">
-                <GraduationCap className="h-5 w-5 text-white min-[360px]:h-6 min-[360px]:w-6" />
-              </span>
-
-              <span className="min-w-0 leading-none">
-                <span className="block truncate text-base font-semibold text-blue-950 min-[360px]:text-lg sm:text-xl">
-                  MayDay
-                </span>
-                <span className="mt-1 block truncate text-[7px] font-semibold uppercase tracking-[0.18em] text-blue-500 min-[360px]:text-[8px] sm:text-[10px] sm:tracking-[0.24em]">
-                  International School
-                </span>
-              </span>
-            </Link>
-
-            <button
-              type="button"
-              onClick={closeMobileMenu}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-blue-100 bg-white text-blue-900 shadow-[0_14px_36px_rgba(37,99,235,0.18)] transition-all duration-300 hover:bg-blue-50 active:scale-95 min-[360px]:h-12 min-[360px]:w-12"
-              aria-label="Close navigation menu"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-
-          <div className="flex flex-1 flex-col justify-center py-8 min-[390px]:py-10 sm:py-14">
-            <div className="space-y-2 min-[360px]:space-y-3 sm:space-y-4">
-              {navLinks.map((link, index) => (
-                <NavLink
-                  key={link.path}
-                  to={link.path}
-                  end={link.path === "/"}
-                  onClick={closeMobileMenu}
-                  className={({ isActive }) =>
-                    `group flex items-center justify-between rounded-[28px] border px-5 py-4 text-[clamp(2rem,11vw,4.25rem)] font-semibold leading-none tracking-[-0.03em] transition-all duration-300 min-[360px]:px-6 min-[360px]:py-5 sm:rounded-[34px] sm:px-8 sm:py-6 ${
-                      isActive
-                        ? "border-blue-200 bg-blue-700 text-white shadow-[0_24px_54px_rgba(29,78,216,0.28)]"
-                        : "border-blue-100/80 bg-white/54 text-blue-950 shadow-[0_18px_46px_rgba(37,99,235,0.1)] hover:border-blue-200 hover:bg-white hover:text-blue-700"
-                    } ${mobileOpen ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`
-                  }
-                  style={{
-                    transitionDelay: mobileOpen
-                      ? `${120 + index * 55}ms`
-                      : `${index * 20}ms`,
-                  }}
-                >
-                  <span>{link.name}</span>
-                  <ArrowRight className="h-6 w-6 shrink-0 opacity-70 transition-transform duration-300 group-hover:translate-x-1 min-[360px]:h-7 min-[360px]:w-7 sm:h-8 sm:w-8" />
-                </NavLink>
-              ))}
-            </div>
-
-            <div
-              className={`mt-7 grid gap-3 transition-all duration-500 min-[390px]:mt-9 sm:mt-10 sm:grid-cols-2 ${
-                mobileOpen ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-              }`}
-              style={{ transitionDelay: mobileOpen ? "380ms" : "0ms" }}
-            >
-              <Link
-                to="/portal/student-login"
-                onClick={closeMobileMenu}
-                className="flex min-h-14 items-center justify-center gap-3 rounded-full border border-blue-200 bg-white/76 px-5 text-base font-semibold text-blue-700 shadow-[0_16px_40px_rgba(37,99,235,0.14)] backdrop-blur-xl transition-all duration-300 hover:bg-white active:scale-[0.98] min-[360px]:min-h-16"
-              >
-                <UserRound className="h-5 w-5" />
-                Portal
-              </Link>
-
-              <Link
-                to="/admissions"
-                onClick={closeMobileMenu}
-                className="group flex min-h-14 items-center justify-center gap-3 rounded-full bg-blue-700 px-5 text-base font-semibold text-white shadow-[0_22px_48px_rgba(29,78,216,0.32)] transition-all duration-300 hover:bg-blue-800 active:scale-[0.98] min-[360px]:min-h-16"
-              >
-                Apply Now
-                <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5" />
-              </Link>
-            </div>
-          </div>
-
-          <div
-            className={`pb-2 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-blue-400 transition-all duration-500 ${
-              mobileOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-            style={{ transitionDelay: mobileOpen ? "460ms" : "0ms" }}
-          >
-            International School
           </div>
         </div>
       </div>
