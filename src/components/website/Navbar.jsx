@@ -643,58 +643,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   GraduationCap,
@@ -726,56 +675,160 @@ const navLinks = [
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const mobileMenuRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const firstFocusableRef = useRef(null);
 
+  // Check for reduced motion preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 15);
     };
 
-    window.addEventListener("scroll", handleScroll);
-
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Handle body overflow and focus management
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-
-    return () => {
-      document.body.style.overflow = "";
-    };
+    const originalOverflow = document.body.style.overflow;
+    
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      
+      // Focus management - trap focus in mobile menu
+      const timer = setTimeout(() => {
+        if (firstFocusableRef.current) {
+          firstFocusableRef.current.focus();
+        }
+      }, 100);
+      
+      return () => {
+        clearTimeout(timer);
+        document.body.style.overflow = originalOverflow;
+        document.body.style.position = "";
+        document.body.style.width = "";
+      };
+    } else {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.position = "";
+      document.body.style.width = "";
+    }
   }, [mobileOpen]);
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape" && mobileOpen) {
+        setMobileOpen(false);
+        // Return focus to menu button
+        const menuButton = document.querySelector('[aria-label="Open main menu"]');
+        if (menuButton) {
+          setTimeout(() => menuButton.focus(), 100);
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [mobileOpen]);
+
+  // Handle focus trap
+  const handleKeyDown = useCallback((e) => {
+    if (!mobileOpen) return;
+    
+    const focusableElements = mobileMenuRef.current?.querySelectorAll(
+      'button:not([disabled]), a:not([disabled]), [tabindex="0"]:not([disabled])'
+    );
+    
+    if (!focusableElements || focusableElements.length === 0) return;
+    
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+    
+    if (e.key === "Tab") {
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    }
+  }, [mobileOpen]);
+
+  const duration = prefersReducedMotion ? "duration-0" : "duration-500";
+  const transition = prefersReducedMotion ? "transition-none" : "transition-all";
 
   return (
     <>
       <header
-        className={`fixed left-1/2 top-4 z-50 w-[95%] max-w-7xl -translate-x-1/2 transition-all duration-500 ${
-          scrolled ? "scale-[0.99]" : "scale-100"
-        }`}
+        className={`
+          fixed 
+          left-1/2 
+          top-4 
+          z-50 
+          w-[95%] 
+          max-w-7xl 
+          -translate-x-1/2 
+          ${transition} 
+          ${duration}
+          ${scrolled ? "scale-[0.98] shadow-2xl" : "scale-100"}
+        `}
+        role="banner"
+        aria-label="Main navigation"
       >
         <div
           className={`
             relative
             overflow-hidden
             rounded-full
-            border
-            border-blue-100/70
-            bg-white/70
-            backdrop-blur-3xl
-            shadow-[0_18px_60px_rgba(37,99,235,0.12)]
-            transition-all
-            duration-500
+            border 
+            border-white/30
+            bg-white/10
+            backdrop-blur-[20px]
+            backdrop-saturate-[180%]
+            shadow-[0_8px_32px_rgba(0,0,0,0.08)]
+            ${transition}
+            ${duration}
+            hover:bg-white/15
           `}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-50/40 via-white/10 to-blue-100/30" />
+          {/* Glass reflection overlay */}
+          <div 
+            className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-white/5 pointer-events-none" 
+            aria-hidden="true"
+          />
+          
+          {/* Glass highlight line */}
+          <div 
+            className="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
+            aria-hidden="true"
+          />
 
           <div className="relative flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
+
             {/* Logo */}
             <Link
               to="/"
-              className="group flex min-w-0 items-center gap-3"
+              className="group flex min-w-0 items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded-2xl"
+              aria-label="MayDay International School - Home"
             >
               <div
-                className="
+                className={`
                   flex
                   h-12
                   w-12
@@ -783,43 +836,29 @@ const Navbar = () => {
                   items-center
                   justify-center
                   rounded-2xl
-                  bg-blue-700
+                  bg-gradient-to-br
+                  from-blue-600
+                  to-blue-700
                   shadow-lg
-                  shadow-blue-600/25
-                  transition-all
-                  duration-500
+                  shadow-blue-500/30
+                  ${transition}
+                  ${duration}
                   group-hover:rotate-6
                   group-hover:scale-105
-                "
+                  group-hover:shadow-blue-500/50
+                  focus-visible:ring-2
+                  focus-visible:ring-blue-500
+                `}
+                aria-hidden="true"
               >
                 <GraduationCap className="h-6 w-6 text-white" />
               </div>
 
               <div className="min-w-0 leading-tight">
-                <h2
-                  className="
-                    truncate
-                    text-base
-                    font-bold
-                    tracking-tight
-                    text-blue-950
-                    sm:text-lg
-                    lg:text-xl
-                  "
-                >
+                <h2 className="truncate text-base font-bold tracking-tight text-white drop-shadow-lg sm:text-lg lg:text-xl">
                   MayDay
                 </h2>
-
-                <p
-                  className="
-                    truncate
-                    text-[9px]
-                    uppercase
-                    tracking-[0.28em]
-                    text-blue-600
-                    sm:text-[10px]
-                  "
-                >
+                <p className="truncate text-[9px] uppercase tracking-[0.28em] text-blue-100/90 sm:text-[10px]">
                   International School
                 </p>
               </div>
@@ -827,17 +866,8 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <nav
-              className="
-                hidden
-                lg:flex
-                items-center
-                rounded-full
-                border
-                border-blue-100
-                bg-white/70
-                p-2
-                backdrop-blur-xl
-              "
+              className="hidden lg:flex items-center rounded-full border border-white/20 bg-white/10 p-1.5 backdrop-blur-xl"
+              aria-label="Main menu"
             >
               {navLinks.map((link) => (
                 <NavLink
@@ -849,15 +879,20 @@ const Navbar = () => {
                       relative
                       rounded-full
                       px-6
-                      py-3
+                      py-2.5
                       text-sm
                       font-semibold
-                      transition-all
-                      duration-300
+                      ${transition}
+                      ${duration}
+                      focus-visible:outline-none
+                      focus-visible:ring-2
+                      focus-visible:ring-blue-400
+                      focus-visible:ring-offset-2
+                      focus-visible:ring-offset-transparent
                       ${
                         isActive
-                          ? "bg-blue-700 text-white shadow-lg shadow-blue-600/20"
-                          : "text-blue-900 hover:bg-blue-50 hover:text-blue-700"
+                          ? "bg-white/20 text-white shadow-lg shadow-black/10 backdrop-blur-xl"
+                          : "text-white/80 hover:bg-white/15 hover:text-white"
                       }
                     `
                   }
@@ -871,26 +906,33 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center gap-3">
               <Link
                 to="/portal/student-login"
-                className="
+                className={`
                   group
                   inline-flex
-                  h-12
+                  h-11
                   items-center
                   gap-2
                   rounded-full
                   border
-                  border-blue-200
-                  bg-white
+                  border-white/30
+                  bg-white/10
                   px-5
                   text-sm
                   font-semibold
-                  text-blue-700
-                  transition-all
-                  duration-300
+                  text-white
+                  backdrop-blur-xl
+                  ${transition}
+                  ${duration}
                   hover:-translate-y-0.5
-                  hover:border-blue-300
+                  hover:bg-white/20
+                  hover:border-white/40
                   hover:shadow-xl
-                "
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-blue-400
+                  focus-visible:ring-offset-2
+                  focus-visible:ring-offset-transparent
+                `}
               >
                 <UserRound className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
                 Portal
@@ -898,35 +940,42 @@ const Navbar = () => {
 
               <Link
                 to="/admissions"
-                className="
+                className={`
                   group
                   inline-flex
-                  h-12
+                  h-11
                   items-center
                   gap-2
                   rounded-full
-                  bg-blue-700
+                  bg-gradient-to-r
+                  from-blue-500
+                  to-blue-600
                   px-6
                   text-sm
                   font-semibold
                   text-white
-                  shadow-[0_18px_40px_rgba(37,99,235,0.30)]
-                  transition-all
-                  duration-300
+                  shadow-[0_8px_32px_rgba(37,99,235,0.35)]
+                  ${transition}
+                  ${duration}
                   hover:-translate-y-0.5
                   hover:scale-[1.02]
-                "
+                  hover:shadow-[0_12px_40px_rgba(37,99,235,0.45)]
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-blue-400
+                  focus-visible:ring-offset-2
+                  focus-visible:ring-offset-transparent
+                `}
               >
                 Apply Now
-
                 <ArrowRight
-                  className="
+                  className={`
                     h-4
                     w-4
-                    transition-transform
+                    ${transition}
                     duration-300
                     group-hover:translate-x-1
-                  "
+                  `}
                 />
               </Link>
             </div>
@@ -934,56 +983,76 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileOpen(true)}
-              className="
+              aria-label="Open main menu"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              className={`
                 flex
-                h-12
-                w-12
+                h-11
+                w-11
                 items-center
                 justify-center
                 rounded-full
                 border
-                border-blue-100
-                bg-white/80
-                text-blue-900
+                border-white/30
+                bg-white/10
+                text-white
                 backdrop-blur-xl
-                transition-all
-                duration-300
+                ${transition}
+                ${duration}
+                hover:bg-white/20
                 hover:scale-105
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-blue-400
+                focus-visible:ring-offset-2
+                focus-visible:ring-offset-transparent
                 lg:hidden
-              "
+              `}
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5" aria-hidden="true" />
             </button>
+
           </div>
         </div>
       </header>
 
-      {/* Premium Mobile Navigation */}
+      {/* Mobile Navigation */}
       <div
+        id="mobile-menu"
+        ref={mobileMenuRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation menu"
         className={`
           fixed
           inset-0
           z-[100]
-          transition-all
-          duration-500
-          ${
-            mobileOpen
-              ? "visible opacity-100"
-              : "invisible opacity-0"
-          }
+          ${transition}
+          ${duration}
+          ${mobileOpen ? "visible opacity-100" : "invisible opacity-0"}
         `}
+        onKeyDown={handleKeyDown}
       >
         {/* Backdrop */}
         <div
-          onClick={() => setMobileOpen(false)}
+          onClick={() => {
+            setMobileOpen(false);
+            const menuButton = document.querySelector('[aria-label="Open main menu"]');
+            if (menuButton) {
+              setTimeout(() => menuButton.focus(), 100);
+            }
+          }}
           className={`
             absolute
             inset-0
-            bg-white/60
-            backdrop-blur-3xl
-            transition-all
-            duration-500
+            bg-black/20
+            backdrop-blur-xl
+            ${transition}
+            ${duration}
+            ${mobileOpen ? "opacity-100" : "opacity-0"}
           `}
+          aria-hidden="true"
         />
 
         {/* Mobile Panel */}
@@ -993,25 +1062,36 @@ const Navbar = () => {
             inset-0
             flex
             flex-col
-            bg-gradient-to-b
-            from-white
-            via-blue-50/60
-            to-white
-            transition-all
-            duration-500
-            ${
-              mobileOpen
-                ? "translate-y-0"
-                : "-translate-y-full"
-            }
+            bg-gradient-to-br
+            from-blue-600/95
+            via-blue-700/95
+            to-blue-800/95
+            backdrop-blur-2xl
+            backdrop-saturate-[200%]
+            ${transition}
+            ${duration}
+            ${mobileOpen ? "translate-y-0" : "-translate-y-full"}
           `}
         >
+          {/* Glass overlay */}
+          <div 
+            className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 pointer-events-none"
+            aria-hidden="true"
+          />
+          
+          {/* Subtle grid pattern */}
+          <div 
+            className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiIGZpbGwtcnVsZT0ibm9uemVybyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-50 pointer-events-none"
+            aria-hidden="true"
+          />
+
           {/* Mobile Header */}
-          <div className="flex items-center justify-between px-6 pt-6">
+          <div className="relative flex items-center justify-between px-6 pt-6">
             <Link
               to="/"
               onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-2xl"
+              aria-label="MayDay International School - Home"
             >
               <div
                 className="
@@ -1021,35 +1101,37 @@ const Navbar = () => {
                   items-center
                   justify-center
                   rounded-2xl
-                  bg-blue-700
+                  bg-white/20
+                  backdrop-blur-xl
                   shadow-lg
-                  shadow-blue-600/20
+                  shadow-black/10
                 "
+                aria-hidden="true"
               >
                 <GraduationCap className="h-6 w-6 text-white" />
               </div>
 
               <div className="leading-tight">
-                <h2 className="text-lg font-bold text-blue-950">
+                <h2 className="text-lg font-bold text-white drop-shadow-lg">
                   MayDay
                 </h2>
-
-                <p
-                  className="
-                    text-[10px]
-                    uppercase
-                    tracking-[0.28em]
-                    text-blue-600
-                  "
-                >
+                <p className="text-[10px] uppercase tracking-[0.28em] text-blue-100/80">
                   International School
                 </p>
               </div>
             </Link>
 
             <button
-              onClick={() => setMobileOpen(false)}
-              className="
+              ref={closeButtonRef}
+              onClick={() => {
+                setMobileOpen(false);
+                const menuButton = document.querySelector('[aria-label="Open main menu"]');
+                if (menuButton) {
+                  setTimeout(() => menuButton.focus(), 100);
+                }
+              }}
+              aria-label="Close menu"
+              className={`
                 flex
                 h-12
                 w-12
@@ -1057,37 +1139,42 @@ const Navbar = () => {
                 justify-center
                 rounded-full
                 border
-                border-blue-100
-                bg-white
-                text-blue-900
+                border-white/30
+                bg-white/10
+                text-white
+                backdrop-blur-xl
                 shadow-lg
-                transition-all
-                duration-300
+                ${transition}
+                ${duration}
+                hover:bg-white/20
                 hover:rotate-90
-              "
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-white/50
+                focus-visible:ring-offset-2
+                focus-visible:ring-offset-transparent
+              `}
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" aria-hidden="true" />
             </button>
           </div>
 
           {/* Mobile Content */}
-          <div
-            className="
-              flex
-              flex-1
-              flex-col
-              justify-center
-              px-8
-              sm:px-10
-            "
-          >
-            <nav className="space-y-2">
+          <div className="relative flex flex-1 flex-col justify-center px-8 sm:px-10">
+            <nav className="space-y-2" aria-label="Mobile menu">
               {navLinks.map((link, index) => (
                 <NavLink
                   key={link.path}
                   to={link.path}
                   end={link.path === "/"}
-                  onClick={() => setMobileOpen(false)}
+                  ref={index === 0 ? firstFocusableRef : null}
+                  onClick={() => {
+                    setMobileOpen(false);
+                    const menuButton = document.querySelector('[aria-label="Open main menu"]');
+                    if (menuButton) {
+                      setTimeout(() => menuButton.focus(), 100);
+                    }
+                  }}
                   className={({ isActive }) =>
                     `
                       group
@@ -1100,29 +1187,35 @@ const Navbar = () => {
                       text-[1.9rem]
                       font-bold
                       tracking-tight
-                      transition-all
-                      duration-500
+                      text-white
+                      ${transition}
+                      ${duration}
+                      focus-visible:outline-none
+                      focus-visible:ring-2
+                      focus-visible:ring-white/50
+                      focus-visible:ring-offset-2
+                      focus-visible:ring-offset-transparent
                       ${
                         isActive
-                          ? "bg-blue-700 text-white shadow-2xl shadow-blue-600/20"
-                          : "text-blue-950 hover:bg-white hover:shadow-xl"
+                          ? "bg-white/20 shadow-2xl shadow-black/10 backdrop-blur-xl"
+                          : "hover:bg-white/10"
                       }
                     `
                   }
                   style={{
-                    transitionDelay: `${index * 70}ms`,
+                    transitionDelay: prefersReducedMotion ? '0ms' : `${index * 70}ms`,
                   }}
                 >
                   <span>{link.name}</span>
-
                   <ArrowRight
-                    className="
+                    className={`
                       h-6
                       w-6
-                      transition-transform
+                      ${transition}
                       duration-300
                       group-hover:translate-x-2
-                    "
+                    `}
+                    aria-hidden="true"
                   />
                 </NavLink>
               ))}
@@ -1131,8 +1224,14 @@ const Navbar = () => {
             <div className="mt-14 space-y-4">
               <Link
                 to="/portal/student-login"
-                onClick={() => setMobileOpen(false)}
-                className="
+                onClick={() => {
+                  setMobileOpen(false);
+                  const menuButton = document.querySelector('[aria-label="Open main menu"]');
+                  if (menuButton) {
+                    setTimeout(() => menuButton.focus(), 100);
+                  }
+                }}
+                className={`
                   flex
                   h-16
                   items-center
@@ -1140,25 +1239,38 @@ const Navbar = () => {
                   gap-3
                   rounded-2xl
                   border
-                  border-blue-200
-                  bg-white
+                  border-white/30
+                  bg-white/10
                   text-base
                   font-semibold
-                  text-blue-700
+                  text-white
+                  backdrop-blur-xl
                   shadow-xl
-                  transition-all
-                  duration-300
+                  ${transition}
+                  ${duration}
                   hover:-translate-y-1
-                "
+                  hover:bg-white/20
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-white/50
+                  focus-visible:ring-offset-2
+                  focus-visible:ring-offset-transparent
+                `}
               >
-                <UserRound className="h-5 w-5" />
+                <UserRound className="h-5 w-5" aria-hidden="true" />
                 Student Portal
               </Link>
 
               <Link
                 to="/admissions"
-                onClick={() => setMobileOpen(false)}
-                className="
+                onClick={() => {
+                  setMobileOpen(false);
+                  const menuButton = document.querySelector('[aria-label="Open main menu"]');
+                  if (menuButton) {
+                    setTimeout(() => menuButton.focus(), 100);
+                  }
+                }}
+                className={`
                   group
                   flex
                   h-16
@@ -1166,54 +1278,56 @@ const Navbar = () => {
                   justify-center
                   gap-3
                   rounded-2xl
-                  bg-blue-700
+                  bg-gradient-to-r
+                  from-white/30
+                  to-white/20
                   text-base
                   font-bold
                   text-white
-                  shadow-[0_20px_45px_rgba(37,99,235,0.35)]
-                  transition-all
-                  duration-300
+                  backdrop-blur-xl
+                  shadow-[0_20px_45px_rgba(0,0,0,0.2)]
+                  ${transition}
+                  ${duration}
                   hover:-translate-y-1
-                "
+                  hover:shadow-[0_25px_55px_rgba(0,0,0,0.3)]
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-white/50
+                  focus-visible:ring-offset-2
+                  focus-visible:ring-offset-transparent
+                `}
               >
                 Apply Now
-
                 <ArrowRight
-                  className="
+                  className={`
                     h-5
                     w-5
-                    transition-transform
+                    ${transition}
                     duration-300
                     group-hover:translate-x-1
-                  "
+                  `}
+                  aria-hidden="true"
                 />
               </Link>
             </div>
           </div>
 
           {/* Footer */}
-          <div
-            className="
-              px-8
-              pb-10
-              pt-6
-            "
-          >
+          <div className="relative px-8 pb-10 pt-6">
             <div
               className="
                 rounded-3xl
                 border
-                border-blue-100
-                bg-white/70
+                border-white/20
+                bg-white/5
                 p-6
                 backdrop-blur-xl
               "
             >
-              <p className="text-sm font-semibold text-blue-900">
+              <p className="text-sm font-semibold text-white/90">
                 Inspiring Excellence.
               </p>
-
-              <p className="mt-2 text-sm leading-7 text-blue-700/80">
+              <p className="mt-2 text-sm leading-7 text-white/70">
                 Building confident learners with a world-class international
                 education and a vibrant school community.
               </p>
