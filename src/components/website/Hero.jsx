@@ -1,502 +1,4 @@
-// import { useState, useEffect, useRef, useCallback } from 'react'
-// import { Link } from 'react-router-dom'
-// import { ArrowRight, Play, X } from 'lucide-react'
-// import { motion, AnimatePresence } from 'framer-motion'
-
-// // ── Google Fonts ─────────────────
-// const FontLoader = () => (
-//   <link 
-//     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" 
-//     rel="stylesheet" 
-//   />
-// )
-
-// const slides = [
-//   {
-//     id: 1,
-//     eyebrow: 'Welcome to MayDay',
-//     heading: 'Nurturing Excellence,',
-//     highlight: 'Building Futures',
-//     subheading: 'Every child is seen, valued, and empowered to discover their greatest potential.',
-//     primaryCTA: { label: 'Student Portal', path: 'https://portal.maydayintschool.com/student', external: true },
-//     secondaryCTA: { label: 'WhatsApp Us', path: 'https://wa.me/2341234567890', external: true },
-//     bgImage: '/hero-slide-1.jpg',
-//   },
-//   {
-//     id: 2,
-//     eyebrow: 'Academic Excellence',
-//     heading: 'World-Class Education,',
-//     highlight: 'Global Standards',
-//     subheading: 'From Pre-Nursery to Secondary, our curriculum is designed to challenge and inspire learners.',
-//     primaryCTA: { label: 'Explore Academics', path: '/academics', external: false },
-//     secondaryCTA: { label: 'Staff Portal', path: 'https://portal.maydayintschool.com/', external: true },
-//     bgImage: '/hero-slide-2.jpg',
-//   },
-//   {
-//     id: 3,
-//     eyebrow: 'Holistic Development',
-//     heading: 'Beyond the Classroom,',
-//     highlight: 'Into the Future',
-//     subheading: 'Sports, ICT, arts, clubs, and cultural activities — developing complete, confident individuals.',
-//     primaryCTA: { label: 'Specialties', path: '/specialties', external: false },
-//     secondaryCTA: { label: 'Contact Us', path: '/contact', external: false },
-//     bgImage: '/hero-slide-3.jpg',
-//   },
-//   {
-//     id: 4,
-//     eyebrow: 'Modern Facilities',
-//     heading: 'State-of-the-Art',
-//     highlight: 'Learning Environment',
-//     subheading: 'Well-equipped classrooms, science labs, computer rooms, and sports facilities.',
-//     primaryCTA: { label: 'Take a Tour', path: '/gallery', external: false },
-//     secondaryCTA: { label: 'Enroll Now', path: '/admissions', external: false },
-//     bgImage: '/hero-slide-4.jpg',
-//   },
-//   {
-//     id: 5,
-//     eyebrow: 'Join Our Family',
-//     heading: 'Start Your Journey',
-//     highlight: 'With Us Today',
-//     subheading: 'Give your child quality education, strong values, and a supportive community.',
-//     primaryCTA: { label: 'Contact Us', path: '/contact', external: false },
-//     secondaryCTA: { label: 'Learn More', path: '/about', external: false },
-//     bgImage: '/hero-slide-5.jpg',
-//   },
-// ]
-
-// const CTALink = ({ cta, className, children }) =>
-//   cta.external ? (
-//     <a href={cta.path} target="_blank" rel="noopener noreferrer" className={className}>
-//       {children}
-//     </a>
-//   ) : (
-//     <Link to={cta.path} className={className}>
-//       {children}
-//     </Link>
-//   )
-
-// const Hero = () => {
-//   const [activeSlide, setActiveSlide] = useState(0)
-//   const [showVideo, setShowVideo] = useState(false)
-//   const intervalRef = useRef(null)
-
-//   const startInterval = useCallback(() => {
-//     if (intervalRef.current) clearInterval(intervalRef.current)
-//     intervalRef.current = setInterval(() => {
-//       setActiveSlide(prev => (prev + 1) % slides.length)
-//     }, 8000)
-//   }, [])
-
-//   useEffect(() => {
-//     startInterval()
-//     return () => clearInterval(intervalRef.current)
-//   }, [startInterval])
-
-//   const slide = slides[activeSlide]
-
-//   return (
-//     <>
-//       <FontLoader />
-      
-//       <style>{`
-//         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        
-//         .hero-root {
-//           --brand-gold: #D4AF37;
-//           --font-serif: 'Playfair Display', serif;
-//           --font-sans: 'Plus Jakarta Sans', sans-serif;
-//           font-family: var(--font-sans);
-//           color: white;
-//           position: relative;
-//           height: 100svh;
-//           overflow: hidden;
-//         }
-        
-//         .hero-bg {
-//           position: absolute;
-//           inset: 0;
-//           background-size: cover;
-//           background-position: center;
-//           z-index: -2;
-//         }
-        
-//         .hero-bg-overlay {
-//           position: absolute;
-//           inset: 0;
-//           background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 100%);
-//           z-index: -1;
-//         }
-        
-//         .hero-h1 {
-//           font-family: var(--font-serif);
-//           font-size: clamp(2rem, 5vw, 3.5rem);
-//           line-height: 1.2;
-//           font-weight: 800;
-//           margin-bottom: 1.2rem;
-//         }
-        
-//         .hero-h1 .highlight {
-//           display: block;
-//           color: var(--brand-gold);
-//           font-style: italic;
-//           font-weight: 700;
-//           margin-top: 0.25rem;
-//         }
-        
-//         .hero-sub {
-//           font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-//           max-width: 550px;
-//           line-height: 1.5;
-//           margin-bottom: 2rem;
-//           color: rgba(255,255,255,0.85);
-//           font-weight: 400;
-//         }
-        
-//         .btn-primary {
-//           background: var(--brand-gold);
-//           color: black;
-//           padding: 12px 28px;
-//           border-radius: 50px;
-//           font-weight: 600;
-//           font-size: 0.9rem;
-//           display: inline-flex;
-//           align-items: center;
-//           gap: 8px;
-//           transition: all 0.3s ease;
-//           text-decoration: none;
-//         }
-        
-//         .btn-primary:hover {
-//           transform: translateY(-2px);
-//           box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
-//         }
-        
-//         .btn-ghost {
-//           border: 1px solid rgba(255,255,255,0.3);
-//           padding: 12px 28px;
-//           border-radius: 50px;
-//           font-weight: 600;
-//           font-size: 0.9rem;
-//           backdrop-filter: blur(10px);
-//           transition: all 0.3s ease;
-//           text-decoration: none;
-//           display: inline-flex;
-//           align-items: center;
-//           color: white;
-//         }
-        
-//         .btn-ghost:hover {
-//           background: white;
-//           color: black;
-//           border-color: white;
-//         }
-        
-//         .eyebrow-text {
-//           color: #D4AF37;
-//           font-weight: 600;
-//           letter-spacing: 2px;
-//           text-transform: uppercase;
-//           font-size: 0.7rem;
-//           display: block;
-//           margin-bottom: 0.75rem;
-//         }
-        
-//         .slide-nav {
-//           position: absolute;
-//           bottom: 30px;
-//           right: 40px;
-//           display: flex;
-//           gap: 15px;
-//           align-items: center;
-//           z-index: 20;
-//         }
-        
-//         .progress-dot {
-//           width: 35px;
-//           height: 2px;
-//           background: rgba(255,255,255,0.3);
-//           border-radius: 2px;
-//           overflow: hidden;
-//           position: relative;
-//           cursor: pointer;
-//         }
-        
-//         .progress-fill {
-//           position: absolute;
-//           left: 0;
-//           top: 0;
-//           height: 100%;
-//           background: var(--brand-gold);
-//           width: 0%;
-//         }
-        
-//         .modal-bg {
-//           position: fixed;
-//           inset: 0;
-//           background: rgba(0,0,0,0.95);
-//           z-index: 100;
-//           display: flex;
-//           align-items: center;
-//           justify-content: center;
-//           backdrop-filter: blur(10px);
-//         }
-        
-//         .watch-tour-btn {
-//           background: none;
-//           border: none;
-//           color: white;
-//           display: flex;
-//           align-items: center;
-//           gap: 10px;
-//           cursor: pointer;
-//           font-weight: 500;
-//           font-size: 0.9rem;
-//           transition: all 0.3s ease;
-//         }
-        
-//         .watch-tour-btn:hover {
-//           color: #D4AF37;
-//         }
-        
-//         .play-icon {
-//           width: 42px;
-//           height: 42px;
-//           border-radius: 50%;
-//           border: 1px solid rgba(255,255,255,0.5);
-//           display: flex;
-//           align-items: center;
-//           justify-content: center;
-//           transition: all 0.3s ease;
-//         }
-        
-//         .watch-tour-btn:hover .play-icon {
-//           border-color: #D4AF37;
-//           background: rgba(212, 175, 55, 0.2);
-//         }
-        
-//         @keyframes slideFadeIn {
-//           0% {
-//             opacity: 0;
-//             transform: translateY(20px);
-//           }
-//           100% {
-//             opacity: 1;
-//             transform: translateY(0);
-//           }
-//         }
-        
-//         .content-animate {
-//           animation: slideFadeIn 0.5s ease-out;
-//         }
-//       `}</style>
-
-//       <section className="hero-root">
-        
-//         {/* Background Layer */}
-//         <AnimatePresence mode="wait">
-//           <motion.div
-//             key={slide.id}
-//             className="hero-bg"
-//             style={{ backgroundImage: `url('${slide.bgImage}')` }}
-//             initial={{ opacity: 0, scale: 1.1 }}
-//             animate={{ opacity: 1, scale: 1 }}
-//             exit={{ opacity: 0 }}
-//             transition={{ duration: 1.2, ease: "easeOut" }}
-//           >
-//             <div className="hero-bg-overlay" />
-//           </motion.div>
-//         </AnimatePresence>
-
-//         {/* Content Layer */}
-//         <div style={{ position: 'relative', zIndex: 10, height: '100%', display: 'flex', alignItems: 'center' }}>
-//           <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', padding: '0 40px' }}>
-//             <AnimatePresence mode="wait">
-//               <motion.div 
-//                 key={activeSlide}
-//                 initial={{ opacity: 0, y: 20 }}
-//                 animate={{ opacity: 1, y: 0 }}
-//                 exit={{ opacity: 0, y: -20 }}
-//                 transition={{ duration: 0.5 }}
-//                 className="content-animate"
-//               >
-//                 <span className="eyebrow-text">
-//                   {slide.eyebrow}
-//                 </span>
-
-//                 <h1 className="hero-h1">
-//                   {slide.heading}
-//                   <span className="highlight">{slide.highlight}</span>
-//                 </h1>
-
-//                 <p className="hero-sub">{slide.subheading}</p>
-
-//                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-//                   <CTALink cta={slide.primaryCTA} className="btn-primary">
-//                     {slide.primaryCTA.label} <ArrowRight size={16} />
-//                   </CTALink>
-
-//                   <CTALink cta={slide.secondaryCTA} className="btn-ghost">
-//                     {slide.secondaryCTA.label}
-//                   </CTALink>
-
-//                   <button 
-//                     onClick={() => setShowVideo(true)}
-//                     className="watch-tour-btn"
-//                   >
-//                     <div className="play-icon">
-//                       <Play size={14} fill="white" />
-//                     </div>
-//                     Watch Tour
-//                   </button>
-//                 </div>
-//               </motion.div>
-//             </AnimatePresence>
-//           </div>
-//         </div>
-
-//         {/* Slide Indicators */}
-//         <div className="slide-nav">
-//           {slides.map((_, i) => (
-//             <div 
-//               key={i} 
-//               onClick={() => { setActiveSlide(i); startInterval(); }} 
-//               className="progress-dot"
-//             >
-//               {activeSlide === i && (
-//                 <motion.div 
-//                   className="progress-fill" 
-//                   initial={{ width: "0%" }} 
-//                   animate={{ width: "100%" }} 
-//                   transition={{ duration: 8, ease: "linear" }}
-//                 />
-//               )}
-//             </div>
-//           ))}
-//         </div>
-//       </section>
-
-//       {/* Video Modal */}
-//       <AnimatePresence>
-//         {showVideo && (
-//           <motion.div 
-//             className="modal-bg"
-//             initial={{ opacity: 0 }}
-//             animate={{ opacity: 1 }}
-//             exit={{ opacity: 0 }}
-//           >
-//             <div style={{ 
-//               position: 'relative', 
-//               width: '90%', 
-//               maxWidth: '900px', 
-//               aspectRatio: '16/9', 
-//               background: '#111', 
-//               borderRadius: '16px', 
-//               display: 'flex', 
-//               alignItems: 'center', 
-//               justifyContent: 'center' 
-//             }}>
-//               <button 
-//                 onClick={() => setShowVideo(false)}
-//                 style={{ 
-//                   position: 'absolute', 
-//                   top: '-45px', 
-//                   right: 0, 
-//                   color: 'white', 
-//                   background: 'none', 
-//                   border: 'none',
-//                   cursor: 'pointer'
-//                 }}
-//               >
-//                 <X size={28} />
-//               </button>
-//               <div style={{ textAlign: 'center' }}>
-//                 <Play size={40} style={{ marginBottom: '1rem', opacity: 0.5 }} />
-//                 <p style={{ fontStyle: 'italic', fontFamily: 'var(--font-serif)', fontSize: '0.9rem' }}>Virtual Tour Experience Coming Soon</p>
-//               </div>
-//             </div>
-//           </motion.div>
-//         )}
-//       </AnimatePresence>
-//     </>
-//   )
-// }
-
-// export default Hero
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -510,7 +12,6 @@ const slides = [
     description:
       "At MayDay International School, we inspire every child to learn, lead, and thrive in a world filled with endless possibilities.",
   },
-
   {
     id: 2,
     image: "/hero-slide-2.jpg",
@@ -519,7 +20,6 @@ const slides = [
     description:
       "Providing world-class education with modern teaching methods and global standards that prepare students for the future.",
   },
-
   {
     id: 3,
     image: "/hero-slide-3.jpg",
@@ -530,23 +30,97 @@ const slides = [
   },
 ];
 
+const AUTOPLAY_MS = 7000;
+
 const Hero = () => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Per-slide load status: "idle" | "loading" | "loaded" | "error".
+  // Drives the skeleton placeholder and the graceful fallback background,
+  // so a missing/slow image never shows a broken-image icon or a flash
+  // of empty space.
+  const [imgStatus, setImgStatus] = useState({});
 
   const intervalRef = useRef(null);
+  const preloadedRef = useRef(new Set());
 
+  // Respect reduced-motion: no autoplay, no slow zoom pan on the image.
   useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % slides.length);
-    }, 7000);
-
-    return () => clearInterval(intervalRef.current);
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
+  const preloadSlide = useCallback((slide) => {
+    if (!slide || preloadedRef.current.has(slide.id)) return;
+    preloadedRef.current.add(slide.id);
+
+    setImgStatus((s) => ({ ...s, [slide.id]: "loading" }));
+    const img = new Image();
+    img.src = slide.image;
+    img.onload = () => setImgStatus((s) => ({ ...s, [slide.id]: "loaded" }));
+    img.onerror = () => setImgStatus((s) => ({ ...s, [slide.id]: "error" }));
+  }, []);
+
+  // Load the first slide right away (it's the LCP element), and the second
+  // shortly after so the first transition is instant. Everything else only
+  // loads just before it's needed — real lazy loading for a carousel
+  // instead of fetching all hero images up front.
+  useEffect(() => {
+    preloadSlide(slides[0]);
+    const timer = setTimeout(() => preloadSlide(slides[1]), 400);
+    return () => clearTimeout(timer);
+  }, [preloadSlide]);
+
+  // Always keep the *next* slide warmed up as the active one changes.
+  useEffect(() => {
+    preloadSlide(slides[(activeSlide + 1) % slides.length]);
+  }, [activeSlide, preloadSlide]);
+
+  // Autoplay — paused on hover/focus, when the tab isn't visible, or when
+  // the person prefers reduced motion.
+  useEffect(() => {
+    if (paused || prefersReducedMotion) return undefined;
+
+    intervalRef.current = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+    }, AUTOPLAY_MS);
+
+    return () => clearInterval(intervalRef.current);
+  }, [paused, prefersReducedMotion]);
+
+  useEffect(() => {
+    const handleVisibility = () => setPaused(document.hidden);
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, []);
+
+  const goToSlide = useCallback(
+    (index) => {
+      preloadSlide(slides[index]);
+      setActiveSlide(index);
+    },
+    [preloadSlide]
+  );
+
   const slide = slides[activeSlide];
+  const status = imgStatus[slide.id] ?? "idle";
+  const duration = prefersReducedMotion ? 0 : 1.2;
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section
+      className="relative min-h-[100svh] overflow-hidden bg-blue-900"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      aria-roledescription="carousel"
+      aria-label="MayDay International School highlights"
+    >
       {/* Background */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -554,79 +128,71 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.2 }}
+          transition={{ duration }}
           className="absolute inset-0"
         >
-          <motion.img
-            src={slide.image}
-            alt={slide.title}
-            initial={{ scale: 1.08 }}
-            animate={{ scale: 1 }}
-            transition={{
-              duration: 8,
-              ease: "easeOut",
-            }}
-            className="absolute inset-0 h-full w-full object-cover object-center"
-          />
+          {/* Skeleton / fallback shown until the image reports loaded,
+              and permanently if it fails — flat, brand-colored, no
+              broken-image icon ever visible. */}
+          {status !== "loaded" && (
+            <div
+              className={`absolute inset-0 bg-gradient-to-br from-blue-800 via-blue-900 to-blue-950 ${
+                status === "loading" && !prefersReducedMotion ? "animate-pulse" : ""
+              }`}
+              aria-hidden="true"
+            />
+          )}
+
+          {status !== "error" && (
+            <motion.img
+              src={slide.image}
+              alt=""
+              loading={activeSlide === 0 ? "eager" : "lazy"}
+              decoding="async"
+              fetchPriority={activeSlide === 0 ? "high" : "auto"}
+              initial={{ scale: prefersReducedMotion ? 1 : 1.08 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 8, ease: "easeOut" }}
+              onLoad={() =>
+                setImgStatus((s) => ({ ...s, [slide.id]: "loaded" }))
+              }
+              onError={() =>
+                setImgStatus((s) => ({ ...s, [slide.id]: "error" }))
+              }
+              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ${
+                status === "loaded" ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          )}
 
           <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/75 to-[#0F172A]/35" />
         </motion.div>
       </AnimatePresence>
 
-      {/* Content */}
-      <div className="relative z-20 flex min-h-screen items-center">
+      {/* Content — top padding clears the floating glass navbar */}
+      <div className="relative z-20 flex min-h-[100svh] items-center pt-28 lg:pt-24">
         <div className="mx-auto w-full max-w-7xl px-6 lg:px-10">
           <AnimatePresence mode="wait">
             <motion.div
               key={slide.id}
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 35 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.7 }}
             >
-              {/* Eyebrow */}
+              {/* Eyebrow — echoes the navbar's amber accent dot */}
               <div className="mb-7">
-                <span
-                  className="
-                  inline-flex
-                  items-center
-                  rounded-full
-                  border
-                  border-white/10
-                  bg-white/10
-                  px-5
-                  py-3
-                  text-[11px]
-                  font-semibold
-                  uppercase
-                  tracking-[3px]
-                  text-blue-200
-                  backdrop-blur-2xl
-                "
-                >
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-5 py-3 text-[11px] font-semibold uppercase tracking-[3px] text-blue-100 backdrop-blur-2xl">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400" aria-hidden="true" />
                   Welcome To MayDay International School
                 </span>
               </div>
 
               {/* Heading */}
               <div className="max-w-4xl">
-                <h1
-                  className="
-                  text-[3.2rem]
-                  font-extrabold
-                  leading-[1.02]
-                  tracking-[-0.05em]
-                  text-white
-                  md:text-[4.5rem]
-                  lg:text-[5.5rem]
-                  xl:text-[6rem]
-                "
-                >
+                <h1 className="text-[3.2rem] font-extrabold leading-[1.02] tracking-[-0.05em] text-white md:text-[4.5rem] lg:text-[5.5rem] xl:text-[6rem]">
                   {slide.title}
-
-                  <span className="mt-3 block text-blue-400">
-                    {slide.highlight}
-                  </span>
+                  <span className="mt-3 block text-blue-400">{slide.highlight}</span>
                 </h1>
               </div>
 
@@ -637,56 +203,24 @@ const Hero = () => {
                 </p>
               </div>
 
-              {/* Buttons */}
+              {/* Buttons — flat, solid-color, same treatment as the navbar */}
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   to="/admissions"
-                  className="
-                  flex
-                  h-14
-                  items-center
-                  gap-3
-                  rounded-full
-                  bg-blue-700
-                  px-8
-                  text-sm
-                  font-semibold
-                  text-white
-                  shadow-[0_20px_50px_rgba(29,78,216,.35)]
-                  transition-all
-                  duration-300
-                  hover:scale-105
-                "
+                  className="flex h-14 items-center gap-3 rounded-full bg-blue-600 px-8 text-sm font-semibold text-white transition-colors duration-300 hover:bg-blue-700"
                 >
                   Apply Now
-
-                  <ArrowRight className="h-5 w-5" />
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
                 </Link>
 
                 <button
-                  className="
-                  flex
-                  h-14
-                  items-center
-                  gap-3
-                  rounded-full
-                  border
-                  border-white/10
-                  bg-white/10
-                  px-7
-                  text-sm
-                  font-semibold
-                  text-white
-                  backdrop-blur-2xl
-                  transition-all
-                  duration-300
-                  hover:bg-white/20
-                "
+                  type="button"
+                  aria-label="Watch the MayDay International School campus tour"
+                  className="flex h-14 items-center gap-3 rounded-full border border-white/10 bg-white/10 px-7 text-sm font-semibold text-white backdrop-blur-2xl transition-colors duration-300 hover:bg-white/20"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15">
-                    <Play className="h-4 w-4" />
+                    <Play className="h-4 w-4" aria-hidden="true" />
                   </div>
-
                   Watch Tour
                 </button>
               </div>
@@ -695,23 +229,338 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Indicators */}
-      <div className="absolute bottom-7 left-1/2 z-30 flex -translate-x-1/2 gap-3">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveSlide(index)}
-            className={`rounded-full transition-all duration-500 ${
-              activeSlide === index
-                ? "h-3 w-12 bg-blue-500"
-                : "h-3 w-3 bg-white/40"
-            }`}
-          />
-        ))}
+      {/* Indicators + autoplay progress */}
+      <div className="absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-3">
+        <div
+          className="flex gap-3"
+          role="tablist"
+          aria-label="Hero slides"
+        >
+          {slides.map((s, index) => {
+            const isActive = activeSlide === index;
+            return (
+              <button
+                key={s.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-current={isActive}
+                aria-label={`Show slide ${index + 1}: ${s.title}`}
+                onClick={() => goToSlide(index)}
+                className={`relative h-3 overflow-hidden rounded-full transition-all duration-500 ${
+                  isActive ? "w-12 bg-white/25" : "w-3 bg-white/40 hover:bg-white/60"
+                }`}
+              >
+                {isActive && !prefersReducedMotion && !paused && (
+                  <motion.span
+                    key={`${s.id}-progress`}
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: AUTOPLAY_MS / 1000, ease: "linear" }}
+                    className="absolute inset-y-0 left-0 bg-amber-400"
+                  />
+                )}
+                {isActive && (prefersReducedMotion || paused) && (
+                  <span className="absolute inset-0 bg-amber-400" />
+                )}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 };
 
 export default Hero;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useRef, useState } from "react";
+// import { Link } from "react-router-dom";
+// import { ArrowRight, Play } from "lucide-react";
+// import { AnimatePresence, motion } from "framer-motion";
+
+// const slides = [
+//   {
+//     id: 1,
+//     image: "/hero-slide-1.jpg",
+//     title: "Empowering Young Minds",
+//     highlight: "For A Brighter Future",
+//     description:
+//       "At MayDay International School, we inspire every child to learn, lead, and thrive in a world filled with endless possibilities.",
+//   },
+
+//   {
+//     id: 2,
+//     image: "/hero-slide-2.jpg",
+//     title: "Academic Excellence",
+//     highlight: "Without Limits",
+//     description:
+//       "Providing world-class education with modern teaching methods and global standards that prepare students for the future.",
+//   },
+
+//   {
+//     id: 3,
+//     image: "/hero-slide-3.jpg",
+//     title: "Building Character",
+//     highlight: "Creating Leaders",
+//     description:
+//       "Developing confident, disciplined and compassionate individuals equipped for tomorrow.",
+//   },
+// ];
+
+// const Hero = () => {
+//   const [activeSlide, setActiveSlide] = useState(0);
+
+//   const intervalRef = useRef(null);
+
+//   useEffect(() => {
+//     intervalRef.current = setInterval(() => {
+//       setActiveSlide((prev) => (prev + 1) % slides.length);
+//     }, 7000);
+
+//     return () => clearInterval(intervalRef.current);
+//   }, []);
+
+//   const slide = slides[activeSlide];
+
+//   return (
+//     <section className="relative min-h-screen overflow-hidden">
+//       {/* Background */}
+//       <AnimatePresence mode="wait">
+//         <motion.div
+//           key={slide.id}
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           exit={{ opacity: 0 }}
+//           transition={{ duration: 1.2 }}
+//           className="absolute inset-0"
+//         >
+//           <motion.img
+//             src={slide.image}
+//             alt={slide.title}
+//             initial={{ scale: 1.08 }}
+//             animate={{ scale: 1 }}
+//             transition={{
+//               duration: 8,
+//               ease: "easeOut",
+//             }}
+//             className="absolute inset-0 h-full w-full object-cover object-center"
+//           />
+
+//           <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/75 to-[#0F172A]/35" />
+//         </motion.div>
+//       </AnimatePresence>
+
+//       {/* Content */}
+//       <div className="relative z-20 flex min-h-screen items-center">
+//         <div className="mx-auto w-full max-w-7xl px-6 lg:px-10">
+//           <AnimatePresence mode="wait">
+//             <motion.div
+//               key={slide.id}
+//               initial={{ opacity: 0, y: 35 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               exit={{ opacity: 0 }}
+//               transition={{ duration: 0.7 }}
+//             >
+//               {/* Eyebrow */}
+//               <div className="mb-7">
+//                 <span
+//                   className="
+//                   inline-flex
+//                   items-center
+//                   rounded-full
+//                   border
+//                   border-white/10
+//                   bg-white/10
+//                   px-5
+//                   py-3
+//                   text-[11px]
+//                   font-semibold
+//                   uppercase
+//                   tracking-[3px]
+//                   text-blue-200
+//                   backdrop-blur-2xl
+//                 "
+//                 >
+//                   Welcome To MayDay International School
+//                 </span>
+//               </div>
+
+//               {/* Heading */}
+//               <div className="max-w-4xl">
+//                 <h1
+//                   className="
+//                   text-[3.2rem]
+//                   font-extrabold
+//                   leading-[1.02]
+//                   tracking-[-0.05em]
+//                   text-white
+//                   md:text-[4.5rem]
+//                   lg:text-[5.5rem]
+//                   xl:text-[6rem]
+//                 "
+//                 >
+//                   {slide.title}
+
+//                   <span className="mt-3 block text-blue-400">
+//                     {slide.highlight}
+//                   </span>
+//                 </h1>
+//               </div>
+
+//               {/* Description */}
+//               <div className="mt-7 max-w-xl">
+//                 <p className="text-base leading-8 text-white/75 md:text-lg">
+//                   {slide.description}
+//                 </p>
+//               </div>
+
+//               {/* Buttons */}
+//               <div className="mt-10 flex flex-wrap gap-4">
+//                 <Link
+//                   to="/admissions"
+//                   className="
+//                   flex
+//                   h-14
+//                   items-center
+//                   gap-3
+//                   rounded-full
+//                   bg-blue-700
+//                   px-8
+//                   text-sm
+//                   font-semibold
+//                   text-white
+//                   shadow-[0_20px_50px_rgba(29,78,216,.35)]
+//                   transition-all
+//                   duration-300
+//                   hover:scale-105
+//                 "
+//                 >
+//                   Apply Now
+
+//                   <ArrowRight className="h-5 w-5" />
+//                 </Link>
+
+//                 <button
+//                   className="
+//                   flex
+//                   h-14
+//                   items-center
+//                   gap-3
+//                   rounded-full
+//                   border
+//                   border-white/10
+//                   bg-white/10
+//                   px-7
+//                   text-sm
+//                   font-semibold
+//                   text-white
+//                   backdrop-blur-2xl
+//                   transition-all
+//                   duration-300
+//                   hover:bg-white/20
+//                 "
+//                 >
+//                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15">
+//                     <Play className="h-4 w-4" />
+//                   </div>
+
+//                   Watch Tour
+//                 </button>
+//               </div>
+//             </motion.div>
+//           </AnimatePresence>
+//         </div>
+//       </div>
+
+//       {/* Indicators */}
+//       <div className="absolute bottom-7 left-1/2 z-30 flex -translate-x-1/2 gap-3">
+//         {slides.map((_, index) => (
+//           <button
+//             key={index}
+//             onClick={() => setActiveSlide(index)}
+//             className={`rounded-full transition-all duration-500 ${
+//               activeSlide === index
+//                 ? "h-3 w-12 bg-blue-500"
+//                 : "h-3 w-3 bg-white/40"
+//             }`}
+//           />
+//         ))}
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default Hero;
 
